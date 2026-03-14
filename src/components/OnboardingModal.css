@@ -1,0 +1,97 @@
+.onb-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeInUp 0.3s var(--ease-smooth);
+}
+
+.onb-modal {
+  width: 100%;
+  max-width: 460px;
+  padding: 2.5rem;
+  text-align: center;
+  position: relative;
+  animation: partyPop 0.4s var(--ease-bounce);
+  border-color: var(--color-border-glow);
+  box-shadow: var(--glow-primary), 0 30px 80px rgba(0,0,0,0.5);
+}
+
+.onb-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 2rem;
+}
+.onb-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-text-faint);
+  transition: all var(--t-normal) var(--ease-smooth);
+}
+.onb-dot.active {
+  background: var(--color-primary);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: var(--glow-primary);
+}
+.onb-dot.done { background: var(--color-primary-dim); }
+
+.onb-icon {
+  font-size: 4.5rem;
+  margin-bottom: 1.25rem;
+  display: block;
+  animation: partyPop 0.4s var(--ease-bounce);
+}
+
+.onb-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  animation: fadeInUp 0.3s var(--ease-smooth);
+}
+
+.onb-desc {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  animation: fadeInUp 0.3s 0.05s var(--ease-smooth) both;
+}
+
+.onb-highlight {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: rgba(52,211,100,0.1);
+  border: 1px solid var(--color-border-glow);
+  border-radius: var(--radius-full);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.3s 0.1s var(--ease-smooth) both;
+}
+
+.onb-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.onb-back { padding: 0.7rem 1.25rem; }
+.onb-next { padding: 0.7rem 2rem; min-width: 140px; justify-content: center; }
+
+.onb-skip {
+  background: none;
+  color: var(--color-text-faint);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color var(--t-fast);
+}
+.onb-skip:hover { color: var(--color-text-muted); }

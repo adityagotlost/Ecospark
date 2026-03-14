@@ -1,0 +1,94 @@
+.badge-unlock-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.badge-unlock-modal {
+  width: 100%;
+  max-width: 400px;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: badgePop 0.5s var(--ease-bounce);
+}
+
+.bu-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.15;
+  filter: blur(60px);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: rotate 10s linear infinite;
+}
+
+.bu-sparkles {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+.bu-icon-wrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+.bu-icon {
+  font-size: 5rem;
+}
+
+.bu-label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.bu-name {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 850;
+  margin-bottom: 1rem;
+}
+
+.bu-desc {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.bu-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+@keyframes badgePop {
+  0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,83 @@
+.ch-summary {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.ch-sum-item { text-align: center; }
+.ch-sum-val { font-family: var(--font-display); font-size: 2rem; font-weight: 800; }
+.ch-sum-label { font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.ch-divider { width: 1px; height: 40px; background: var(--color-border); }
+.ch-progress-wrap { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 0.4rem; }
+.ch-progress-track { height: 8px; background: rgba(52,211,100,0.1); border-radius: var(--radius-full); overflow: hidden; }
+.ch-progress-fill { height: 100%; background: var(--grad-primary); border-radius: var(--radius-full); transition: width 0.8s var(--ease-smooth); box-shadow: var(--glow-primary); }
+.ch-pct { font-size: 0.8rem; color: var(--color-primary); font-weight: 600; }
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.challenge-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all var(--t-normal) var(--ease-smooth);
+  animation: fadeInUp 0.4s var(--ease-smooth) both;
+}
+.challenge-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--diff-color, var(--color-border-glow));
+  box-shadow: 0 0 25px rgba(from var(--diff-color, #34d364) r g b / 0.15);
+}
+.challenge-card.ch-done { opacity: 0.7; }
+
+.ch-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.ch-icon-wrap {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  background: rgba(52,211,100,0.08);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ch-icon { font-size: 2rem; }
+.ch-badges { display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-end; }
+.ch-diff-chip, .ch-cat-chip {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ch-cat-chip { background: rgba(255,255,255,0.05); color: var(--color-text-muted); }
+
+.ch-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; }
+.ch-desc { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; flex: 1; }
+.ch-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.ch-pts { font-size: 0.85rem; font-weight: 700; color: var(--color-primary); }
+.ch-btn { padding: 0.45rem 1rem; font-size: 0.85rem; border-radius: var(--radius-full); }
+.ch-done-badge {
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: rgba(52,211,100,0.1);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+@media (max-width: 900px) { .challenges-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .challenges-grid { grid-template-columns: 1fr; } }
