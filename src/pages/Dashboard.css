@@ -10,7 +10,8 @@
 .welcome-greeting {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: -0.04em;
   margin-bottom: 0.25rem;
 }
 .welcome-sub {
@@ -25,11 +26,12 @@
 }
 .welcome-level-badge {
   padding: 0.5rem 1.2rem;
-  background: rgba(52,211,100,0.1);
-  border: 1px solid var(--color-border-glow);
+  background: rgba(173,255,47,0.08);
+  border: 1px solid rgba(173,255,47,0.25);
   border-radius: var(--radius-full);
   color: var(--color-primary);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   font-size: 0.9rem;
   box-shadow: var(--glow-primary);
 }
@@ -63,7 +65,8 @@
 .scd-value {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: -0.04em;
   line-height: 1;
   margin-bottom: 0.2rem;
 }
@@ -94,7 +97,7 @@
 .op-pct { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; }
 .progress-track {
   height: 10px;
-  background: rgba(52,211,100,0.1);
+  background: rgba(173,255,47,0.08);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -165,14 +168,15 @@
 .dc-icon { font-size: 3rem; animation: float 3s ease-in-out infinite; }
 .dc-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
 .dc-desc { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; }
-.dc-done { color: var(--color-primary); font-weight: 700; font-size: 0.9rem; padding: 0.5rem 1rem; background: rgba(52,211,100,0.1); border-radius: var(--radius-full); }
+.dc-done { color: var(--color-primary); font-weight: 700; font-size: 0.9rem; padding: 0.5rem 1rem; background: rgba(173,255,47,0.08); border: 1px solid rgba(173,255,47,0.2); border-radius: var(--radius-full); }
 .dc-btn { width: 100%; justify-content: center; margin-top: 0.5rem; }
 
 /* ── Quick actions ── */
 .section-heading {
   font-family: var(--font-display);
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   margin-bottom: 1rem;
 }
 .qa-grid {
