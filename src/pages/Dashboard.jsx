@@ -7,7 +7,7 @@ import {
   CategoryScale, LinearScale, PointElement,
   LineElement, Filler, Tooltip, Legend,
 } from 'chart.js';
-import { LESSONS, CHALLENGES, ALL_BADGES } from '../store';
+import { LESSONS, CHALLENGES, ALL_BADGES, QUIZZES } from '../store';
 import OnboardingModal from '../components/OnboardingModal';
 import Confetti from '../components/Confetti';
 import './Dashboard.css';
@@ -191,8 +191,9 @@ export default function Dashboard({ user, onUpdate }) {
 
   const impact = calcImpact(user);
   const completedCount = (user?.completedLessons?.length || 0) + (user?.completedChallenges?.length || 0) + (user?.completedQuizzes?.length || 0);
-  const totalItems = LESSONS.length + CHALLENGES.length + 4;
-  const progressPct = Math.round((completedCount / totalItems) * 100);
+  const totalItems = LESSONS.length + CHALLENGES.length + QUIZZES.length;
+  const displayCompletedCount = Math.min(completedCount, totalItems);
+  const progressPct = Math.min(100, Math.round((completedCount / totalItems) * 100));
 
   let weeklyData = user?.weeklyPoints || [0, 0, 0, 0, 0, 0, 0];
   if (!Array.isArray(weeklyData)) {
@@ -301,7 +302,7 @@ export default function Dashboard({ user, onUpdate }) {
               transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
             />
           </div>
-          <div className="op-sub">{completedCount} of {totalItems} activities completed</div>
+          <div className="op-sub">{displayCompletedCount} of {totalItems} activities completed</div>
         </motion.div>
 
         {/* 🌍 REAL-WORLD IMPACT — NEW! */}
