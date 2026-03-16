@@ -150,6 +150,8 @@ export const ALL_BADGES = [
   { id: 'quiz_ace',       icon: '\uD83E\uDD47', name: 'Quiz Ace',          desc: 'Complete 6 quizzes',                       color: '#adff2f', condition: u => u.completedQuizzes?.length >= 6 },
   { id: 'lesson_legend',  icon: '\uD83D\uDCDA', name: 'Lesson Legend',    desc: 'Complete 10 lessons',                      color: '#c084fc', condition: u => u.completedLessons?.length >= 10 },
   { id: 'eco_champion',   icon: '\uD83E\uDD8D', name: 'Eco Champion',     desc: 'Earn 2500 EcoPoints',                      color: '#adff2f', condition: u => u.ecoPoints >= 2500 },
+  { id: 'eco_master',     icon: '🎓', name: 'Eco Master',       desc: 'Complete 15 lessons',                      color: '#f43f5e', condition: u => u.completedLessons?.length >= 15 },
+  { id: 'quiz_legend',    icon: '👑', name: 'Quiz Legend',      desc: 'Complete 10 quizzes',                      color: '#eab308', condition: u => u.completedQuizzes?.length >= 10 },
 ];
 
 export function checkAndAwardBadges(user) {
@@ -210,7 +212,6 @@ export const LESSONS = [
     icon: '🌡️',
     category: 'Climate',
     difficulty: 'Beginner',
-    duration: '10 min',
     points: 50,
     color: '#ef4444',
     content: [
@@ -218,6 +219,9 @@ export const LESSONS = [
       { type: 'fact', body: '🌡️ The Earth has warmed by about 1.1°C since pre-industrial times. Even 0.5°C more could be devastating.' },
       { type: 'text', body: 'Greenhouse gases like CO₂ and methane trap heat in the atmosphere, causing the planet to warm—similar to how a car heats up in the sun.' },
       { type: 'fact', body: '📊 India is the 3rd largest emitter of CO₂ globally, yet contributes only 7% of global emissions per capita.' },
+      { type: 'text', body: 'The impacts of climate change include more frequent and intense droughts, storms, heat waves, rising sea levels, melting glaciers and warming oceans.' },
+      { type: 'fact', body: '🌊 Global sea levels have risen by about 8 inches since 1880, and the rate of rise is accelerating. This threatens coastal cities worldwide.' },
+      { type: 'text', body: 'We can mitigate climate change by shifting to renewable energy, improving energy efficiency, and protecting forests and oceans which absorb carbon.' }
     ],
   },
   {
@@ -226,13 +230,15 @@ export const LESSONS = [
     icon: '♻️',
     category: 'Waste',
     difficulty: 'Beginner',
-    duration: '8 min',
     points: 50,
     color: '#22c55e',
     content: [
       { type: 'text', body: 'India generates 62 million tonnes of waste annually, of which only 43 million tonnes are collected. Proper segregation at source is the first step to responsible waste management.' },
       { type: 'fact', body: '🗑️ Wet waste (organic): 55% | Dry waste (recyclable): 25% | Hazardous: 5% | Others: 15%' },
       { type: 'text', body: 'Segregate into: Green bin (wet/organic), Blue bin (dry/recyclable), Red bin (hazardous). This simple act reduces landfill burden dramatically.' },
+      { type: 'text', body: 'Wet waste can be composted at home to create nutrient-rich soil for plants. This prevents methane emissions from rotting food in landfills.' },
+      { type: 'fact', body: '⚡ Recycling just one aluminum can saves enough energy to listen to a full album on your phone. Aluminum can be recycled infinitely without losing quality.' },
+      { type: 'text', body: 'Electronic waste (e-waste) contains toxic heavy metals like lead and mercury. It should never be thrown in regular bins but given to authorized e-waste recyclers.' }
     ],
   },
   {
@@ -241,13 +247,15 @@ export const LESSONS = [
     icon: '💧',
     category: 'Water',
     difficulty: 'Beginner',
-    duration: '9 min',
     points: 50,
     color: '#3b82f6',
     content: [
       { type: 'text', body: 'India faces a severe water crisis—600 million people face high to extreme water stress. Groundwater is being used 3× faster than it can replenish.' },
       { type: 'fact', body: '💧 Fixing a leaky tap can save 15 litres/day. A 5-minute shower uses 60L; a bath uses 150L.' },
       { type: 'text', body: 'Simple acts: turn off taps, harvest rainwater, use drip irrigation, and reuse greywater for plants.' },
+      { type: 'fact', body: '🚰 Agriculture accounts for about 80% of India\'s total water use, heavily relying on rapidly depleting groundwater.' },
+      { type: 'text', body: 'Water footprints matter too. The "hidden water" in products we consume daily is enormous. For example, it takes about 2,500 liters of water to produce a single cotton t-shirt.' },
+      { type: 'text', body: 'Implementing rainwater harvesting in residential buildings and schools can significantly recharge local groundwater levels.' }
     ],
   },
   {
@@ -256,13 +264,15 @@ export const LESSONS = [
     icon: '🦋',
     category: 'Ecology',
     difficulty: 'Intermediate',
-    duration: '12 min',
     points: 60,
     color: '#8b5cf6',
     content: [
       { type: 'text', body: 'India is one of the 17 megadiverse countries, home to over 7.6% of all mammal species and 12.6% of all bird species on Earth.' },
       { type: 'fact', body: '🐅 India has 70% of the world\'s tigers. Yet, 21% of its mammal species are threatened with extinction.' },
       { type: 'text', body: 'Biodiversity loss disrupts food chains, reduces crop yields, and can trigger disease outbreaks—affecting human health directly.' },
+      { type: 'fact', body: '🐝 Bees and other pollinators are responsible for 1 out of every 3 bites of food we eat. Their decline threatens global food security.' },
+      { type: 'text', body: 'Protecting natural habitats from deforestation, pollution, and invasive species is crucial for maintaining ecological balance.' },
+      { type: 'text', body: 'Creating small native gardens or "pollinator patches" in urban areas can help support local biodiversity and insect populations.' }
     ],
   },
   {
@@ -271,13 +281,15 @@ export const LESSONS = [
     icon: '☀️',
     category: 'Energy',
     difficulty: 'Intermediate',
-    duration: '11 min',
     points: 60,
     color: '#f59e0b',
     content: [
       { type: 'text', body: 'India has the 4th largest renewable energy capacity in the world! Solar, wind, hydro, and biomass energy are India\'s green future.' },
       { type: 'fact', body: '☀️ India\'s target: 500 GW of renewable energy by 2030. Current capacity: ~170 GW (2024).' },
       { type: 'text', body: 'Even at home: switch to LED bulbs (use 75% less energy), unplug devices on standby, and opt for green energy providers.' },
+      { type: 'fact', body: '🌬️ A single large wind turbine can generate enough electricity to power about 600 homes continuously.' },
+      { type: 'text', body: 'Unlike fossil fuels, renewable energy sources do not emit greenhouse gases or toxic pollutants, leading to cleaner air and better public health.' },
+      { type: 'text', body: 'Solar energy costs have dropped by over 80% in the last decade, making it the cheapest source of new electricity in many parts of the world.' }
     ],
   },
   {
@@ -286,12 +298,15 @@ export const LESSONS = [
     icon: '🌾',
     category: 'Food',
     difficulty: 'Advanced',
-    duration: '14 min',
     points: 70,
     color: '#84cc16',
     content: [
       { type: 'text', body: 'Agriculture uses 70% of freshwater worldwide and contributes 24% of greenhouse gas emissions. Sustainable farming can reverse these impacts.' },
       { type: 'fact', body: '🌾 Organic farming can increase crop yields by 20-30% in developing countries while reducing chemical use dramatically.' },
+      { type: 'text', body: 'Practices like crop rotation, agroforestry, and integrated pest management naturally enhance soil health without relying on synthetic fertilizers.' },
+      { type: 'fact', body: '🍎 About one-third of all food produced globally is lost or wasted. Reducing food waste is a major part of sustainable agriculture.' },
+      { type: 'text', body: 'Eating locally sourced, seasonal produce reduces the carbon footprint associated with long-distance food transportation and cold storage.' },
+      { type: 'text', body: 'Transitioning to sustainable agriculture not only combats climate change but also secures the livelihoods of millions of smallholder farmers worldwide.' }
     ],
   },
   {
@@ -300,14 +315,15 @@ export const LESSONS = [
     icon: '🌫️',
     category: 'Climate',
     difficulty: 'Beginner',
-    duration: '10 min',
     points: 50,
     color: '#94a3b8',
     content: [
       { type: 'text', body: 'Air pollution is now the leading environmental cause of disease. India has 14 of the world\'s 20 most polluted cities. Fine particulate matter (PM2.5) penetrates deep into lungs and enters the bloodstream.' },
-      { type: 'fact', body: '\uD83C\uDFE5 Air pollution causes ~1.67 million deaths in India annually - more than any other environmental risk factor.' },
+      { type: 'fact', body: '🏥 Air pollution causes ~1.67 million deaths in India annually - more than any other environmental risk factor.' },
       { type: 'text', body: 'Sources: vehicle exhaust, industrial emissions, crop burning, and construction dust. Solutions include electric vehicles, clean cooking fuels, and urban tree planting.' },
-      { type: 'fact', body: '\uD83C\uDF33 A single tree can absorb up to 22 kg of CO2 per year and filter up to 100 grams of dust from the air.' },
+      { type: 'fact', body: '🌳 A single tree can absorb up to 22 kg of CO2 per year and filter up to 100 grams of dust from the air.' },
+      { type: 'text', body: 'Indoor air pollution from burning solid fuels (wood, dung) for cooking affects millions of rural households, primarily women and children.' },
+      { type: 'text', body: 'Switching to public transport, carpooling, or cycling can drastically cut down personal contributions to urban air pollution.' }
     ],
   },
   {
@@ -316,14 +332,15 @@ export const LESSONS = [
     icon: '🌊',
     category: 'Ecology',
     difficulty: 'Intermediate',
-    duration: '12 min',
     points: 60,
     color: '#0ea5e9',
     content: [
       { type: 'text', body: 'The ocean covers 71% of Earth and produces 50% of the oxygen we breathe. Yet over 8 million tonnes of plastic enter the ocean every year - the equivalent of dumping a garbage truck of plastic every minute.' },
-      { type: 'fact', body: '\uD83D\uDC22 By 2050, there could be more plastic in the ocean than fish by weight if we don\'t act now.' },
+      { type: 'fact', body: '🐢 By 2050, there could be more plastic in the ocean than fish by weight if we don\'t act now.' },
       { type: 'text', body: 'Ocean acidification - caused by CO2 absorption - has increased ocean acidity by 26% since the Industrial Revolution, threatening coral reefs and shellfish worldwide.' },
-      { type: 'fact', body: '\uD83E\uDEB8 India\'s Lakshadweep coral reefs are among the most biodiverse in the world, but are bleaching rapidly due to warming seas.' },
+      { type: 'fact', body: '🪸 India\'s Lakshadweep coral reefs are among the most biodiverse in the world, but are bleaching rapidly due to warming seas.' },
+      { type: 'text', body: 'Overfishing threatens marine food webs. Sustainable fishing practices and marine protected areas (MPAs) are essential to allow fish populations to recover.' },
+      { type: 'text', body: 'Reducing your single-use plastic consumption directly helps protect marine life from ingestion and entanglement.' }
     ],
   },
   {
@@ -332,7 +349,6 @@ export const LESSONS = [
     icon: '👣',
     category: 'Climate',
     difficulty: 'Intermediate',
-    duration: '11 min',
     points: 60,
     color: '#f97316',
     content: [
@@ -340,6 +356,8 @@ export const LESSONS = [
       { type: 'fact', body: '✈️ A single long-haul flight generates more CO₂ than a month of daily car commuting. Flying less is one of the highest-impact choices you can make.' },
       { type: 'text', body: 'The average Indian emits ~1.9 tonnes of CO₂ per year — far below the global average of 4.7, but cities like Delhi and Mumbai are rising fast.' },
       { type: 'fact', body: '🥩 Switching from beef to plant-based protein for one year saves more CO₂ than giving up your car for the same period.' },
+      { type: 'text', body: 'Buying second-hand clothes or wearing clothes longer reduces the massive carbon footprint of the "fast fashion" industry.' },
+      { type: 'text', body: 'Small lifestyle changes, aggregated over millions of people, can lead to massive global reductions in greenhouse gas emissions.' }
     ],
   },
   {
@@ -348,7 +366,6 @@ export const LESSONS = [
     icon: '🧴',
     category: 'Waste',
     difficulty: 'Beginner',
-    duration: '9 min',
     points: 50,
     color: '#ec4899',
     content: [
@@ -356,6 +373,8 @@ export const LESSONS = [
       { type: 'fact', body: '🧴 India banned single-use plastics in 2022, targeting straws, cutlery, plates, cups, and packaging below 75 microns.' },
       { type: 'text', body: 'Microplastics — particles smaller than 5mm — are now found in human blood, lungs, and even breast milk. Reducing plastic use protects your health, not just the environment.' },
       { type: 'fact', body: '♻️ Only 9% of all plastic ever made has been recycled. 12% has been incinerated. The other 79% is in landfills or the environment.' },
+      { type: 'text', body: 'Carrying a reusable water bottle and shopping bags are the easiest and most effective ways to break our reliance on single-use plastics.' },
+      { type: 'text', body: 'Many plastics take over 400 years to degrade, meaning almost every piece of plastic ever created still exists in some form today.' }
     ],
   },
   {
@@ -364,7 +383,6 @@ export const LESSONS = [
     icon: '🪱',
     category: 'Food',
     difficulty: 'Intermediate',
-    duration: '13 min',
     points: 65,
     color: '#92400e',
     content: [
@@ -372,6 +390,8 @@ export const LESSONS = [
       { type: 'fact', body: '⚠️ India loses approximately 5.3 billion tonnes of topsoil annually to erosion caused by overfarming, deforestation, and poor land management.' },
       { type: 'text', body: 'Healthy soil sequesters carbon, filters water, and grows food. Composting kitchen waste, avoiding chemical fertilizers, and practicing crop rotation all help restore soil health.' },
       { type: 'fact', body: '🌱 Cover cropping — growing plants specifically to improve soil — can increase organic matter by 1-2% over five years, dramatically improving fertility.' },
+      { type: 'text', body: 'Healthy soils act like a sponge, absorbing rainfall and preventing severe flooding, while storing water for deeper roots during droughts.' },
+      { type: 'text', body: 'Home composting transforms your kitchen scraps into rich fertilizer for pots and gardens, directly returning life-giving nutrients to the earth.' }
     ],
   },
   {
@@ -380,7 +400,6 @@ export const LESSONS = [
     icon: '🏙️',
     category: 'Energy',
     difficulty: 'Advanced',
-    duration: '15 min',
     points: 75,
     color: '#10b981',
     content: [
@@ -388,6 +407,8 @@ export const LESSONS = [
       { type: 'fact', body: '🚇 A single metro train replaces ~600 cars on the road. Mumbai Metro reduces 250,000 tonnes of CO₂ annually.' },
       { type: 'text', body: 'Green building principles: natural ventilation, solar panels on rooftops, rainwater harvesting, green roofs, and passive cooling reduce energy demand by 30-70%.' },
       { type: 'fact', body: '🌳 Urban forests (miyawaki forests) grow 10× faster than natural forests and are 30× denser — perfect for Indian cities with limited land.' },
+      { type: 'text', body: 'Walkable neighborhoods and dedicated cycling lanes reduce reliance on fossil fuels and foster healthier, more connected communities.' },
+      { type: 'text', body: 'Urban heat islands occur when concrete buildings absorb the sun\'s heat. Planting trees and creating green spaces drastically cool down neighborhoods naturally.' }
     ],
   },
   {
@@ -396,7 +417,6 @@ export const LESSONS = [
     icon: '🎯',
     category: 'Climate',
     difficulty: 'Advanced',
-    duration: '15 min',
     points: 80,
     color: '#6366f1',
     content: [
@@ -405,8 +425,94 @@ export const LESSONS = [
       { type: 'text', body: 'Individual and community action matters: carbon offsetting, advocacy, lifestyle changes, and supporting climate-conscious businesses all contribute to SDG 13.' },
       { type: 'fact', body: '🌏 The Paris Agreement targets limiting global warming to 1.5°C. Every 0.1°C above this threshold means millions more people exposed to extreme heat and flooding.' },
       { type: 'text', body: 'Youth climate movements like Fridays for Future have directly influenced national policies. You have the power to drive change through awareness and action.' },
+      { type: 'text', body: 'Climate justice is a core principle of SDG 13, recognizing that the most vulnerable communities often suffer the worst impacts of climate change while contributing the least to it.' }
     ],
   },
+  {
+    id: 'energy-conservation',
+    title: 'Energy Conservation at Home',
+    icon: '🔌',
+    category: 'Energy',
+    difficulty: 'Beginner',
+    points: 50,
+    color: '#eab308',
+    content: [
+      { type: 'text', body: 'Energy conservation means using less energy by adjusting our behaviors and habits. It saves money and reduces the strain on power grids.' },
+      { type: 'fact', body: '🔌 Vampire power (devices on standby) can account for up to 10% of an average home\'s electricity use.' },
+      { type: 'text', body: 'Simple changes like using natural light, washing clothes in cold water, and turning off fans when leaving a room make a huge difference.' },
+      { type: 'fact', body: '🧑‍🍳 Keeping a lid on cooking pots can reduce cooking energy by up to 14%, and using pressure cookers saves even more.' },
+      { type: 'text', body: 'Setting the AC temperature slightly higher (at 24°C or 25°C) instead of 18°C can lower cooling energy consumption by over 20%.' },
+      { type: 'text', body: 'Smart power strips can automatically cut off connection to devices that are in standby mode, eliminating vampire power draw effortlessly.' }
+    ],
+  },
+  {
+    id: 'circular-economy',
+    title: 'The Circular Economy',
+    icon: '🔁',
+    category: 'Waste',
+    difficulty: 'Intermediate',
+    points: 60,
+    color: '#14b8a6',
+    content: [
+      { type: 'text', body: 'Our current economy is mostly linear: "take, make, dispose". A circular economy designs out waste, keeps materials in use, and regenerates natural systems.' },
+      { type: 'fact', body: '📱 Electronic waste is the fastest-growing waste stream globally, but 70% of the toxic chemicals in landfills come from it.' },
+      { type: 'text', body: 'By repairing, refurbishing, and recycling products, we drastically reduce the need to extract new raw materials from the earth.' },
+      { type: 'fact', body: '👗 The fashion industry produces 10% of all humanity\'s carbon emissions and is the second-largest consumer of the world\'s water supply.' },
+      { type: 'text', body: 'Embracing "Product-as-a-Service" models—like renting tools or clothing instead of buying them—significantly advances the circular economy model.' },
+      { type: 'text', body: 'Extended Producer Responsibility (EPR) holds manufacturers accountable for the entire lifecycle of their products, ensuring correct disposal and recycling.' }
+    ],
+  },
+  {
+    id: 'environmental-policy',
+    title: 'Environmental Policy & Law',
+    icon: '⚖️',
+    category: 'Ecology',
+    difficulty: 'Advanced',
+    points: 70,
+    color: '#4f46e5',
+    content: [
+      { type: 'text', body: 'While individual actions matter, systemic change is driven by strong environmental policies, international treaties, and climate justice laws.' },
+      { type: 'fact', body: '📜 The Montreal Protocol successfully phased out 99% of ozone-depleting chemicals, showing that global policy cooperation works.' },
+      { type: 'text', body: 'Understanding policy helps you vote efficiently and advocate for laws that hold large polluters accountable and protect vulnerable communities.' },
+      { type: 'fact', body: '🏦 A rising trend is imposing "Carbon Taxes", which charge major industrial emitters a fee for the carbon they release, pushing them to innovate cleaner methods.' },
+      { type: 'text', body: 'International agreements like the UN Convention on Biological Diversity set global targets to protect at least 30% of land and seas by 2030.' },
+      { type: 'text', body: 'Public consultations and activism play crucial roles in shaping environmental impact assessments (EIA) for large infrastructure projects in India.' }
+    ],
+  },
+  {
+    id: 'climate-technology',
+    title: 'Future Climate Tech',
+    icon: '🔬',
+    category: 'Energy',
+    difficulty: 'Advanced',
+    points: 75,
+    color: '#06b6d4',
+    content: [
+      { type: 'text', body: 'New technologies are emerging to tackle the climate crisis, from Direct Air Capture (DAC) of CO₂ to lab-grown meat and next-gen solid-state batteries.' },
+      { type: 'fact', body: '💨 Decarbonizing heavy industries like steel and cement could require green hydrogen, a technology still scaling up globally.' },
+      { type: 'text', body: 'While tech won\'t solve everything without reducing consumption, it will play a critical role in reaching net-zero emissions by 2050.' },
+      { type: 'fact', body: '🛰️ Satellites powered by AI are now used to track illegal deforestation and monitor specific methane leak points in real-time from space.' },
+      { type: 'text', body: 'Precision agriculture utilizes drones and sensors to deliver exactly the required water and nutrients to crops, minimizing waste and chemical use.' },
+      { type: 'text', body: 'Solid-state batteries are the next frontier for electric vehicles—promising longer ranges, faster charging, and lower risks of fire than current lithium-ion models.' }
+    ],
+  },
+  {
+    id: 'sustainable-finance',
+    title: 'Sustainable Finance',
+    icon: '📈',
+    category: 'Climate',
+    difficulty: 'Advanced',
+    points: 70,
+    color: '#059669',
+    content: [
+      { type: 'text', body: 'Money drives the global economy. Sustainable finance (ESG investing) directs capital toward projects that benefit the environment rather than fossil fuels.' },
+      { type: 'fact', body: '🏦 Since the Paris Agreement, the world\'s 60 largest banks have still poured over $5.5 trillion into fossil fuel projects.' },
+      { type: 'text', body: 'By choosing green banks, divesting pension funds from oil, and supporting carbon pricing markets, the financial sector can accelerate the green transition.' },
+      { type: 'fact', body: '💵 The global market for "Green Bonds"—debt designed to fund climate-related projects—surpassed $2.5 trillion in total issuance by 2023.' },
+      { type: 'text', body: 'Environmental, Social, and Governance (ESG) criteria are increasingly used by investors to screen companies based on their ecological impact and transparency.' },
+      { type: 'text', body: 'Microfinance initiatives often provide zero-interest loans to rural households to help them install residential solar panels, merging financial inclusion with sustainability.' }
+    ],
+  }
 ];
 
 // ── Quiz Content ───────────────────────────────────
@@ -515,6 +621,61 @@ export const QUIZZES = [
       { q: 'What is India\'s current renewable energy capacity (2024)?', options: ['50 GW', '100 GW', '170 GW', '300 GW'], answer: 2 },
       { q: 'LED bulbs use how much less energy than incandescent bulbs?', options: ['25%', '50%', '75%', '90%'], answer: 2 },
       { q: 'What is India\'s global rank in renewable energy capacity?', options: ['1st', '2nd', '4th', '7th'], answer: 2 },
+    ],
+  },
+  {
+    id: 'quiz-energy-conservation',
+    title: 'Energy Conservation Quiz',
+    icon: '🔌',
+    lessonId: 'energy-conservation',
+    questions: [
+      { q: 'What is "vampire power"?', options: ['Solar energy', 'Devices using power on standby', 'Nighttime energy use', 'Energy from batteries'], answer: 1 },
+      { q: 'How much of an average home\'s electricity use can standby power account for?', options: ['1%', '5%', '10%', '25%'], answer: 2 },
+      { q: 'Which is an energy conservation practice?', options: ['Leaving lights on', 'Washing clothes in hot water', 'Washing clothes in cold water', 'Keeping the fridge open'], answer: 2 },
+    ],
+  },
+  {
+    id: 'quiz-circular-economy',
+    title: 'Circular Economy Quiz',
+    icon: '🔁',
+    lessonId: 'circular-economy',
+    questions: [
+      { q: 'What describes a linear economy?', options: ['Take, make, dispose', 'Reduce, reuse, recycle', 'Design out waste', 'Regenerate nature'], answer: 0 },
+      { q: 'What is the fastest-growing waste stream globally?', options: ['Plastic bags', 'Food waste', 'Electronic waste', 'Glass bottles'], answer: 2 },
+      { q: 'What does a circular economy aim to do?', options: ['Extract more raw materials', 'Keep materials in use', 'Burn waste for fuel', 'Increase landfill size'], answer: 1 },
+    ],
+  },
+  {
+    id: 'quiz-policy',
+    title: 'Environmental Policy Quiz',
+    icon: '⚖️',
+    lessonId: 'environmental-policy',
+    questions: [
+      { q: 'What did the Montreal Protocol successfully phase out?', options: ['Fossil fuels', 'Single-use plastics', 'Ozone-depleting chemicals', 'Pesticides'], answer: 2 },
+      { q: 'What is the main driver of systemic environmental change?', options: ['Recycling at home', 'Strong environmental policies', 'Planting single trees', 'Using less water'], answer: 1 },
+      { q: 'Why is understanding policy important?', options: ['To build solar panels', 'To advocate for laws that hold polluters accountable', 'To learn how to compost', 'To measure your carbon footprint'], answer: 1 },
+    ],
+  },
+  {
+    id: 'quiz-climate-tech',
+    title: 'Climate Tech Quiz',
+    icon: '🔬',
+    lessonId: 'climate-technology',
+    questions: [
+      { q: 'What does DAC stand for in climate technology?', options: ['Direct Air Capture', 'Digital Action Climate', 'Dual Air Conditioning', 'Direct Atmospheric Control'], answer: 0 },
+      { q: 'Which fuel is seen as key for decarbonizing heavy industries like steel?', options: ['Natural gas', 'Green hydrogen', 'Coal', 'Diesel'], answer: 1 },
+      { q: 'Can technology alone solve the climate crisis?', options: ['Yes', 'No, it requires reducing consumption too', 'Yes, if we build enough solar', 'Yes, with AI'], answer: 1 },
+    ],
+  },
+  {
+    id: 'quiz-finance',
+    title: 'Sustainable Finance Quiz',
+    icon: '📈',
+    lessonId: 'sustainable-finance',
+    questions: [
+      { q: 'What does ESG stand for?', options: ['Energy, Solar, Green', 'Environmental, Social, Governance', 'Earth, Sustainability, Growth', 'Ecological Savings Group'], answer: 1 },
+      { q: 'How much have the top 60 banks invested in fossil fuels since the Paris Agreement?', options: ['$100 billion', '$1 trillion', '$5.5 trillion', '$10 trillion'], answer: 2 },
+      { q: 'How can the financial sector accelerate the green transition?', options: ['By printing more money', 'By directing capital toward green projects', 'By investing in coal', 'By closing all banks'], answer: 1 },
     ],
   },
 ];

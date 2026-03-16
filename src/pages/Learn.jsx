@@ -24,7 +24,6 @@ function LessonModal({ lesson, user, onClose, onComplete }) {
             <div className="lm-category" style={{ color: lesson.color }}>{lesson.category}</div>
             <h2 className="lm-title">{lesson.title}</h2>
             <div className="lm-meta">
-              <span>⏱️ {lesson.duration}</span>
               <span>⚡ +{lesson.points} pts</span>
               <span className={`difficulty-chip diff-${lesson.difficulty.toLowerCase()}`}>{lesson.difficulty}</span>
             </div>
@@ -117,7 +116,6 @@ export default function Learn({ user, onUpdate }) {
                 <h3 className="lc-title">{l.title}</h3>
                 <p className="lc-category">{l.category}</p>
                 <div className="lc-meta">
-                  <span>⏱️ {l.duration}</span>
                   <span style={{ color: l.color }}>⚡ +{l.points} pts</span>
                 </div>
                 <div className="lc-bar">

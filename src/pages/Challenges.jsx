@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CHALLENGES } from '../store';
 import { fbCompleteChallenge } from '../firestore';
 import Confetti from '../components/Confetti';
+import PlantVerificationModal from '../components/PlantVerificationModal';
 import './Challenges.css';
 
 const DIFF_COLORS = { Easy: '#34d364', Medium: '#f59e0b', Hard: '#ef4444' };
@@ -12,6 +13,7 @@ export default function Challenges({ user, onUpdate }) {
   const [completing, setCompleting] = useState(null);
   const [toast, setToast] = useState(null);
   const [confetti, setConfetti] = useState(false);
+  const [verifyingChallenge, setVerifyingChallenge] = useState(null);
 
   const categories = ['All', 'Nature', 'Waste', 'Energy', 'Water'];
 
@@ -22,11 +24,30 @@ export default function Challenges({ user, onUpdate }) {
 
   const handleComplete = async (challenge) => {
     if (user?.completedChallenges?.includes(challenge.id)) return;
+    
+    if (challenge.id === 'plant-tree') {
+      setVerifyingChallenge(challenge);
+      return;
+    }
+
     setCompleting(challenge.id);
     
     // Small delay for UI animation feedback
     await new Promise(res => setTimeout(res, 800));
     
+    await fbCompleteChallenge(user.uid, challenge.id, challenge.points);
+    onUpdate?.();
+    setCompleting(null);
+    setConfetti(true);
+    showToast(`✅ +${challenge.points} EcoPoints earned! 🌱`);
+  };
+
+  const handleVerificationSuccess = async () => {
+    const challenge = verifyingChallenge;
+    if (!challenge) return;
+    
+    setVerifyingChallenge(null);
+    setCompleting(challenge.id);
     await fbCompleteChallenge(user.uid, challenge.id, challenge.points);
     onUpdate?.();
     setCompleting(null);
@@ -40,6 +61,13 @@ export default function Challenges({ user, onUpdate }) {
   return (
     <div className="challenges-page page">
       <Confetti active={confetti} onDone={() => setConfetti(false)} />
+      
+      <PlantVerificationModal 
+        isOpen={!!verifyingChallenge}
+        onClose={() => setVerifyingChallenge(null)}
+        onVerify={handleVerificationSuccess}
+      />
+
       <div className="section">
         <div className="page-header">
           <h1 className="page-title">🎯 Eco Challenges</h1>
