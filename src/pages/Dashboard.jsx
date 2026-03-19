@@ -9,6 +9,7 @@ import {
 } from 'chart.js';
 import { LESSONS, CHALLENGES, ALL_BADGES, QUIZZES } from '../store';
 import OnboardingModal from '../components/OnboardingModal';
+import EcoScan from '../components/EcoScan';
 import Confetti from '../components/Confetti';
 import './Dashboard.css';
 
@@ -171,6 +172,7 @@ function RecentBadge({ badgeId }) {
 
 export default function Dashboard({ user, onUpdate }) {
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showScan, setShowScan] = useState(false);
   const [confetti, setConfetti] = useState(false);
 
   // Show onboarding for new users
@@ -245,6 +247,7 @@ export default function Dashboard({ user, onUpdate }) {
       animate={{ opacity: 1 }}
     >
       {showOnboarding && <OnboardingModal onClose={handleOnboardingClose} />}
+      {showScan && <EcoScan user={user} onClose={() => setShowScan(false)} onUpdate={refreshUser} />}
       <Confetti active={confetti} onDone={() => setConfetti(false)} />
 
       <div className="section">
@@ -264,9 +267,9 @@ export default function Dashboard({ user, onUpdate }) {
             </div>
           </div>
           <div className="welcome-right">
-            <div className="welcome-level-badge">
-              {user?.ecoPoints >= 1000 ? '🌍 Planet Saver' : user?.ecoPoints >= 500 ? '⚔️ Eco Warrior' : '🌱 Eco Seedling'}
-            </div>
+            <button className="btn-primary scan-cta-btn" onClick={() => setShowScan(true)} id="dash-scan-btn">
+              📸 Scan Eco-Station
+            </button>
             <Link to="/calculator" className="btn-outline calc-cta-btn" id="dash-calc-btn">
               🌍 Carbon Calculator
             </Link>

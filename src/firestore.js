@@ -35,6 +35,7 @@ export async function fbRegister({ name, email, password, school, grade }) {
     completedQuizzes:    [],
     badges:              [],
     weeklyPoints:        [0, 0, 0, 0, 0, 0, 0],
+    ecoStations:         [],
   };
   await setDoc(doc(db, 'users', uid), userData);
   return userData;
@@ -152,6 +153,19 @@ export async function fbCompleteQuiz(uid, quizId, score, total) {
     completedQuizzes: arrayUnion({ quizId, score: validScore, total }),
   });
   await fbAddEcoPoints(uid, points);
+}
+
+// ── Eco-Stations (QR) ──────────────────────────────────────────
+
+export async function fbScanEcoStation(uid, stationId, points = 100) {
+  const user = await fbGetUser(uid);
+  if (!user) return [];
+  if (user.ecoStations?.includes(stationId)) return []; // Already scanned
+  
+  await updateDoc(doc(db, 'users', uid), {
+    ecoStations: arrayUnion(stationId),
+  });
+  return fbAddEcoPoints(uid, points);
 }
 
 // ── Badges ────────────────────────────────────────────────────

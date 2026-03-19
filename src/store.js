@@ -152,6 +152,7 @@ export const ALL_BADGES = [
   { id: 'eco_champion',   icon: '\uD83E\uDD8D', name: 'Eco Champion',     desc: 'Earn 2500 EcoPoints',                      color: '#adff2f', condition: u => u.ecoPoints >= 2500 },
   { id: 'eco_master',     icon: '🎓', name: 'Eco Master',       desc: 'Complete 15 lessons',                      color: '#f43f5e', condition: u => u.completedLessons?.length >= 15 },
   { id: 'quiz_legend',    icon: '👑', name: 'Quiz Legend',      desc: 'Complete 10 quizzes',                      color: '#eab308', condition: u => u.completedQuizzes?.length >= 10 },
+  { id: 'eco_explorer',   icon: '📍', name: 'Eco Explorer',    desc: 'Scan your first Eco-Station QR',           color: '#0ea5e9', condition: u => u.ecoStations?.length >= 1 },
 ];
 
 export function checkAndAwardBadges(user) {

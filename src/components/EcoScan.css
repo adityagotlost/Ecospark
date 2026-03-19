@@ -1,0 +1,197 @@
+/* Eco-Station Scanner Styling */
+/* ================================================ */
+
+.ecoscan-modal {
+  width: 380px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.ecoscan-header {
+  margin-bottom: 2rem;
+}
+
+.ecoscan-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.ecoscan-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.ecoscan-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* Scanner View */
+.scanner-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.scanner-frame {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 255, 100, 0.05);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(173, 255, 47, 0.1);
+}
+
+.scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--color-primary);
+  box-shadow: 0 0 15px var(--color-primary);
+  animation: scanner-move 2.5s infinite ease-in-out;
+  z-index: 5;
+}
+
+@keyframes scanner-move {
+  0%, 100% { top: 0%; transform: scaleX(1); }
+  50% { top: 100%; transform: scaleX(0.8); }
+}
+
+.scanner-corners .corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--color-primary);
+  border-style: solid;
+  border-width: 0;
+}
+
+.corner.tl { top: 1rem; left: 1rem; border-top-width: 3px; border-left-width: 3px; }
+.corner.tr { top: 1rem; right: 1rem; border-top-width: 3px; border-right-width: 3px; }
+.corner.bl { bottom: 1rem; left: 1rem; border-bottom-width: 3px; border-left-width: 3px; }
+.corner.br { bottom: 1rem; right: 1rem; border-bottom-width: 3px; border-right-width: 3px; }
+
+.scanner-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.scanner-hint {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(173, 255, 47, 0.6);
+  animation: pulse-glow 2s infinite;
+}
+
+.scanner-status {
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.scanner-tip {
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+  font-style: italic;
+}
+
+/* Manual Input */
+.ecoscan-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.scan-btn {
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.divider span {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--color-text-faint);
+  letter-spacing: 2px;
+}
+
+.manual-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.code-input {
+  text-align: center;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.6rem 1rem !important;
+}
+
+.ecoscan-error {
+  font-size: 0.8rem;
+  color: var(--color-warn);
+  font-weight: 600;
+  background: rgba(255, 179, 71, 0.1);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+/* Success State */
+.ecoscan-success {
+  padding: 1rem 0;
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: partyPop 0.5s var(--ease-bounce) both;
+}
+
+.success-badge {
+  margin-top: 1.5rem;
+  background: var(--gradient-primary);
+  color: #000;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: var(--glow-primary);
+}
+
+@keyframes partyPop {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
