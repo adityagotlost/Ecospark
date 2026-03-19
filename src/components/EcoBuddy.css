@@ -1,0 +1,320 @@
+/* Eco-Buddy Styling */
+/* ================================================ */
+
+.ecobuddy-root {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+}
+
+/* Chat Layout */
+/* ================================================ */
+
+.ecobuddy-chat {
+  position: absolute;
+  bottom: 5rem;
+  right: 0;
+  width: 320px;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.4);
+  transform-origin: bottom right;
+  animation: chat-pop-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: rgba(15, 25, 20, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(52, 211, 100, 0.2) !important;
+  border-radius: 1.5rem !important;
+}
+
+@keyframes chat-pop-up {
+  from { opacity: 0; transform: scale(0.8) translateY(2rem); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Chat Header */
+.chat-header {
+  padding: 1.25rem;
+  background: rgba(52, 211, 100, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-bot-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bot-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(52, 211, 100, 0.3);
+}
+
+.bot-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.bot-status {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bot-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--color-primary);
+}
+
+.chat-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chat-close:hover {
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* Chat Messages */
+.chat-messages {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  scroll-behavior: smooth;
+}
+
+.msg-bubble {
+  max-width: 85%;
+  padding: 0.8rem 1rem;
+  border-radius: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.msg-bubble.buddy {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eee;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.msg-bubble.user {
+  align-self: flex-end;
+  background: var(--gradient-primary);
+  color: #000;
+  font-weight: 500;
+  border-bottom-right-radius: 0.25rem;
+  box-shadow: 0 4px 12px rgba(52, 211, 100, 0.2);
+}
+
+/* Typing Indicator */
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 0.8rem 1rem !important;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: typing-blink 1.4s infinite ease-in-out;
+}
+
+@keyframes typing-blink {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.6); opacity: 0.3; }
+}
+
+ .dot:nth-child(2) { animation-delay: 0.2s; }
+ .dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Chat Input Area */
+.chat-input-area {
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-input-area input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  padding: 0.6rem 1.2rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.chat-input-area input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(52, 211, 100, 0.1);
+}
+
+.chat-send {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #000;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chat-send:hover:not(:disabled) {
+  transform: scale(1.1) rotate(-10deg);
+  background: #34d364;
+}
+
+.chat-send:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+/* Mascot FAB */
+/* ================================================ */
+
+.ecobuddy-fab {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(15, 25, 20, 0.9);
+  border: 2px solid rgba(52, 211, 100, 0.4);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+}
+
+.ecobuddy-fab:hover {
+  transform: translateY(-0.5rem) scale(1.05);
+  border-color: var(--color-primary);
+  box-shadow: 0 1rem 2rem rgba(52, 211, 100, 0.2);
+}
+
+.ecobuddy-fab.is-open {
+  transform: rotate(360deg);
+  background: var(--color-primary);
+  border-color: #fff;
+}
+
+.mascot-sprite {
+  font-size: 2.2rem;
+  z-index: 2;
+  filter: drop-shadow(0 0.25rem 0.5rem rgba(0,0,0,0.3));
+  animation: float-mascot 3s ease-in-out infinite;
+}
+
+.mascot-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 50%;
+  filter: blur(12px);
+  opacity: 0.2;
+  transition: all 1s;
+}
+
+.ecobuddy-fab:hover .mascot-aura {
+  opacity: 0.4;
+  width: 120%;
+  height: 120%;
+}
+
+@keyframes float-mascot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.4rem); }
+}
+
+.fab-tooltip {
+  position: absolute;
+  right: 120%;
+  background: var(--color-primary);
+  color: #000;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(1rem);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+}
+
+.ecobuddy-fab:hover .fab-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fab-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: var(--color-primary);
+}
+
+/* Custom Scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 5px;
+}
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

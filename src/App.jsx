@@ -15,6 +15,7 @@ import Badges from './pages/Badges';
 import Profile from './pages/Profile';
 import Calculator from './pages/Calculator';
 import BadgeUnlockModal from './components/BadgeUnlockModal';
+import EcoBuddy from './components/EcoBuddy';
 import { ALL_BADGES } from './store';
 
 function ProtectedRoute({ user, loading, children }) {
@@ -90,6 +91,7 @@ export default function App() {
           />
         )}
       </AnimatePresence>
+      <EcoBuddy />
       <Routes>
         <Route path="/"            element={<Landing user={user} />} />
         <Route path="/auth"        element={user && !loading ? <Navigate to="/dashboard" replace /> : <Auth onAuth={refreshUser} />} />
