@@ -17,7 +17,7 @@ const ACTIVITIES = [
     color: '#f59e0b',
     items: [
       { id: 'electricity',  label: 'Electricity used per month',  unit: 'kWh',  co2Factor: 0.82,  tip: 'Switch to LED bulbs and solar energy!' },
-      { id: 'lpg',          label: 'LPG cylinders per month',     unit: 'cylinders', co2Factor: 11.6, tip: 'Use energy-efficient cookware.' },
+      { id: 'lpg',          label: 'LPG cylinders per month',     unit: 'cylinders', co2Factor: 42.3, tip: 'Use energy-efficient cookware.' },
     ],
   },
   {
@@ -25,7 +25,7 @@ const ACTIVITIES = [
     color: '#22c55e',
     items: [
       { id: 'meat',         label: 'Meat meals per week',         unit: 'meals',co2Factor: 6.6,   tip: 'One meatless day/week = 330 kg CO₂/year less.' },
-      { id: 'dairy',        label: 'Dairy servings per day',      unit: 'servings', co2Factor: 3.2, tip: 'Plant-based alternatives have lower footprint.' },
+      { id: 'dairy',        label: 'Dairy servings per day',      unit: 'servings', co2Factor: 0.6, tip: 'Plant-based alternatives have lower footprint.' },
     ],
   },
   {
@@ -61,7 +61,7 @@ export default function Calculator({ user, onUpdate }) {
     ACTIVITIES.forEach(cat => {
       cat.items.forEach(item => {
         const v = values[item.id] || 0;
-        const isYearly = item.unit === 'hours' || item.unit === 'cylinders' && false;
+        const isYearly = item.unit === 'hours';
         const multiplier = item.unit === 'km' ? 365
           : item.unit === 'meals' ? 52
           : item.unit === 'servings' ? 365
