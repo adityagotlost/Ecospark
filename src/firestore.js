@@ -146,9 +146,10 @@ export async function fbCompleteChallenge(uid, challengeId, points = 100) {
 // ── Quizzes ───────────────────────────────────────────────────
 
 export async function fbCompleteQuiz(uid, quizId, score, total) {
-  const points = Math.round((score / total) * 80);
+  const validScore = Math.min(score, total);
+  const points = Math.round((validScore / total) * 80);
   await updateDoc(doc(db, 'users', uid), {
-    completedQuizzes: arrayUnion({ quizId, score, total }),
+    completedQuizzes: arrayUnion({ quizId, score: validScore, total }),
   });
   await fbAddEcoPoints(uid, points);
 }

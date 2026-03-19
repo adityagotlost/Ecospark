@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { QUIZZES } from '../store';
 import { fbCompleteQuiz } from '../firestore';
 import './Quizzes.css';
@@ -10,11 +10,18 @@ function QuizModal({ quiz, user, onClose, onComplete }) {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [answers, setAnswers] = useState([]);
+  const hasAnsweredRef = useRef(false);
+
+  // Reset ref when question changes
+  if (hasAnsweredRef.current && !answered) {
+    hasAnsweredRef.current = false;
+  }
 
   const q = quiz.questions[current];
 
   const handleSelect = (idx) => {
-    if (answered) return;
+    if (answered || hasAnsweredRef.current) return;
+    hasAnsweredRef.current = true;
     setSelected(idx);
     setAnswered(true);
     const correct = idx === q.answer;
@@ -29,12 +36,14 @@ function QuizModal({ quiz, user, onClose, onComplete }) {
       setAnswered(false);
     } else {
       setFinished(true);
-      await fbCompleteQuiz(user.uid, quiz.id, score + (selected === q.answer ? 1 : 0), quiz.questions.length);
+      // Ensure score never exceeds total questions
+      const validatedScore = Math.min(score, quiz.questions.length);
+      await fbCompleteQuiz(user.uid, quiz.id, validatedScore, quiz.questions.length);
       onComplete();
     }
   };
 
-  const finalScore = score + (selected === q.answer ? 1 : 0);
+  const finalScore = Math.min(score, quiz.questions.length);
   const pct = Math.round((finalScore / quiz.questions.length) * 100);
 
   if (finished) {
