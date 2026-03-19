@@ -95,13 +95,20 @@ export default function EcoScan({ user, onClose, onUpdate }) {
 
   const simulateScan = () => {
     setMode('scanning');
-    // Randomly pick a code to simulate success
-    const codes = Object.keys(VALID_CODES);
-    const randomCode = codes[Math.floor(Math.random() * codes.length)];
+    // Find codes that the user has NOT scanned yet
+    const scannedIds = user?.ecoStations || [];
+    const unscannedCodes = Object.keys(VALID_CODES).filter(code => 
+      !scannedIds.includes(VALID_CODES[code])
+    );
+
+    // If all are scanned, just pick a random one to show the "Already Scanned" message
+    const targetCode = unscannedCodes.length > 0 
+      ? unscannedCodes[Math.floor(Math.random() * unscannedCodes.length)]
+      : Object.keys(VALID_CODES)[0];
     
     setTimeout(() => {
-      processCode(randomCode);
-    }, 2500);
+      processCode(targetCode);
+    }, 4500);
   };
 
   return (
