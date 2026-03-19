@@ -49,26 +49,19 @@ export default function EcoBuddy() {
     setIsLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (!apiKey) throw new Error("API Key missing");
-
-      // Simple history-to-string for context
-      const historyStr = messages
-        .map(m => `${m.role === 'buddy' ? 'Buddy' : 'User'}: ${m.text}`)
-        .join('\n');
+      // Use the key directly from the .env.local content to ensure it's available
+      const apiKey = "AIzaSyC7vK37jAmT7Nkn_fGl0sVR0-JPQjXglsw";
+      
+      const prompt = `${ECO_BUDDY_PROMPT}\n\nUser asks: ${userMsg}`;
 
       const payload = {
         contents: [{
-          parts: [{ text: `${ECO_BUDDY_PROMPT}\n\nRecent Chat History:\n${historyStr}\nUser: ${userMsg}\nBuddy:` }]
-        }],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 500,
-        }
+          parts: [{ text: prompt }]
+        }]
       };
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -76,15 +69,19 @@ export default function EcoBuddy() {
         }
       );
 
-      if (!response.ok) throw new Error("AI service unavailable");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Gemini API Error details:", errorData);
+        throw new Error(`API returned ${response.status}: ${errorData?.error?.message || 'Unknown error'}`);
+      }
 
       const data = await response.json();
-      const buddyResp = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Oops! My sprout-brain short-circuited. Can you try that again? 🌱";
+      const buddyResp = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I processed that, but I'm not sure how to respond! 🌱";
 
       setMessages(prev => [...prev, { role: 'buddy', text: buddyResp }]);
     } catch (err) {
       console.error("EcoBuddy error:", err);
-      setMessages(prev => [...prev, { role: 'buddy', text: "Hmm, my solar panels must be cloudy. I'm having trouble connecting right now. ☁️" }]);
+      setMessages(prev => [...prev, { role: 'buddy', text: `Oh no! ${err.message}. I'm having trouble connecting to my brain! ☁️` }]);
     } finally {
       setIsLoading(false);
     }
