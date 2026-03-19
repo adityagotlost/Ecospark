@@ -55,13 +55,21 @@ export default function EcoBuddy() {
       const prompt = `${ECO_BUDDY_PROMPT}\n\nUser asks: ${userMsg}`;
 
       const payload = {
-        contents: [{
-          parts: [{ text: prompt }]
-        }]
+        contents: [
+          {
+            parts: [
+              { text: `${ECO_BUDDY_PROMPT}\n\nUser asks: ${userMsg}` }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 1024,
+        }
       };
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
