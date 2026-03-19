@@ -21,14 +21,7 @@ export default function EcoScan({ user, onClose, onUpdate }) {
   useEffect(() => {
     if (mode === 'scanning') {
       startCamera();
-      const timer = setTimeout(() => {
-        // Auto-process for the demo after 4 seconds if they haven't manually clicked
-        const codes = Object.keys(VALID_CODES);
-        const randomCode = codes[Math.floor(Math.random() * codes.length)];
-        processCode(randomCode);
-      }, 4500);
       return () => {
-        clearTimeout(timer);
         stopCamera();
       };
     }
@@ -93,22 +86,22 @@ export default function EcoScan({ user, onClose, onUpdate }) {
     }
   };
 
-  const simulateScan = () => {
-    setMode('scanning');
+  const simulateScanResult = () => {
     // Find codes that the user has NOT scanned yet
     const scannedIds = user?.ecoStations || [];
     const unscannedCodes = Object.keys(VALID_CODES).filter(code => 
       !scannedIds.includes(VALID_CODES[code])
     );
 
-    // If all are scanned, just pick a random one to show the "Already Scanned" message
     const targetCode = unscannedCodes.length > 0 
       ? unscannedCodes[Math.floor(Math.random() * unscannedCodes.length)]
       : Object.keys(VALID_CODES)[0];
     
-    setTimeout(() => {
-      processCode(targetCode);
-    }, 4500);
+    processCode(targetCode);
+  };
+
+  const simulateScan = () => {
+    setMode('scanning');
   };
 
   return (
@@ -149,7 +142,10 @@ export default function EcoScan({ user, onClose, onUpdate }) {
               </div>
             </div>
             <div className="scanner-status">Searching for Code...</div>
-            <p className="scanner-tip">Tip: In this demo, we've simulated a scan for you!</p>
+            <button className="btn-primary simulate-found-btn" onClick={() => simulateScanResult()} disabled={isProcessing}>
+              {isProcessing ? 'Verifying...' : '⚡ Simulate Code Found'}
+            </button>
+            <p className="scanner-tip">Tip: In a real-world setup, this would happen automatically!</p>
           </div>
         ) : (
           <div className="ecoscan-content">
