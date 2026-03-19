@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { fbScanEcoStation } from '../firestore';
 import './EcoScan.css';
 
@@ -10,6 +10,8 @@ const VALID_CODES = {
 };
 
 export default function EcoScan({ user, onClose, onUpdate }) {
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
   const [mode, setMode] = useState('input'); // 'input' or 'scanning'
   const [code, setCode] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -18,12 +20,40 @@ export default function EcoScan({ user, onClose, onUpdate }) {
 
   useEffect(() => {
     if (mode === 'scanning') {
+      startCamera();
       const timer = setTimeout(() => {
-        // Auto-fail or wait for user to click "Simulate Scan"
-      }, 5000);
-      return () => clearTimeout(timer);
+        // Auto-process for the demo after 4 seconds if they haven't manually clicked
+        const codes = Object.keys(VALID_CODES);
+        const randomCode = codes[Math.floor(Math.random() * codes.length)];
+        processCode(randomCode);
+      }, 4500);
+      return () => {
+        clearTimeout(timer);
+        stopCamera();
+      };
     }
   }, [mode]);
+
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } 
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.error("Camera access denied:", err);
+      setError("📸 Camera access denied. You can still use the manual code above!");
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+    }
+  };
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();
@@ -95,6 +125,13 @@ export default function EcoScan({ user, onClose, onUpdate }) {
         ) : mode === 'scanning' ? (
           <div className="scanner-view">
             <div className="scanner-frame">
+              <video 
+                ref={videoRef} 
+                autoPlay 
+                playsInline 
+                muted 
+                className="scanner-video"
+              />
               <div className="scanner-line" />
               <div className="scanner-corners">
                 <div className="corner tl" /><div className="corner tr" />
