@@ -49,8 +49,8 @@ export default function EcoBuddy() {
     setIsLoading(true);
 
     try {
-      // Use the key directly from the .env.local content to ensure it's available
-      const apiKey = "AIzaSyC7vK37jAmT7Nkn_fGl0sVR0-JPQjXglsw";
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (!apiKey) throw new Error("Eco-Buddy API key is missing. Please check your configuration.");
       
       const prompt = `${ECO_BUDDY_PROMPT}\n\nUser asks: ${userMsg}`;
 
