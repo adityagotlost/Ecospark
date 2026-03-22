@@ -84,7 +84,7 @@ export default function PlantVerificationModal({ isOpen, onClose, onVerify }) {
       };
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -99,7 +99,7 @@ export default function PlantVerificationModal({ isOpen, onClose, onVerify }) {
       }
 
       const data = await response.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toUpperCase();
+      const text = data?.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim().toUpperCase();
       console.log('Gemini response:', text);
 
       if (text === 'TRUE') {

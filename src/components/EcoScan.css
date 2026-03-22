@@ -40,24 +40,24 @@
 
 .scanner-frame {
   position: relative;
-  width: 240px;
-  height: 240px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 255, 100, 0.05);
+  width: 100%;
+  max-width: 320px;
+  min-height: 250px;
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: inset 0 0 30px rgba(173, 255, 47, 0.1);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 20px rgba(173, 255, 47, 0.2);
 }
 
-.scanner-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.1); /* Slight zoom for that scope feel */
-  z-index: 1;
+#reader {
+  width: 100% !important;
+  border: none !important;
+}
+
+#reader video {
+  border-radius: 0.8rem;
+  object-fit: cover !important;
 }
 
 .scanner-line {

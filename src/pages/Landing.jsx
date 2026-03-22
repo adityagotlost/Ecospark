@@ -55,12 +55,10 @@ export default function Landing({ user }) {
           ))}
         </div>
         <div className="hero-content">
-          <div className="hero-badge anim-fade-up">
-            🌱 India's #1 Eco-Education Platform
-          </div>
-          <h1 className="hero-title anim-fade-up">
+          <span className="hero-badge anim-fade-in">🌱 INDIA'S #1 ECO-EDUCATION PLATFORM</span>
+          <h1 className="hero-title anim-title">
             Save the Planet.<br />
-            <span className="gradient-text">Earn Points. Level Up.</span>
+            <span className="text-gradient">Earn Points. Level Up.</span>
           </h1>
           <p className="hero-desc anim-fade-up">
             EcoSpark turns environmental education into an exciting game. 

@@ -44,15 +44,40 @@ export async function fbRegister({ name, email, password, school, grade }) {
 export async function fbLogin({ email, password }) {
   const cred = await signInWithEmailAndPassword(auth, email, password);
   const uid  = cred.user.uid;
-  const snap = await getDoc(doc(db, 'users', uid));
-  if (!snap.exists()) throw new Error('User data not found.');
+  let snap = await getDoc(doc(db, 'users', uid));
+
+  if (!snap.exists()) {
+    // Re-create user data if it was accidentally deleted
+    const userData = {
+      uid, 
+      email: cred.user.email,
+      name: cred.user.displayName || email.split('@')[0],
+      school: 'Eco High School', // default
+      grade: '10th', // default
+      avatar: (cred.user.displayName || email).charAt(0).toUpperCase(),
+      ecoPoints: 0,
+      streak: 1,
+      joinedAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+      completedLessons: [],
+      completedChallenges: [],
+      completedQuizzes: [],
+      badges: [],
+      weeklyPoints: [0, 0, 0, 0, 0, 0, 0],
+      ecoStations: [],
+    };
+    await setDoc(doc(db, 'users', uid), userData);
+    // Fetch it again to be safe
+    snap = await getDoc(doc(db, 'users', uid));
+  }
+
   const user = snap.data();
 
   // Streak logic
   const lastLogin  = new Date(user.lastLogin);
   const today      = new Date();
   const diffDays   = Math.floor((today - lastLogin) / 86400000);
-  const newStreak  = diffDays === 1 ? user.streak + 1 : diffDays > 1 ? 1 : user.streak;
+  const newStreak  = diffDays === 1 ? (user.streak || 0) + 1 : diffDays > 1 ? 1 : (user.streak || 1);
 
   await updateDoc(doc(db, 'users', uid), {
     lastLogin: today.toISOString(),

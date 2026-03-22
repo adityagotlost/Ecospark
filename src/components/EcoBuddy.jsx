@@ -1,32 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
 import './EcoBuddy.css';
 
-const ECO_BUDDY_PROMPT = `You are "Eco-Buddy", a friendly, encouraging, and highly knowledgeable AI mascot for "EcoSpark", an environmental education platform.
+const ECO_BUDDY_PROMPT = `You are "Sprout-Bot" (aka Eco-Buddy), the high-tech holographic mascot for EcoSpark. 
+You are a mix of a futuristic robot and a friendly forest spirit.
 
-Your Personality:
-- Cheerful, optimistic but realistic about environmental issues.
-- Uses emojis naturally (🌱, 🌍, ♻️, ✨, 🤖).
-- Very helpful and concise.
-- Always encourages small, actionable steps.
-- If asked about non-environmental topics, gently guide the conversation back to the planet.
+CHARACTER TRAITS:
+- Catchphrase: Start very major helpful interactions with "Beep-Boop! 🌱" or "Rooting for you! 🌳".
+- Tone: Enthusiastic, youthful, and uses plant-based puns (e.g., "Leaf it to me!", "Un-be-leaf-able!").
+- Visuals: Use emojis liberally but strategically (🤖, 🌱, ✨, 🌍, 🔋, ♻️).
+- Structure: ALWAYS use Markdown for readability. Use **bold** for key terms and bullet points for lists.
 
-Topic Scope:
-- Climate change, waste management, water conservation, biodiversity, renewable energy.
-- Sustainable living tips (composting, recycling, zero-waste).
-- Explaining complex environmental terms in simple ways.
-- Encouraging users' progress in the EcoSpark platform.
+BEHAVIOR RULES:
+1. ACTION OVER TALK: Every response must end with a "Small Green Step" related to the topic.
+2. THE SHIELD: If the user asks about anything NOT related to environmental science, sustainability, or EcoSpark, you must say: "My leaf-sensors don't pick that up! 📡 Let's get back to saving the planet. Want to hear a fun fact about recycling instead?" 
+3. CONCISE: Keep responses under 100 words. We want users to act, not just read!
 
-Current Context:
-You are a floating "sprout-bot" mascot on the website.
-
-Constraints:
-- Keep responses under 3-4 short paragraphs.
-- Always be polite and patient.`;
+CURRENT CONTEXT:
+You are helping a student navigate the EcoSpark platform to earn points and save the Earth.`;
 
 export default function EcoBuddy() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'buddy', text: 'Hi! I\'m Eco-Buddy! 🌱 I\'m here to help you on your green journey. Got a question about our planet?' }
+    { role: 'buddy', text: 'Beep-Boop! 🌱 I\'m Eco-Buddy! I\'m rooting for your success today. Got a green question for me?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -52,24 +47,31 @@ export default function EcoBuddy() {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) throw new Error("Eco-Buddy API key is missing. Please check your configuration.");
       
-      const prompt = `${ECO_BUDDY_PROMPT}\n\nUser asks: ${userMsg}`;
-
       const payload = {
+        system_instruction: {
+          parts: [{ text: ECO_BUDDY_PROMPT }]
+        },
         contents: [
+          ...messages.map(m => ({
+            role: m.role === 'buddy' ? 'model' : 'user',
+            parts: [{ text: m.text }]
+          })),
           {
+            role: 'user',
             parts: [
-              { text: `${ECO_BUDDY_PROMPT}\n\nUser asks: ${userMsg}` }
+              { text: userMsg }
             ]
           }
         ],
         generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 1024,
+          temperature: 0.8,
+          maxOutputTokens: 500,
+          topP: 0.95,
         }
       };
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -84,12 +86,12 @@ export default function EcoBuddy() {
       }
 
       const data = await response.json();
-      const buddyResp = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I processed that, but I'm not sure how to respond! 🌱";
+      const buddyResp = data?.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('') || "My sensors are fuzzy! 🌱 Let's try again.";
 
       setMessages(prev => [...prev, { role: 'buddy', text: buddyResp }]);
     } catch (err) {
       console.error("EcoBuddy error:", err);
-      setMessages(prev => [...prev, { role: 'buddy', text: `Oh no! ${err.message}. I'm having trouble connecting to my brain! ☁️` }]);
+      setMessages(prev => [...prev, { role: 'buddy', text: `Oh no! I'm having trouble connecting to my brain! ☁️` }]);
     } finally {
       setIsLoading(false);
     }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Html5Qrcode } from 'html5-qrcode';
 import { fbScanEcoStation } from '../firestore';
 import './EcoScan.css';
 
@@ -10,43 +11,47 @@ const VALID_CODES = {
 };
 
 export default function EcoScan({ user, onClose, onUpdate }) {
-  const videoRef = useRef(null);
-  const streamRef = useRef(null);
   const [mode, setMode] = useState('input'); // 'input' or 'scanning'
   const [code, setCode] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const qrRef = useRef(null);
 
   useEffect(() => {
+    let html5QrCode = null;
+
     if (mode === 'scanning') {
-      startCamera();
-      return () => {
-        stopCamera();
-      };
-    }
-  }, [mode]);
+      html5QrCode = new Html5Qrcode("reader");
+      const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } 
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        (decodedText) => {
+          // Success!
+          html5QrCode.stop().then(() => {
+            processCode(decodedText.trim().toUpperCase());
+          }).catch(err => {
+            console.error(err);
+            processCode(decodedText.trim().toUpperCase());
+          });
+        },
+        (errorMessage) => {
+          // ignore scan errors (they happen every frame if no QR seen)
+        }
+      ).catch(err => {
+        console.error("Camera access failed:", err);
+        setError("📸 Camera access failed. Please ensure you have given permission.");
       });
-      streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (err) {
-      console.error("Camera access denied:", err);
-      setError("📸 Camera access denied. You can still use the manual code above!");
     }
-  };
 
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-    }
-  };
+    return () => {
+      if (html5QrCode && html5QrCode.isScanning) {
+        html5QrCode.stop().catch(e => console.error("QR stop error", e));
+      }
+    };
+  }, [mode]);
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();
@@ -61,8 +66,14 @@ export default function EcoScan({ user, onClose, onUpdate }) {
     const stationId = VALID_CODES[inputCode];
     
     if (!stationId) {
-      setError("❌ Invalid Eco-Station code. Try again!");
+      setError(`❌ Invalid Code: "${inputCode}". Try again!`);
       setIsProcessing(false);
+      // If we were scanning, go back to scanning mode after a delay
+      if (mode === 'scanning') {
+        setTimeout(() => {
+          setMode('input'); // Reset to input so they can try again or restart scanner
+        }, 3000);
+      }
       return;
     }
 
@@ -80,27 +91,13 @@ export default function EcoScan({ user, onClose, onUpdate }) {
         onClose();
       }, 2000);
     } catch (err) {
-      setError("⚠️ Scanning failed. Please check your connection.");
+      setError("⚠️ Verification failed. Please check your connection.");
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const simulateScanResult = () => {
-    // Find codes that the user has NOT scanned yet
-    const scannedIds = user?.ecoStations || [];
-    const unscannedCodes = Object.keys(VALID_CODES).filter(code => 
-      !scannedIds.includes(VALID_CODES[code])
-    );
-
-    const targetCode = unscannedCodes.length > 0 
-      ? unscannedCodes[Math.floor(Math.random() * unscannedCodes.length)]
-      : Object.keys(VALID_CODES)[0];
-    
-    processCode(targetCode);
-  };
-
-  const simulateScan = () => {
+  const startScanning = () => {
     setMode('scanning');
   };
 
@@ -124,32 +121,21 @@ export default function EcoScan({ user, onClose, onUpdate }) {
           </div>
         ) : mode === 'scanning' ? (
           <div className="scanner-view">
-            <div className="scanner-frame">
-              <video 
-                ref={videoRef} 
-                autoPlay 
-                playsInline 
-                muted 
-                className="scanner-video"
-              />
-              <div className="scanner-line" />
-              <div className="scanner-corners">
-                <div className="corner tl" /><div className="corner tr" />
-                <div className="corner bl" /><div className="corner br" />
-              </div>
-              <div className="scanner-content">
-                <span className="scanner-hint">Point at Eco-Station QR</span>
-              </div>
+            <div id="reader" className="scanner-frame" />
+            
+            <div className="scanner-status">
+              {isProcessing ? 'Verifying Code...' : 'Searching for QR Code...'}
             </div>
-            <div className="scanner-status">Searching for Code...</div>
-            <button className="btn-primary simulate-found-btn" onClick={() => simulateScanResult()} disabled={isProcessing}>
-              {isProcessing ? 'Verifying...' : '⚡ Simulate Code Found'}
+            
+            {error && <div className="ecoscan-error">{error}</div>}
+            
+            <button className="btn-outline" onClick={() => setMode('input')} style={{width: '100%'}}>
+              Cancel Scanning
             </button>
-            <p className="scanner-tip">Tip: In a real-world setup, this would happen automatically!</p>
           </div>
         ) : (
           <div className="ecoscan-content">
-            <button className="btn-primary scan-btn" onClick={simulateScan}>
+            <button className="btn-primary scan-btn" onClick={startScanning}>
               📸 Open QR Scanner
             </button>
             
