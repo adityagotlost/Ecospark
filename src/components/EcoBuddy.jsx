@@ -41,7 +41,8 @@ export default function EcoBuddy() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async () => {
+  const handleSend = async (e) => {
+    if (e) e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMsg = input.trim();
@@ -51,53 +52,43 @@ export default function EcoBuddy() {
 
     try {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (!apiKey) throw new Error("Eco-Buddy API key is missing. Please check your configuration.");
-      
-      const payload = {
-        system_instruction: {
-          parts: [{ text: ECO_BUDDY_PROMPT }]
-        },
-        contents: [
-          ...messages
-            .filter(m => !m.text.includes("having trouble connecting") && !m.text.includes("Quota exceeded")) // ignore errors
-            .map(m => ({
-              role: m.role === 'buddy' ? 'model' : 'user',
-              parts: [{ text: m.text }]
-            })),
+      if (!apiKey) throw new Error("API Key missing");
+
+      // Dynamically import the SDK
+      const { GoogleGenerativeAI } = await import('@google/generative-ai');
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+      const chat = model.startChat({
+        history: [
           {
-            role: 'user',
-            parts: [{ text: userMsg }]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.8,
-          maxOutputTokens: 1000,
-          topP: 0.95,
-        }
-      };
+            role: "user",
+            parts: [{ text: ECO_BUDDY_PROMPT }],
+          },
+          {
+            role: "model",
+            parts: [{ text: "Understood! I am Eco-Buddy." }],
+          },
+          ...messages
+             .filter(m => m.role === 'user' || m.role === 'buddy')
+             .map(m => ({
+               role: m.role === 'buddy' ? 'model' : 'user',
+               parts: [{ text: m.text }]
+             }))
+        ]
+      });
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        }
-      );
+      const result = await chat.sendMessage(userMsg);
+      const dataText = result.response.text();
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Gemini API Error details:", errorData);
-        throw new Error(errorData?.error?.message || `API returned ${response.status}`);
-      }
+      setMessages(prev => [...prev, { role: 'buddy', text: dataText }]);
 
-      const data = await response.json();
-      const buddyResp = data?.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('') || "My sensors are fuzzy! 🌱 Let's try again.";
-
-      setMessages(prev => [...prev, { role: 'buddy', text: buddyResp }]);
     } catch (err) {
-      console.error("EcoBuddy error:", err);
-      setMessages(prev => [...prev, { role: 'buddy', text: `Oh no! I'm having trouble connecting to my brain! ☁️ (${err.message})` }]);
+      console.error("EcoBuddy API Error:", err);
+      setMessages(prev => [...prev, { 
+        role: 'buddy', 
+        text: "Uh oh! My servers are a bit overloaded. Give me a second and try again! 🌍" 
+      }]);
     } finally {
       setIsLoading(false);
     }

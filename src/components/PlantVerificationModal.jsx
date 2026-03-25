@@ -3,16 +3,13 @@ import './PlantVerificationModal.css';
 
 const GEMINI_PROMPT = `Analyze this image carefully. Answer ONLY with "TRUE" or "FALSE" and nothing else.
 
-TRUE only if: The image is a real photograph of a newly planted tree sapling or young plant growing in the ground outdoors.
+TRUE if: The image contains a real plant, tree sapling, or young plant. It is perfectly fine if hands are holding it, it is in dirt, or it is a high-quality photograph.
 
-FALSE if any of the following apply:
-- It is a drawing, illustration, painting, logo, or graphic design
-- It is an indoor potted houseplant
-- It is a large, fully-grown tree (not a sapling)
-- It does not contain a plant at all
-- It is a stock photo or watermarked image
+FALSE if:
+- It is obviously a cartoon, drawing, illustration, or painting
+- It does not contain a plant or tree at all
 
-Respond with exactly one word: TRUE or FALSE.`;
+Respond with exactly the word TRUE or FALSE.`;
 
 export default function PlantVerificationModal({ isOpen, onClose, onVerify }) {
   const [file, setFile] = useState(null);
@@ -63,46 +60,25 @@ export default function PlantVerificationModal({ isOpen, onClose, onVerify }) {
 
       const base64Data = await fileToBase64(file);
 
-      const payload = {
-        contents: [
-          {
-            parts: [
-              { text: GEMINI_PROMPT },
-              {
-                inlineData: {
-                  mimeType: file.type,
-                  data: base64Data,
-                },
-              },
-            ],
-          },
-        ],
-        generationConfig: {
-          temperature: 0,
-          maxOutputTokens: 10,
-        },
-      };
+      // Dynamically import the SDK to avoid blocking the initial bundle
+      const { GoogleGenerativeAI } = await import('@google/generative-ai');
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      const result = await model.generateContent([
+        GEMINI_PROMPT,
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          inlineData: {
+            data: base64Data,
+            mimeType: file.type
+          }
         }
-      );
+      ]);
 
-      if (!response.ok) {
-        const errData = await response.json();
-        console.error('Gemini API error:', errData);
-        throw new Error(`API error ${response.status}: ${errData?.error?.message || 'Unknown error'}`);
-      }
-
-      const data = await response.json();
-      const text = data?.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim().toUpperCase();
+      const text = result.response.text().trim().toUpperCase();
       console.log('Gemini response:', text);
 
-      if (text === 'TRUE') {
+      if (text.includes('TRUE')) {
         setResultMsg("✅ Verified! Gemini AI confirmed it's a real outdoor sapling 🌱. Amazing work!");
         setTimeout(() => {
           onVerify();
