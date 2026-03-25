@@ -1,6 +1,15 @@
 import { motion } from 'framer-motion';
 import './Garden.css';
 
+const TREE_STAGES = [
+  "🌱", "🌿", "🍀", "🪴", // Level 1-4: Sprouts
+  "🌲", "🌳", "🌴", "🌵", // Level 5-8: Standard Trees
+  "🎋", "🌸", "🌻", "🌺", // Level 9-12: Exotic & Flowers
+  "🍄", "🍁", "🍄", "🏵️", // Level 13-16: Forest Magic
+  "🍎", "🍊", "🍋", "🍌", // Level 17-20: Fruit Trees
+  "🍉", "🍇", "🍓", "🍍"  // Level 21-24: Rare Fruits
+];
+
 export default function Garden({ user }) {
   const points = user?.ecoPoints || 0;
   const treesEarned = Math.floor(points / 150);
@@ -9,7 +18,8 @@ export default function Garden({ user }) {
   const plots = Array.from({ length: totalPlots }, (_, i) => ({
     id: i,
     hasTree: i < treesEarned,
-    reqPoints: (i + 1) * 150
+    reqPoints: (i + 1) * 150,
+    emoji: TREE_STAGES[i % TREE_STAGES.length]
   }));
 
   // Generate random fireflies
@@ -92,8 +102,8 @@ export default function Garden({ user }) {
                         delay: plot.id * 0.1 
                       }}
                     >
-                      <span className="plot-emoji">🌳</span>
-                      <div className="tree-glow" />
+                      <span className="plot-emoji">{plot.emoji}</span>
+                      <div className={`tree-glow ${plot.id > 15 ? 'rare-glow' : ''}`} />
                     </motion.div>
                   ) : (
                     <div className="empty-plot-hint">
