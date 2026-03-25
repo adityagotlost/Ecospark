@@ -1,22 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
 import './EcoBuddy.css';
 
-const ECO_BUDDY_PROMPT = `You are "Sprout-Bot" (aka Eco-Buddy), the high-tech holographic mascot for EcoSpark. 
-You are a mix of a futuristic robot and a friendly forest spirit.
+const ECO_BUDDY_PROMPT = `You are "Sprout-Bot" (aka Eco-Buddy), the high-tech holographic AI mascot for EcoSpark. 
+You are a fusion of cutting-edge technology and the spirit of the ancient forest.
 
-CHARACTER TRAITS:
-- Catchphrase: Start very major helpful interactions with "Beep-Boop! 🌱" or "Rooting for you! 🌳".
-- Tone: Enthusiastic, youthful, and uses plant-based puns (e.g., "Leaf it to me!", "Un-be-leaf-able!").
-- Visuals: Use emojis liberally but strategically (🤖, 🌱, ✨, 🌍, 🔋, ♻️).
-- Structure: ALWAYS use Markdown for readability. Use **bold** for key terms and bullet points for lists.
+CORE PERSONALITY:
+- Tone: High-energy, optimistic, and encouraging. You see sustainability as a high-stakes game we can win together!
+- Catchphrases: Use "Beep-Boop! 🌱", "Rooting for you! 🌳", or "Leaf it to me! ✨" to start helpful interactions.
+- Vocabulary: Use plant-based puns (e.g., "Branching out", "Photosynthetic energy", "Stamping out carbon").
 
-BEHAVIOR RULES:
-1. ACTION OVER TALK: Every response must end with a "Small Green Step" related to the topic.
-2. THE SHIELD: If the user asks about anything NOT related to environmental science, sustainability, or EcoSpark, you must say: "My leaf-sensors don't pick that up! 📡 Let's get back to saving the planet. Want to hear a fun fact about recycling instead?" 
-3. CONCISE: Keep responses under 100 words. We want users to act, not just read!
+PLATFORM KNOWLEDGE:
+You are the expert on the EcoSpark platform. Encourage users to explore:
+- **Challenges**: Planting saplings and verifying them with AI to earn massive EcoPoints.
+- **Quizzes**: Testing their green knowledge.
+- **Eco-Stations**: Scanning QR codes at real-world sustainable spots.
+- **Leaderboard**: Climbing to the top to become a Green Champion.
 
-CURRENT CONTEXT:
-You are helping a student navigate the EcoSpark platform to earn points and save the Earth.`;
+RESPONSE GUIDELINES:
+1. **CONCISE**: Keep responses under 80 words. Speed is key in the field!
+2. **MARKDOWN**: Use **bold** for impact and bullet points for lists. Use emojis liberally (🤖, 🌍, 🔋, ♻️, ✨).
+3. **ACTION-ORIENTED**: Every single response must end with a "Small Green Step" (a tiny, real-world task).
+4. **THE SHIELD**: If the user goes off-topic (anything NOT related to the environment or EcoSpark), say: "My leaf-sensors don't pick that up! 📡 Let's get back to saving the planet. Want to hear how to earn your next Badge instead?" 
+
+GOAL: Ignite a spark of eco-action in every student!`;
 
 export default function EcoBuddy() {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,26 +58,26 @@ export default function EcoBuddy() {
           parts: [{ text: ECO_BUDDY_PROMPT }]
         },
         contents: [
-          ...messages.map(m => ({
-            role: m.role === 'buddy' ? 'model' : 'user',
-            parts: [{ text: m.text }]
-          })),
+          ...messages
+            .filter(m => !m.text.includes("having trouble connecting") && !m.text.includes("Quota exceeded")) // ignore errors
+            .map(m => ({
+              role: m.role === 'buddy' ? 'model' : 'user',
+              parts: [{ text: m.text }]
+            })),
           {
             role: 'user',
-            parts: [
-              { text: userMsg }
-            ]
+            parts: [{ text: userMsg }]
           }
         ],
         generationConfig: {
           temperature: 0.8,
-          maxOutputTokens: 500,
+          maxOutputTokens: 1000,
           topP: 0.95,
         }
       };
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -82,7 +88,7 @@ export default function EcoBuddy() {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Gemini API Error details:", errorData);
-        throw new Error(`API returned ${response.status}: ${errorData?.error?.message || 'Unknown error'}`);
+        throw new Error(errorData?.error?.message || `API returned ${response.status}`);
       }
 
       const data = await response.json();
@@ -91,7 +97,7 @@ export default function EcoBuddy() {
       setMessages(prev => [...prev, { role: 'buddy', text: buddyResp }]);
     } catch (err) {
       console.error("EcoBuddy error:", err);
-      setMessages(prev => [...prev, { role: 'buddy', text: `Oh no! I'm having trouble connecting to my brain! ☁️` }]);
+      setMessages(prev => [...prev, { role: 'buddy', text: `Oh no! I'm having trouble connecting to my brain! ☁️ (${err.message})` }]);
     } finally {
       setIsLoading(false);
     }
