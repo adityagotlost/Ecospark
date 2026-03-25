@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { path: '/learn',       label: 'Learn',        icon: '📚' },
   { path: '/quizzes',     label: 'Quizzes',      icon: '🧠' },
   { path: '/challenges',  label: 'Challenges',   icon: '🎯' },
+  { path: '/garden',      label: 'Garden',       icon: '🌳' },
   { path: '/leaderboard', label: 'Leaderboard',  icon: '🏆' },
   { path: '/badges',      label: 'Badges',       icon: '🏅' },
   { path: '/calculator',  label: 'Calculator',   icon: '🌍' },

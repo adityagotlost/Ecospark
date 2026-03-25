@@ -14,6 +14,7 @@ import Leaderboard from './pages/Leaderboard';
 import Badges from './pages/Badges';
 import Profile from './pages/Profile';
 import Calculator from './pages/Calculator';
+import Garden from './pages/Garden';
 import BadgeUnlockModal from './components/BadgeUnlockModal';
 import EcoBuddy from './components/EcoBuddy';
 import { ALL_BADGES } from './store';
@@ -103,6 +104,7 @@ export default function App() {
         <Route path="/badges"      element={<ProtectedRoute user={user} loading={loading}><Badges user={user} /></ProtectedRoute>} />
         <Route path="/profile"     element={<ProtectedRoute user={user} loading={loading}><Profile user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
         <Route path="/calculator"  element={<ProtectedRoute user={user} loading={loading}><Calculator user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
+        <Route path="/garden"      element={<ProtectedRoute user={user} loading={loading}><Garden user={user} /></ProtectedRoute>} />
         <Route path="*"            element={<Navigate to="/" replace />} />
       </Routes>
     </>
