@@ -233,3 +233,11 @@ function LeaderboardContent({ user }) {
     </div>
   );
 }
+
+export default function Leaderboard({ user }) {
+  return (
+    <LeaderboardErrorBoundary>
+      <LeaderboardContent user={user} />
+    </LeaderboardErrorBoundary>
+  );
+}
