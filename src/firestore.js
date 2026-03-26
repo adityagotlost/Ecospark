@@ -135,14 +135,15 @@ export async function fbUpdateUser(uid, updates) {
   await updateDoc(doc(db, 'users', uid), updates);
 }
 
-export async function fbUpdateProfile(uid, name, photoDataUrl) {
+export async function fbUpdateProfile(uid, name, photoDataUrl, profileTheme, profileFrame) {
   const updates = { name };
-  if (photoDataUrl) {
-    updates.photoURL = photoDataUrl;
-  }
+  if (photoDataUrl) updates.photoURL = photoDataUrl;
+  if (profileTheme !== undefined && profileTheme !== null) updates.profileTheme = profileTheme;
+  if (profileFrame !== undefined && profileFrame !== null) updates.profileFrame = profileFrame;
   await fbUpdateUser(uid, updates);
   return updates;
 }
+
 
 // ── Eco Points ────────────────────────────────────────────────
 
