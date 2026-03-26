@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { onLeaderboardChange } from '../firestore';
 import './Leaderboard.css';
 
@@ -30,7 +30,30 @@ function PodiumCard({ user, rank }) {
   );
 }
 
-export default function Leaderboard({ user }) {
+export class LeaderboardErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '80px 20px', color: '#ff4444', background: '#111', height: '100vh', zIndex: 99999 }}>
+          <h1 style={{ fontSize: '24px', marginBottom: '10px' }}>Leaderboard Crash Details</h1>
+          <pre style={{ whiteSpace: 'pre-wrap', background: '#222', padding: '20px', borderRadius: '8px', fontSize: '14px' }}>
+            {this.state.error ? this.state.error.stack || this.state.error.toString() : 'Unknown Error'}
+          </pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function LeaderboardContent({ user }) {
   const [board, setBoard] = useState([]);
   const [filter, setFilter] = useState('Global');
   const [loaded, setLoaded] = useState(false);
