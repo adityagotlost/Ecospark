@@ -177,12 +177,38 @@ export async function fbCompleteChallenge(uid, challengeId, points = 100) {
 // ── Quizzes ───────────────────────────────────────────────────
 
 export async function fbCompleteQuiz(uid, quizId, score, total) {
+  const user = await fbGetUser(uid);
+  if (!user) return;
+
   const validScore = Math.min(score, total);
-  const points = Math.round((validScore / total) * 80);
-  await updateDoc(doc(db, 'users', uid), {
-    completedQuizzes: arrayUnion({ quizId, score: validScore, total }),
-  });
-  await fbAddEcoPoints(uid, points);
+  const newPoints = Math.round((validScore / total) * 80);
+
+  const existingQuizzes = user.completedQuizzes || [];
+  const existingIdx = existingQuizzes.findIndex(q => q.quizId === quizId);
+
+  if (existingIdx >= 0) {
+    const oldAttempt = existingQuizzes[existingIdx];
+    if (validScore > oldAttempt.score) {
+      // higher score achieved
+      const oldPoints = Math.round((oldAttempt.score / oldAttempt.total) * 80);
+      const pointsDiff = newPoints - oldPoints;
+      
+      existingQuizzes[existingIdx] = { quizId, score: validScore, total };
+      await updateDoc(doc(db, 'users', uid), {
+        completedQuizzes: existingQuizzes,
+      });
+      if (pointsDiff > 0) {
+        await fbAddEcoPoints(uid, pointsDiff);
+      }
+    }
+  } else {
+    // first attempt
+    existingQuizzes.push({ quizId, score: validScore, total });
+    await updateDoc(doc(db, 'users', uid), {
+      completedQuizzes: existingQuizzes,
+    });
+    await fbAddEcoPoints(uid, newPoints);
+  }
 }
 
 // ── Eco-Stations (QR) ──────────────────────────────────────────
