@@ -3,6 +3,26 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { fbRegister, fbLogin, fbResetPassword } from '../firestore';
 import './Auth.css';
 
+const SCHOOLS = [
+  "Delhi Public School",
+  "Kendriya Vidyalaya",
+  "Navodaya Vidyalaya",
+  "Army Public School",
+  "Sardar Patel Vidyalaya",
+  "St. Xavier's College",
+  "Green Valley School",
+  "Ryan International",
+  "Bal Bharati Public School",
+  "Modern School",
+  "Haridwar University",
+  "IIT Delhi",
+  "IIT Bombay",
+  "NIT Trichy",
+  "BITS Pilani",
+  "SRM University",
+  "VIT Vellore"
+];
+
 export default function Auth({ onAuth }) {
   const [searchParams] = useSearchParams();
   const [tab, setTab]     = useState(searchParams.get('tab') === 'login' ? 'login' : 'signup');
@@ -171,8 +191,12 @@ export default function Auth({ onAuth }) {
               </div>
               <div className="form-group">
                 <label htmlFor="signup-school">School / College</label>
-                <input id="signup-school" type="text" className="form-input" placeholder="e.g. Delhi Public School"
+                <input id="signup-school" type="text" className="form-input" placeholder="Select or type your school"
+                  list="school-list"
                   value={signupData.school} onChange={e => setSignupData(p => ({...p, school: e.target.value}))} />
+                <datalist id="school-list">
+                  {SCHOOLS.map(s => <option key={s} value={s} />)}
+                </datalist>
               </div>
               <div className="form-group">
                 <label htmlFor="signup-email">Email *</label>
