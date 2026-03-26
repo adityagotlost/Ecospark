@@ -57,7 +57,14 @@ export default function Leaderboard({ user }) {
     list = list.map(u => {
       let dPts = u.ecoPoints || 0;
       if (filter === 'This Week') {
-        dPts = u.weeklyPoints ? u.weeklyPoints.reduce((a, b) => a + b, 0) : 0;
+        let weeklyTotal = 0;
+        if (Array.isArray(u.weeklyPoints)) {
+          weeklyTotal = u.weeklyPoints.reduce((a, b) => a + b, 0);
+        } else if (u.weeklyPoints && typeof u.weeklyPoints === 'object') {
+          weeklyTotal = Object.values(u.weeklyPoints).reduce((a, b) => a + Number(b || 0), 0);
+        }
+        
+        dPts = weeklyTotal;
         // If they have no weekly points at all recorded, give them a proportional slice for the demo
         if (dPts === 0) dPts = Math.floor((u.ecoPoints || 0) * 0.15); 
       }
