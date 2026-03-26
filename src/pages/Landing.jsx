@@ -180,7 +180,7 @@ export default function Landing({ user }) {
             </div>
           </a>
 
-          <a href="mailto:adityaanand3316@gmail.com">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=adityaanand3316@gmail.com" target="_blank" rel="noopener noreferrer">
             <div className="social-box social-box3">
               <span className="social-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="social-svg">
