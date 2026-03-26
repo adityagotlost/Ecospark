@@ -118,8 +118,9 @@ function LeaderboardContent({ user }) {
     return list;
   }, [board, filter, user]);
 
+  const currentUser = user;
   const myRankUser = filteredBoard.find(u => u.isCurrentUser);
-  const myRank = myRankUser ? filteredBoard.indexOf(myRankUser) + 1 : 0;
+  const myRank = myRankUser ? myRankUser.rank : 0;
 
   const podium = filteredBoard.slice(0, 3);
   const rest   = filteredBoard.slice(3);
