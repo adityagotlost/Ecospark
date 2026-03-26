@@ -12,28 +12,34 @@ export default function Profile({ user: propUser, onUpdate }) {
   const [isSaving, setIsSaving] = useState(false);
 
   const processImage = (file) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_SIZE = 250;
-          let width = img.width;
-          let height = img.height;
-          if (width > height) {
-            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
-          } else {
-            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+          try {
+            const canvas = document.createElement('canvas');
+            const MAX_SIZE = 250;
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+            } else {
+              if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.8));
+          } catch (err) {
+            reject(err);
           }
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          resolve(canvas.toDataURL('image/jpeg', 0.8));
         };
+        img.onerror = () => reject(new Error("Failed to load image element."));
         img.src = e.target.result;
       };
+      reader.onerror = () => reject(new Error("Failed to read file."));
       reader.readAsDataURL(file);
     });
   };
@@ -46,12 +52,17 @@ export default function Profile({ user: propUser, onUpdate }) {
       if (editFile) {
         photoDataUrl = await processImage(editFile);
       }
-      await fbUpdateProfile(user.uid, editName, photoDataUrl);
+      
+      // Fire and forget the update to leverage Firestore's optimistic local cache
+      fbUpdateProfile(user.uid, editName, photoDataUrl).catch(err => {
+        console.error("Background update failed:", err);
+      });
+      
       if(onUpdate) onUpdate();
       setIsEditing(false);
     } catch (e) {
       console.error(e);
-      alert('Failed to update profile: ' + e.message);
+      alert('Failed to read image: ' + e.message);
     } finally {
       setIsSaving(false);
     }
