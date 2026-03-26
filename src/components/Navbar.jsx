@@ -28,7 +28,7 @@ export default function Navbar({ user, onLogout }) {
     <nav className="navbar">
       <div className="navbar-inner">
         {/* Logo */}
-        <Link to={user ? '/dashboard' : '/'} className="navbar-logo">
+        <Link to="/" className="navbar-logo">
           <span className="logo-icon">🌱</span>
           <span className="logo-text">Eco<span className="logo-spark">Spark</span></span>
         </Link>
