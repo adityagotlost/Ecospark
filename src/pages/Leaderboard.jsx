@@ -10,7 +10,8 @@ const RANK_STYLES = [
 
 function PodiumCard({ user, rank }) {
   if (!user) return null; // Handle case where there are < 3 people in a school
-  const rs = RANK_STYLES[rank - 1];
+  const safeRank = Math.min(rank, 3);
+  const rs = RANK_STYLES[safeRank - 1] || RANK_STYLES[2];
   return (
     <div
       className={`podium-card podium-rank-${rank}`}
@@ -74,6 +75,23 @@ export default function Leaderboard({ user }) {
     // Now sort by displayPoints securely
     list.sort((a, b) => b.displayPoints - a.displayPoints);
     
+    // Assign true competition ranks (handling ties natively)
+    let currentRank = 1;
+    let rankOffset = 0;
+    let prevScore = null;
+    list = list.map(u => {
+      if (prevScore !== null && u.displayPoints < prevScore) {
+        currentRank = currentRank + rankOffset;
+        rankOffset = 1;
+      } else if (prevScore !== null && u.displayPoints === prevScore) {
+        rankOffset++;
+      } else {
+        rankOffset = 1; // First element
+      }
+      prevScore = u.displayPoints;
+      return { ...u, rank: currentRank };
+    });
+    
     return list;
   }, [board, filter, user]);
 
@@ -126,12 +144,12 @@ export default function Leaderboard({ user }) {
           </div>
         )}
 
-        {/* Podium */}
+        {/* Podium Step Layout */}
         {loaded && podium.length > 0 && (
           <div className="podium-section">
-            <PodiumCard user={podium[1]} rank={2} />
-            <PodiumCard user={podium[0]} rank={1} />
-            <PodiumCard user={podium[2]} rank={3} />
+            {podium.map(pUser => (
+              <PodiumCard key={pUser.id} user={pUser} rank={pUser.rank} />
+            ))}
           </div>
         )}
 
@@ -152,7 +170,7 @@ export default function Leaderboard({ user }) {
           ) : (
             <div className="lb-rows">
               {rest.map((entry, i) => {
-                const rank = i + 4;
+                const rank = entry.rank;
                 const isMe = entry.isCurrentUser;
                 return (
                   <div
