@@ -14,8 +14,7 @@ import {
   doc, getDoc, setDoc, updateDoc, collection,
   query, orderBy, limit, getDocs, increment, arrayUnion, onSnapshot,
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { auth, db, storage } from './firebase';
+import { auth, db } from './firebase';
 import { ALL_BADGES } from './store';
 
 // ── Auth ──────────────────────────────────────────────────────
@@ -136,16 +135,11 @@ export async function fbUpdateUser(uid, updates) {
   await updateDoc(doc(db, 'users', uid), updates);
 }
 
-export async function fbUpdateProfile(uid, name, photoFile) {
+export async function fbUpdateProfile(uid, name, photoDataUrl) {
   const updates = { name };
-  
-  if (photoFile) {
-    const fileRef = ref(storage, `avatars/${uid}-${Date.now()}`);
-    await uploadBytes(fileRef, photoFile);
-    const photoURL = await getDownloadURL(fileRef);
-    updates.photoURL = photoURL;
+  if (photoDataUrl) {
+    updates.photoURL = photoDataUrl;
   }
-  
   await fbUpdateUser(uid, updates);
   return updates;
 }

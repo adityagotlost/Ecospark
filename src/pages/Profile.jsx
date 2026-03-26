@@ -11,16 +11,47 @@ export default function Profile({ user: propUser, onUpdate }) {
   const [editFile, setEditFile] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
 
+  const processImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_SIZE = 250;
+          let width = img.width;
+          let height = img.height;
+          if (width > height) {
+            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+          } else {
+            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSaveProfile = async () => {
     if (!user) return;
     setIsSaving(true);
     try {
-      await fbUpdateProfile(user.uid, editName, editFile);
+      let photoDataUrl = null;
+      if (editFile) {
+        photoDataUrl = await processImage(editFile);
+      }
+      await fbUpdateProfile(user.uid, editName, photoDataUrl);
       if(onUpdate) onUpdate();
       setIsEditing(false);
     } catch (e) {
       console.error(e);
-      alert('Failed to update profile');
+      alert('Failed to update profile: ' + e.message);
     } finally {
       setIsSaving(false);
     }
