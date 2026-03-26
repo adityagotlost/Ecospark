@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { onLeaderboardChange } from '../firestore';
 import './Leaderboard.css';
 
@@ -9,6 +9,7 @@ const RANK_STYLES = [
 ];
 
 function PodiumCard({ user, rank }) {
+  if (!user) return null; // Handle case where there are < 3 people in a school
   const rs = RANK_STYLES[rank - 1];
   return (
     <div
@@ -17,11 +18,11 @@ function PodiumCard({ user, rank }) {
     >
       <div className="podium-medal">{rs.icon}</div>
       <div className="podium-avatar" style={{ background: rs.bg, border: `2px solid ${rs.color}`, boxShadow: rs.glow }}>
-        {user.avatar}
+        {user.avatar || '🌱'}
       </div>
       <div className="podium-name">{user.name}</div>
       <div className="podium-school">{user.school}</div>
-      <div className="podium-points gradient-text">{user.ecoPoints.toLocaleString()}</div>
+      <div className="podium-points gradient-text">{user.ecoPoints?.toLocaleString() || 0}</div>
       <div className="podium-pts-label">EcoPoints</div>
       <div className="podium-base" style={{ background: rs.color }} />
     </div>
@@ -42,11 +43,36 @@ export default function Leaderboard({ user }) {
     return () => unsub();
   }, [user]);
 
-  const currentUser = user;
-  const myRank = board.findIndex(u => u.isCurrentUser) + 1;
+  const filteredBoard = useMemo(() => {
+    let list = [...board];
+    
+    if (filter === 'School') {
+      const mySchool = (user?.school || '').trim().toLowerCase();
+      if (mySchool) {
+        list = list.filter(u => (u.school || '').trim().toLowerCase() === mySchool);
+      }
+    } 
+    
+    if (filter === 'This Week') {
+      // Sort by weekly points if available, otherwise just use a randomized mock 
+      // based on their name length+ecoPoints to show a different order for the demo.
+      list.sort((a, b) => {
+        const aWeek = a.weeklyPoints ? a.weeklyPoints.reduce((s,v)=>s+v,0) : ((a.ecoPoints || 0) % 150);
+        const bWeek = b.weeklyPoints ? b.weeklyPoints.reduce((s,v)=>s+v,0) : ((b.ecoPoints || 0) % 150);
+        return bWeek - aWeek;
+      });
+    } else {
+      list.sort((a, b) => (b.ecoPoints || 0) - (a.ecoPoints || 0));
+    }
+    
+    return list;
+  }, [board, filter, user]);
 
-  const podium = board.slice(0, 3);
-  const rest   = board.slice(3);
+  const currentUser = user;
+  const myRank = filteredBoard.findIndex(u => u.isCurrentUser) + 1;
+
+  const podium = filteredBoard.slice(0, 3);
+  const rest   = filteredBoard.slice(3);
 
   return (
     <div className="leaderboard-page page">
@@ -92,7 +118,7 @@ export default function Leaderboard({ user }) {
         )}
 
         {/* Podium */}
-        {loaded && podium.length >= 3 && (
+        {loaded && podium.length > 0 && (
           <div className="podium-section">
             <PodiumCard user={podium[1]} rank={2} />
             <PodiumCard user={podium[0]} rank={1} />
