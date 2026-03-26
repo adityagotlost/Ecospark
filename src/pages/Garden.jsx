@@ -96,7 +96,9 @@ export default function Garden({ user }) {
               <span className="tol-emoji">{phase.emoji}</span>
             </motion.div>
             
+            
             <div className="tol-dirt-mound" />
+
           </motion.div>
         </div>
 

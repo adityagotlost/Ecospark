@@ -289,12 +289,12 @@ export default function Dashboard({ user, onUpdate }) {
 
         {/* Stat cards */}
         <div className="dash-stats">
-          <StatCard icon="⚡" label="Total EcoPoints"   value={user?.ecoPoints || 0}                         color="#34d364" delay={0}   />
-          <StatCard icon="📚" label="Lessons Done"       value={user?.completedLessons?.length || 0}          color="#00e5c4" delay={100} />
-          <StatCard icon="🎯" label="Challenges Done"    value={user?.completedChallenges?.length || 0}       color="#a78bfa" delay={200} />
-          <StatCard icon="🏅" label="Badges Earned"      value={user?.badges?.length || 0}                    color="#ffd700" delay={300} />
-          <StatCard icon="🔥" label="Day Streak"         value={user?.streak || 1}                            color="#ef4444" delay={400} />
-          <StatCard icon="🧠" label="Quizzes Completed"  value={user?.completedQuizzes?.length || 0}          color="#f59e0b" delay={500} />
+          <StatCard icon="⚡" label="Total EcoPoints"         value={user?.ecoPoints || 0}                  color="#34d364" delay={0}   />
+          <StatCard icon="📚" label="Lessons Done"            value={user?.completedLessons?.length || 0}   color="#00e5c4" delay={100} />
+          <StatCard icon="🎯" label="Challenges Done"         value={user?.completedChallenges?.length || 0}color="#a78bfa" delay={150} />
+          <StatCard icon="🏅" label="Badges Earned"           value={user?.badges?.length || 0}             color="#ffd700" delay={200} />
+          <StatCard icon="🔥" label="Day Streak"              value={user?.streak || 1}                     color="#ef4444" delay={250} />
+          <StatCard icon="🧠" label="Quizzes Completed"       value={user?.completedQuizzes?.length || 0}   color="#fb923c" delay={300} />
         </div>
 
         {/* Progress bar */}

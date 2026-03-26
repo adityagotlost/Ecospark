@@ -165,6 +165,7 @@ export async function fbAddEcoPoints(uid, points) {
   return fbCheckAndAwardBadges(uid);
 }
 
+
 // ── Lessons ───────────────────────────────────────────────────
 
 export async function fbCompleteLesson(uid, lessonId, points = 50) {

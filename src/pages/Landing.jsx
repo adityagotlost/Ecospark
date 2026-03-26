@@ -197,7 +197,7 @@ export default function Landing({ user }) {
       {/* Footer */}
       <footer className="landing-footer">
         <div className="footer-logo">🌱 EcoSpark</div>
-        <p>Built for Smart India Hackathon 2025 · Aligned with NEP 2020 & SDG Goals</p>
+        <p>Build for Tech Sangram 2026 · Aligned with NEP 2020 & SDG Goals</p>
         <div className="sdg-chips">
           <span className="chip" style={{background:'rgba(52,211,100,0.15)',color:'var(--color-primary)'}}>SDG 4: Quality Education</span>
           <span className="chip" style={{background:'rgba(0,229,196,0.15)',color:'var(--color-secondary)'}}>SDG 13: Climate Action</span>

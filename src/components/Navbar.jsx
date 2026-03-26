@@ -53,7 +53,7 @@ export default function Navbar({ user, onLogout }) {
         <div className="navbar-right">
           {user ? (
             <>
-              <div className="nav-points">
+              <div className="nav-points" title="Lifetime EcoPoints (Rank/Level)">
                 <span className="points-icon">⚡</span>
                 <span className="points-val">{user.ecoPoints?.toLocaleString() || 0}</span>
               </div>
