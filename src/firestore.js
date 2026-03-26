@@ -265,6 +265,7 @@ export function onLeaderboardChange(callback) {
         avatar:    u.avatar,
         photoURL:  u.photoURL,
         ecoPoints: u.ecoPoints || 0,
+        weeklyPoints: u.weeklyPoints || [0,0,0,0,0,0,0],
         badges:    u.badges?.length || 0,
       };
     });
