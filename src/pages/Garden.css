@@ -2,6 +2,9 @@
   position: relative;
   overflow: hidden;
   min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .fireflies-layer {
@@ -18,185 +21,198 @@
   height: 4px;
   background: #a7f3d0;
   border-radius: 50%;
-  box-shadow: 0 0 10px 4px rgba(167, 243, 208, 0.4);
+  box-shadow: 0 0 12px 6px rgba(167, 243, 208, 0.3);
 }
 
-.garden-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  background: linear-gradient(135deg, rgba(52, 211, 100, 0.05), rgba(10, 30, 18, 0.8));
-  border-left: 4px solid var(--color-primary);
-  border-radius: var(--radius-lg);
+.tree-of-life-section {
   position: relative;
   z-index: 1;
-}
-
-.gh-title {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--color-text-light);
-}
-
-.gh-desc {
-  color: var(--color-text-muted);
-  font-size: 1.05rem;
-  max-width: 500px;
-  line-height: 1.5;
-}
-
-.gh-desc strong {
-  color: var(--color-text-light);
-}
-
-.gh-stats {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  background: var(--color-surface);
-  padding: 1rem 1.5rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-}
-
-.gh-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--color-border);
-}
-
-.gh-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-}
-
-.gs-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-muted);
-}
-
-.gs-val {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-.text-yellow { color: #facc15; }
-.text-green { color: var(--color-primary); }
-
-.garden-grid-container {
-  padding: 2.5rem;
-  border-radius: var(--radius-lg);
-  background: rgba(10, 30, 18, 0.6);
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 1;
-  overflow-x: auto;
-}
-
-.garden-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
+  padding: 2rem;
 }
 
-.garden-plot {
-  aspect-ratio: 1;
-  border-radius: 16px;
-  background: rgba(43, 27, 20, 0.8);
-  border: 2px dashed rgba(255, 255, 255, 0.1);
+.tol-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.tol-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+}
+
+.tol-subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+.tol-centerpiece {
   display: flex;
-  align-items: flex-end;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.tol-pedestal {
   position: relative;
-  transition: all 0.3s ease;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 100%, rgba(43, 27, 20, 0.9) 0%, rgba(10, 30, 18, 0.8) 100%);
+  border: 4px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 80px -20px var(--phase-glow);
+  transition: box-shadow 1s ease;
   overflow: hidden;
 }
 
-.garden-plot.has-tree {
-  border: 2px solid rgba(52, 211, 100, 0.3);
-  background: linear-gradient(180deg, rgba(52, 211, 100, 0.05) 0%, rgba(43, 27, 20, 0.8) 100%);
-}
-
-.garden-plot.has-tree:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px -10px rgba(52, 211, 100, 0.4);
-  border-color: rgba(52, 211, 100, 0.6);
-}
-
-.plot-dirt {
-  width: 100%;
-  height: 40%;
-  background: #3e2723;
-  border-radius: 0 0 14px 14px;
+.tol-aura {
   position: absolute;
-  bottom: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  border-top: 4px solid #2d1a11;
-}
-
-.tree-wrapper {
-  position: absolute;
-  bottom: 10px;
-  font-size: 4.5rem;
-  z-index: 2;
-  filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
-  animation: sway 4s infinite ease-in-out alternate;
-  transform-origin: bottom center;
-}
-
-.tree-glow {
-  position: absolute;
-  bottom: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  height: 20px;
-  background: var(--color-primary);
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
-  filter: blur(15px);
-  opacity: 0.4;
+  filter: blur(60px);
+  opacity: 0.25;
+  transition: background 1s ease;
+}
+
+.tol-emoji-wrapper {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.8));
+}
+
+.tol-emoji {
+  font-size: 8rem;
+  line-height: 1;
+}
+
+.tol-dirt-mound {
+  position: absolute;
+  bottom: -20px;
+  width: 150px;
+  height: 60px;
+  background: #3e2723;
+  border-radius: 50%;
+  filter: blur(5px);
   z-index: 1;
 }
 
-.empty-plot-hint {
-  margin-top: 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 0.85rem;
-  font-weight: 500;
+.tol-info {
+  width: 100%;
+  padding: 2.5rem;
+  text-align: center;
+  background: rgba(10, 30, 18, 0.65);
+  backdrop-filter: blur(15px);
+  border-radius: var(--radius-lg);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-@keyframes sway {
-  0% { transform: rotate(-2deg); }
-  100% { transform: rotate(2deg); }
+.tol-name {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  transition: text-shadow 1s ease;
+}
+
+.tol-desc {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.tol-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.tol-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ts-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ts-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.text-white { color: #fff; }
+
+.tol-progress-container {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+}
+
+.tol-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+}
+
+.tol-progress-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tol-progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1), background 1s ease, box-shadow 1s ease;
+}
+
+.tol-maxed {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  color: #facc15;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
-  .garden-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-  .gh-stats { width: 100%; justify-content: space-around; }
-  .garden-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-  .tree-wrapper { font-size: 3.5rem; }
-}
-@media (max-width: 480px) {
-  .garden-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .tol-title { font-size: 2.2rem; }
+  .tol-pedestal { width: 220px; height: 220px; }
+  .tol-aura { width: 180px; height: 180px; }
+  .tol-emoji { font-size: 6rem; }
+  .tol-info { padding: 1.5rem; }
+  .tol-stats { gap: 1.5rem; }
+  .ts-val { font-size: 1.5rem; }
 }

@@ -1,29 +1,41 @@
 import { motion } from 'framer-motion';
 import './Garden.css';
 
-const TREE_STAGES = [
-  "🌱", "🌿", "🍀", "🪴", // Level 1-4: Sprouts
-  "🌲", "🌳", "🌴", "🌵", // Level 5-8: Standard Trees
-  "🎋", "🌸", "🌻", "🌺", // Level 9-12: Exotic & Flowers
-  "🍄", "🍁", "🍄", "🏵️", // Level 13-16: Forest Magic
-  "🍎", "🍊", "🍋", "🍌", // Level 17-20: Fruit Trees
-  "🍉", "🍇", "🍓", "🍍"  // Level 21-24: Rare Fruits
+const TREE_PHASES = [
+  { minLevel: 0,  emoji: "🌱", name: "Fragile Seedling", glow: "rgba(52, 211, 100, 0.3)", desc: "A tiny spark of life. Keep completing real-world tasks to help it grow!" },
+  { minLevel: 3,  emoji: "🌿", name: "Growing Sapling", glow: "rgba(52, 211, 100, 0.5)", desc: "Your tree is taking root and growing stronger every day." },
+  { minLevel: 6,  emoji: "🌳", name: "Lush Tree", glow: "rgba(16, 185, 129, 0.7)", desc: "A beautiful, sturdy tree. Your environmental impact is really showing!" },
+  { minLevel: 10, emoji: "🌲", name: "Forest Guardian", glow: "rgba(6, 182, 212, 0.8)", desc: "An ancient, majestic guardian of the forest. Truly breathtaking!" },
+  { minLevel: 15, emoji: "🌟", name: "Tree of Life", glow: "rgba(250, 204, 21, 1)", desc: "The ultimate peak of nature's harmony. You are exactly what Earth needs!" }
 ];
 
 export default function Garden({ user }) {
   const points = user?.ecoPoints || 0;
-  const treesEarned = Math.floor(points / 150);
-  const totalPlots = 24; // 4x6 grid
+  const level = Math.floor(points / 150); // 1 level per 150 pts
 
-  const plots = Array.from({ length: totalPlots }, (_, i) => ({
-    id: i,
-    hasTree: i < treesEarned,
-    reqPoints: (i + 1) * 150,
-    emoji: TREE_STAGES[i % TREE_STAGES.length]
-  }));
+  // Find current phase
+  const reversedPhases = [...TREE_PHASES].reverse();
+  const phase = reversedPhases.find(p => level >= p.minLevel) || TREE_PHASES[0];
+  const phaseIndex = TREE_PHASES.indexOf(phase);
+  
+  // Find next phase
+  const nextPhase = TREE_PHASES[phaseIndex + 1];
+  
+  // Calculate progress to next phase
+  let progressPct = 100;
+  let nextGoal = null;
+  
+  if (nextPhase) {
+    const currentPhaseStartPts = phase.minLevel * 150;
+    const nextPhaseStartPts = nextPhase.minLevel * 150;
+    const pointsInCurrentPhase = points - currentPhaseStartPts;
+    const pointsNeededForPhase = nextPhaseStartPts - currentPhaseStartPts;
+    progressPct = Math.min(100, Math.max(0, (pointsInCurrentPhase / pointsNeededForPhase) * 100));
+    nextGoal = nextPhaseStartPts;
+  }
 
   // Generate random fireflies
-  const fireflies = Array.from({ length: 15 }, (_, i) => ({
+  const fireflies = Array.from({ length: 20 }, (_, i) => ({
     id: i,
     top: `${Math.random() * 100}%`,
     left: `${Math.random() * 100}%`,
@@ -45,8 +57,8 @@ export default function Garden({ user }) {
             className="firefly"
             style={{ top: f.top, left: f.left }}
             animate={{
-              y: [0, -20, 0, 15, 0],
-              x: [0, 15, 0, -15, 0],
+              y: [0, -30, 0, 20, 0],
+              x: [0, 20, 0, -20, 0],
               opacity: [0, 0.8, 0, 1, 0]
             }}
             transition={{
@@ -59,63 +71,71 @@ export default function Garden({ user }) {
         ))}
       </div>
 
-      <div className="section">
-        <div className="garden-header glass-card">
-          <div className="gh-content">
-            <h1 className="gh-title">Your Digital <span className="gradient-text">Garden</span> 🌲</h1>
-            <p className="gh-desc">
-              Every real-world action you complete plants a seed here! 
-              You've earned <strong>{treesEarned}</strong> {treesEarned === 1 ? 'tree' : 'trees'} so far.
-            </p>
-          </div>
-          <div className="gh-stats">
-            <div className="gh-stat">
-              <span className="gs-label">Next Tree At</span>
-              <span className="gs-val text-yellow">{(treesEarned + 1) * 150} pts</span>
-            </div>
-            <div className="gh-divider" />
-            <div className="gh-stat">
-              <span className="gs-label">Current Points</span>
-              <span className="gs-val text-green">{points} pts</span>
-            </div>
-          </div>
+      <div className="section tree-of-life-section">
+        
+        <div className="tol-header">
+          <h1 className="tol-title">The <span className="gradient-text">Tree of Life</span></h1>
+          <p className="tol-subtitle">Your real-world eco-actions breathe life into this digital sanctuary.</p>
         </div>
 
-        <div className="garden-grid-container glass-card">
-          <div className="garden-grid">
-            {plots.map(plot => (
-              <div 
-                key={plot.id} 
-                className={`garden-plot ${plot.hasTree ? 'has-tree' : 'empty'}`}
-                title={plot.hasTree ? "A beautiful tree you planted!" : `Unlocks at ${plot.reqPoints} points`}
-              >
-                <div className="plot-dirt">
-                  {plot.hasTree ? (
-                    <motion.div 
-                      className="tree-wrapper"
-                      initial={{ scale: 0, y: 20 }}
-                      animate={{ scale: 1, y: 0 }}
-                      transition={{ 
-                        type: "spring",
-                        stiffness: 100, 
-                        damping: 10,
-                        delay: plot.id * 0.1 
-                      }}
-                    >
-                      <span className="plot-emoji">{plot.emoji}</span>
-                      <div className={`tree-glow ${plot.id > 15 ? 'rare-glow' : ''}`} />
-                    </motion.div>
-                  ) : (
-                    <div className="empty-plot-hint">
-                      <span className="padlock">🔒</span>
-                      <span>{plot.reqPoints}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="tol-centerpiece">
+          <motion.div 
+            className="tol-pedestal glass-card"
+            style={{ '--phase-glow': phase.glow }}
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 15 }}
+          >
+            <div className="tol-aura" style={{ background: phase.glow }} />
+            
+            <motion.div 
+              className="tol-emoji-wrapper"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="tol-emoji">{phase.emoji}</span>
+            </motion.div>
+            
+            <div className="tol-dirt-mound" />
+          </motion.div>
         </div>
+
+        <div className="tol-info glass-card">
+          <h2 className="tol-name" style={{ textShadow: `0 0 10px ${phase.glow}` }}>{phase.name}</h2>
+          <p className="tol-desc">{phase.desc}</p>
+          
+          <div className="tol-stats">
+            <div className="tol-stat-box">
+              <span className="ts-label">Total Points</span>
+              <span className="ts-val gradient-text">{points}</span>
+            </div>
+            <div className="tol-stat-box">
+              <span className="ts-label">Tree Level</span>
+              <span className="ts-val text-white">Lvl {level}</span>
+            </div>
+          </div>
+
+          {nextPhase && (
+            <div className="tol-progress-container">
+              <div className="tol-progress-labels">
+                <span>Next Evolution: {nextPhase.name}</span>
+                <span>{points} / {nextGoal} pts</span>
+              </div>
+              <div className="tol-progress-bar">
+                <div 
+                  className="tol-progress-fill" 
+                  style={{ width: `${progressPct}%`, background: nextPhase.glow, boxShadow: `0 0 10px ${nextPhase.glow}` }} 
+                />
+              </div>
+            </div>
+          )}
+          {!nextPhase && (
+            <div className="tol-maxed">
+              🎉 Maximum Evolution Reached! You are an absolute legend.
+            </div>
+          )}
+        </div>
+
       </div>
     </motion.div>
   );
