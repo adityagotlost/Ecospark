@@ -84,7 +84,7 @@ export default function Profile({ user: propUser, onUpdate }) {
 
   const currentLevel = levels.find((l, i) => user?.ecoPoints >= l.min && (user?.ecoPoints < l.max || i === levels.length - 1)) || levels[0];
   const nextLevel = levels[levels.indexOf(currentLevel) + 1];
-  const levelProgress = nextLevel ? Math.min(100, Math.round(((user?.ecoPoints - currentLevel.min) / (nextLevel.min - currentLevel.min)) * 100)) : 100;
+  const levelProgress = nextLevel ? Math.min(100, Math.round((user?.ecoPoints / nextLevel.min) * 100)) : 100;
 
   return (
     <div className="profile-page page">
