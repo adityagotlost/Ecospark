@@ -63,16 +63,33 @@ export default function EcoScan({ user, onClose, onUpdate }) {
     setIsProcessing(true);
     setError(null);
 
-    const stationId = VALID_CODES[inputCode];
-    
+    // Normalize: strip URLs, trim whitespace, uppercase
+    let normalized = inputCode.trim().toUpperCase();
+    // If it's a URL (e.g. https://ecospark.web.app?code=ECO_FEST_2024), extract the code param
+    try {
+      const url = new URL(normalized.toLowerCase());
+      const codeParam = url.searchParams.get('code') || url.searchParams.get('station');
+      if (codeParam) normalized = codeParam.toUpperCase();
+      else {
+        // Try extracting from URL path last segment
+        const parts = url.pathname.split('/');
+        normalized = parts[parts.length - 1].toUpperCase();
+      }
+    } catch (_) {
+      // Not a URL, use as-is
+    }
+    // Try direct match first, then partial match
+    let stationId = VALID_CODES[normalized];
     if (!stationId) {
-      setError(`❌ Invalid Code: "${inputCode}". Try again!`);
+      const foundKey = Object.keys(VALID_CODES).find(k => normalized.includes(k) || k.includes(normalized));
+      stationId = foundKey ? VALID_CODES[foundKey] : null;
+    }
+
+    if (!stationId) {
+      setError(`❌ Invalid Code. Make sure you're scanning an official EcoSpark QR!`);
       setIsProcessing(false);
-      // If we were scanning, go back to scanning mode after a delay
       if (mode === 'scanning') {
-        setTimeout(() => {
-          setMode('input'); // Reset to input so they can try again or restart scanner
-        }, 3000);
+        setTimeout(() => setMode('input'), 3000);
       }
       return;
     }

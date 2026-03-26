@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EcoSpark QR Posters</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Inter:wght@400;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #eef9f2; font-family: 'Inter', sans-serif; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .poster {
+    width: 100%; aspect-ratio: 3/4;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+    padding: 2.5rem 2rem;
+    background: #040c08;
+    border: 4px solid var(--color);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .poster-badge {
+    background: var(--color);
+    color: #040c08;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+    border-radius: 100px;
+  }
+  .poster-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+    line-height: 1.15;
+  }
+  .poster-title span { color: var(--color); }
+  .qr-wrap {
+    background: #f0fff4;
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 3px solid var(--color);
+    box-shadow: 0 0 40px -5px var(--color);
+  }
+  .qr-wrap img { width: 220px; height: 220px; display: block; image-rendering: pixelated; }
+  .code-label {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color);
+    letter-spacing: 0.1em;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--color);
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    word-break: break-all;
+    text-align: center;
+  }
+  .earn { color: #aaa; font-size: 0.85rem; text-align: center; }
+  .earn strong { color: #fff; font-size: 1.3rem; font-weight: 700; }
+  @media print {
+    .grid { page-break-after: always; }
+    .poster { page-break-inside: avoid; break-inside: avoid; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+
+<div class="poster" style="--color: #ffd700">
+  <div class="poster-badge">🌱 EcoSpark Eco-Station</div>
+  <div class="poster-title">🎪 <span>Eco Fest</span><br>Station</div>
+  <div class="qr-wrap"><img src="data:image/png;base64,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" alt="ECO_FEST_2024" /></div>
+  <div class="code-label">ECO_FEST_2024</div>
+  <div class="earn">Scan to earn <strong>+100 EcoPoints</strong></div>
+</div>
+
+<div class="poster" style="--color: #34d364">
+  <div class="poster-badge">🌱 EcoSpark Eco-Station</div>
+  <div class="poster-title">🌿 <span>Green Campus</span><br>Station</div>
+  <div class="qr-wrap"><img src="data:image/png;base64,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" alt="GREEN_CAMPUS" /></div>
+  <div class="code-label">GREEN_CAMPUS</div>
+  <div class="earn">Scan to earn <strong>+100 EcoPoints</strong></div>
+</div>
+
+<div class="poster" style="--color: #f97316">
+  <div class="poster-badge">🌱 EcoSpark Eco-Station</div>
+  <div class="poster-title">☀️ <span>Solar Punk</span><br>Station</div>
+  <div class="qr-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAAAklEQVR4AewaftIAAAYlSURBVO3BMa4kNpIFwKfEt+mR9z8f6QiEfK07jhbgbhemUh0Rf/z5919/B6CBCkATFYAmKgBNVACaqAA0UQFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaKIC0EQFoIkKQBMVgCYqAE1UAJqoADRRAWiiAtDETz5sjhV+nXN3+HXmWOHXOXfnkyoATVQAmqgANFEBaKIC0EQFoIkKQBMVgCYqAE1UAJqoADTxky9z7s7vZI6VbzLHyotzd17MsfLi3J1vcu7O72SOlW9SAWiiAtBEBaCJCkATFYAmKgBNVACaqAA0UQFoogLQRAWgiZ80N8fKNzl355vMsdLZHCsvzt35JnOsfJNzdzqrADRRAWiiAtBEBaCJCkATFYAmKgBNVACaqAA0UQFoogLQxE/gP5y782KOlRfn7sD/VQWgiQpAExWAJioATVQAmqgANFEBaKIC0EQFoIkKQBMVgCZ+Av9hjpUX5+68mGPlk87d4d+rAtBEBaCJCkATFYAmKgBNVACaqAA0UQFoogLQRAWgiQpAEz9p7twdfp1zdz7p3J0Xc6x0du4Ov04FoIkKQBMVgCYqAE1UAJqoADRRAWiiAtBEBaCJCkATFYAmfvJl5lihjzlWXpy709kcK/z3VACaqAA0UQFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaOInH3buDv9e5+68mGPlm5y7Qx8VgCYqAE1UAJqoADRRAWiiAtBEBaCJCkATFYAmKgBNVACa+MmHzbHy4tydF3Os/E7O3Xlx7s4nzbHy4tydF3OsfNIcK7+Tc3c6qwA0UQFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaKIC0MRPPuzcnRdzrHzSuTsv5lh5ce7OJ82x8uLcnRdzrHQ2x8qLc3e+yRwrL87d+Z1UAJqoADRRAWiiAtBEBaCJCkATFYAmKgBNVACaqAA0UQFo4icfNsfKi3N3Xsyx0tkcK580x8o3mWPlxbk7L+ZY4Z/NsfLi3J1vUgFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaKIC0EQFoImffNi5Oy/mWHlx7s6LOVZenLvzYo6VF+fuvJhj5cW5O580x8qLc3c6m2Plxbk7nzTHyifNsfLi3J1PqgA0UQFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaKIC0MRP+F/NsfLi3J0Xc6x80hwr32SOlRfn7rw4d6ezc3dezLHy4tydzioATVQAmqgANFEBaKIC0EQFoIkKQBMVgCYqAE1UAJqoADTxx59///V3+NeaY4Vf59ydT5pj5cW5Oy/mWHlx7s43qQA0UQFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaKIC0MRPPmyOFX6dc3denLvzSXOsvDh358UcKy/O3Xkxx8o3OXfnxRwrv5MKQBMVgCYqAE1UAJqoADRRAWiiAtBEBaCJCkATFYAmKgBN/OTLnLvzO5lj5ZPmWHlx7s6Lc3dezLHySXOsvDh355PmWPkm5+68mGPlxbk7n1QBaKIC0EQFoIkKQBMVgCYqAE1UAJqoADRRAWiiAtBEBaCJnzQ3x8o3OXenszlWXpy78+LcnRdzrLw4d6ezc3dezLHyO6kANFEBaKIC0EQFoIkKQBMVgCYqAE1UAJqoADRRAWiiAtDET+D/YY6VF+fufJM5Vl6cu/Pi3J3Ozt35JhWAJioATVQAmqgANFEBaKIC0EQFoIkKQBMVgCYqAE1UAJr4CfyHc3dezLHyYo6VF+fuvJhjpbM5VvhnFYAmKgBNVACaqAA0UQFoogLQRAWgiQpAExWAJioATVQAmvhJc+fu8M/O3fmkc3e+ybk7nzTHCv89FYAmKgBNVACaqAA0UQFoogLQRAWgiQpAExWAJioATVQAmvjJl5ljhV9njpUX5+580hwrL87d6ezcnRdzrHzSHCsvzt35JhWAJioATVQAmqgANFEBaKIC0EQFoIkKQBMVgCYqAE1UAJr448+///o7AA1UAJqoADRRAWiiAtBEBaCJCkATFYAmKgBNVACaqAA0UQFoogLQRAWgiQpAExWAJioATVQAmqgANFEBaKIC0EQFoIkKQBMVgCb+BwKvAMFQ8GVKAAAAAElFTkSuQmCC" alt="SOLAR_PUNK" /></div>
+  <div class="code-label">SOLAR_PUNK</div>
+  <div class="earn">Scan to earn <strong>+100 EcoPoints</strong></div>
+</div>
+
+<div class="poster" style="--color: #00e5c4">
+  <div class="poster-badge">🌱 EcoSpark Eco-Station</div>
+  <div class="poster-title">♻️ <span>Recycle Pro</span><br>Station</div>
+  <div class="qr-wrap"><img src="data:image/png;base64,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" alt="RECYCLE_PRO" /></div>
+  <div class="code-label">RECYCLE_PRO</div>
+  <div class="earn">Scan to earn <strong>+100 EcoPoints</strong></div>
+</div>
+</div>
+</body>
+</html>
