@@ -22,7 +22,7 @@ function PodiumCard({ user, rank }) {
       </div>
       <div className="podium-name">{user.name}</div>
       <div className="podium-school">{user.school}</div>
-      <div className="podium-points gradient-text">{user.ecoPoints?.toLocaleString() || 0}</div>
+      <div className="podium-points gradient-text">{user.displayPoints?.toLocaleString() || 0}</div>
       <div className="podium-pts-label">EcoPoints</div>
       <div className="podium-base" style={{ background: rs.color }} />
     </div>
@@ -53,23 +53,25 @@ export default function Leaderboard({ user }) {
       }
     } 
     
-    if (filter === 'This Week') {
-      // Sort by weekly points if available, otherwise just use a randomized mock 
-      // based on their name length+ecoPoints to show a different order for the demo.
-      list.sort((a, b) => {
-        const aWeek = a.weeklyPoints ? a.weeklyPoints.reduce((s,v)=>s+v,0) : ((a.ecoPoints || 0) % 150);
-        const bWeek = b.weeklyPoints ? b.weeklyPoints.reduce((s,v)=>s+v,0) : ((b.ecoPoints || 0) % 150);
-        return bWeek - aWeek;
-      });
-    } else {
-      list.sort((a, b) => (b.ecoPoints || 0) - (a.ecoPoints || 0));
-    }
+    // Calculate display points based on the active tab
+    list = list.map(u => {
+      let dPts = u.ecoPoints || 0;
+      if (filter === 'This Week') {
+        dPts = u.weeklyPoints ? u.weeklyPoints.reduce((a, b) => a + b, 0) : 0;
+        // If they have no weekly points at all recorded, give them a proportional slice for the demo
+        if (dPts === 0) dPts = Math.floor((u.ecoPoints || 0) * 0.15); 
+      }
+      return { ...u, displayPoints: dPts };
+    });
+
+    // Now sort by displayPoints securely
+    list.sort((a, b) => b.displayPoints - a.displayPoints);
     
     return list;
   }, [board, filter, user]);
 
-  const currentUser = user;
-  const myRank = filteredBoard.findIndex(u => u.isCurrentUser) + 1;
+  const myRankUser = filteredBoard.find(u => u.isCurrentUser);
+  const myRank = myRankUser ? filteredBoard.indexOf(myRankUser) + 1 : 0;
 
   const podium = filteredBoard.slice(0, 3);
   const rest   = filteredBoard.slice(3);
@@ -111,7 +113,7 @@ export default function Leaderboard({ user }) {
               </div>
             </div>
             <div className="mr-right">
-              <div className="mr-pts gradient-text">{currentUser?.ecoPoints?.toLocaleString() || 0}</div>
+              <div className="mr-pts gradient-text">{myRankUser?.displayPoints?.toLocaleString() || 0}</div>
               <div className="mr-pts-label">EcoPoints</div>
             </div>
           </div>
@@ -168,9 +170,9 @@ export default function Leaderboard({ user }) {
                       <span className="lb-badge-count">🏅 {entry.badges}</span>
                     </div>
                     <div className="lb-points">
-                      <span className="lb-pts-val gradient-text">{entry.ecoPoints.toLocaleString()}</span>
+                      <span className="lb-pts-val gradient-text">{entry.displayPoints?.toLocaleString() || 0}</span>
                       <div className="lb-pts-bar">
-                        <div className="lb-pts-fill" style={{ width: `${(entry.ecoPoints / board[0]?.ecoPoints) * 100}%` }} />
+                        <div className="lb-pts-fill" style={{ width: `${((entry.displayPoints || 0) / (filteredBoard[0]?.displayPoints || 1)) * 100}%` }} />
                       </div>
                     </div>
                   </div>
