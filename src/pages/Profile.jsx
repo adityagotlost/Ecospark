@@ -1,9 +1,31 @@
+import { useState } from 'react';
 import { ALL_BADGES, LESSONS, CHALLENGES } from '../store';
 import { Link } from 'react-router-dom';
+import { fbUpdateProfile } from '../firestore';
 import './Profile.css';
 
 export default function Profile({ user: propUser, onUpdate }) {
   const user = propUser;
+  const [isEditing, setIsEditing] = useState(false);
+  const [editName, setEditName] = useState(user?.name || '');
+  const [editFile, setEditFile] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSaveProfile = async () => {
+    if (!user) return;
+    setIsSaving(true);
+    try {
+      await fbUpdateProfile(user.uid, editName, editFile);
+      if(onUpdate) onUpdate();
+      setIsEditing(false);
+    } catch (e) {
+      console.error(e);
+      alert('Failed to update profile');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const earned = (user?.badges || []).map(id => ALL_BADGES.find(b => b.id === id)).filter(Boolean);
 
   const totalActivities = (user?.completedLessons?.length||0) + (user?.completedChallenges?.length||0) + (user?.completedQuizzes?.length||0);
@@ -30,11 +52,26 @@ export default function Profile({ user: propUser, onUpdate }) {
         <div className="profile-hero glass-card">
           <div className="profile-bg-glow" />
           <div className="profile-avatar-wrap">
-            <div className="profile-avatar">{user?.avatar}</div>
+            <div className="profile-avatar">
+              {user?.photoURL ? <img src={user.photoURL} alt="avatar" className="avatar-img" /> : user?.avatar}
+            </div>
             <div className="profile-level-ring" />
           </div>
           <div className="profile-info">
-            <h1 className="profile-name">{user?.name}</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.4rem' }}>
+              <h1 className="profile-name" style={{ marginBottom: 0 }}>{user?.name}</h1>
+              <button 
+                className="btn-outline" 
+                style={{ padding: '0.3rem 0.8rem', fontSize: '0.8rem', borderRadius: '4px' }}
+                onClick={() => {
+                  setEditName(user?.name || '');
+                  setEditFile(null);
+                  setIsEditing(true);
+                }}
+              >
+                ✎ Edit
+              </button>
+            </div>
             <p className="profile-meta">🏫 {user?.school} &nbsp;·&nbsp; 📚 Grade {user?.grade}</p>
             <p className="profile-join">Member since {joinDate}</p>
             
@@ -135,6 +172,45 @@ export default function Profile({ user: propUser, onUpdate }) {
         </div>
 
       </div>
+
+      {isEditing && (
+        <div className="modal-overlay" onClick={() => !isSaving && setIsEditing(false)}>
+          <div className="modal-content glass-card" onClick={e => e.stopPropagation()}>
+            <h2 style={{ marginBottom: '1.5rem', fontFamily: 'var(--font-display)' }}>Edit Profile</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>Name</label>
+                <input 
+                  type="text" 
+                  value={editName} 
+                  onChange={e => setEditName(e.target.value)}
+                  className="input-field"
+                  style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--color-border)', background: 'rgba(0,0,0,0.2)', color: 'white' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>Profile Image</label>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={e => {
+                    if(e.target.files[0]) setEditFile(e.target.files[0]);
+                  }}
+                  className="input-field"
+                  style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--color-border)', background: 'rgba(0,0,0,0.2)', color: 'white' }}
+                />
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '2rem' }}>
+              <button className="btn-outline" onClick={() => setIsEditing(false)} disabled={isSaving}>Cancel</button>
+              <button className="btn-primary" onClick={handleSaveProfile} disabled={isSaving}>
+                {isSaving ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

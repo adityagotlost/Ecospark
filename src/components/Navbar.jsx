@@ -58,7 +58,7 @@ export default function Navbar({ user, onLogout }) {
                 <span className="points-val">{user.ecoPoints?.toLocaleString() || 0}</span>
               </div>
               <Link to="/profile" className="nav-avatar" title="Profile">
-                {user.avatar}
+                {user.photoURL ? <img src={user.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : user.avatar}
               </Link>
               <button className="btn-logout" onClick={handleLogout} id="navbar-logout-btn">
                 Logout

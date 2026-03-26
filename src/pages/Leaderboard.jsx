@@ -19,7 +19,7 @@ function PodiumCard({ user, rank }) {
     >
       <div className="podium-medal">{rs.icon}</div>
       <div className="podium-avatar" style={{ background: rs.bg, border: `2px solid ${rs.color}`, boxShadow: rs.glow }}>
-        {user.avatar || '🌱'}
+        {user.photoURL ? <img src={user.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : (user.avatar || '🌱')}
       </div>
       <div className="podium-name">{user.name}</div>
       <div className="podium-school">{user.school}</div>
@@ -155,7 +155,9 @@ function LeaderboardContent({ user }) {
               <div className="mr-label">Your Rank</div>
             </div>
             <div className="mr-mid">
-              <div className="mr-avatar">{currentUser?.avatar}</div>
+              <div className="mr-avatar">
+                {currentUser?.photoURL ? <img src={currentUser.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : currentUser?.avatar}
+              </div>
               <div>
                 <div className="mr-name">{currentUser?.name}</div>
                 <div className="mr-school">{currentUser?.school}</div>
@@ -206,7 +208,9 @@ function LeaderboardContent({ user }) {
                       {rank <= 10 ? <span className="rank-num top10">{rank}</span> : <span className="rank-num">{rank}</span>}
                     </span>
                     <div className="lb-user">
-                      <div className="lb-avatar">{entry.avatar}</div>
+                      <div className="lb-avatar">
+                        {entry.photoURL ? <img src={entry.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : entry.avatar}
+                      </div>
                       <div className="lb-user-info">
                         <div className="lb-user-name">
                           {entry.name}

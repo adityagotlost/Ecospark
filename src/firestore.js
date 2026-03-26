@@ -14,7 +14,8 @@ import {
   doc, getDoc, setDoc, updateDoc, collection,
   query, orderBy, limit, getDocs, increment, arrayUnion, onSnapshot,
 } from 'firebase/firestore';
-import { auth, db } from './firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth, db, storage } from './firebase';
 import { ALL_BADGES } from './store';
 
 // ── Auth ──────────────────────────────────────────────────────
@@ -133,6 +134,20 @@ export async function fbGetUser(uid) {
 
 export async function fbUpdateUser(uid, updates) {
   await updateDoc(doc(db, 'users', uid), updates);
+}
+
+export async function fbUpdateProfile(uid, name, photoFile) {
+  const updates = { name };
+  
+  if (photoFile) {
+    const fileRef = ref(storage, `avatars/${uid}-${Date.now()}`);
+    await uploadBytes(fileRef, photoFile);
+    const photoURL = await getDownloadURL(fileRef);
+    updates.photoURL = photoURL;
+  }
+  
+  await fbUpdateUser(uid, updates);
+  return updates;
 }
 
 // ── Eco Points ────────────────────────────────────────────────
@@ -254,6 +269,7 @@ export function onLeaderboardChange(callback) {
         name:      u.name,
         school:    u.school,
         avatar:    u.avatar,
+        photoURL:  u.photoURL,
         ecoPoints: u.ecoPoints || 0,
         badges:    u.badges?.length || 0,
       };
