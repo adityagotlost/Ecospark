@@ -11,6 +11,7 @@ import { LESSONS, CHALLENGES, ALL_BADGES, QUIZZES } from '../store';
 import OnboardingModal from '../components/OnboardingModal';
 import EcoScan from '../components/EcoScan';
 import Confetti from '../components/Confetti';
+import SplitText from '../components/SplitText';
 import './Dashboard.css';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -259,8 +260,18 @@ export default function Dashboard({ user, onUpdate }) {
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <div className="welcome-text">
-            <div className="welcome-greeting">
-              Welcome back, <span className="gradient-text">{user?.name?.split(' ')[0] || 'Eco Hero'}</span> 🌿
+            <div className="welcome-greeting" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem' }}>
+              <SplitText text="Welcome back," delay={40} />
+              <span className="gradient-text">
+                <SplitText text={user?.name?.split(' ')[0] || 'Eco Hero'} delay={40} animationOffset={0.52} />
+              </span>
+              <motion.span 
+                initial={{ opacity: 0, scale: 0 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
+              >
+                🌿
+              </motion.span>
             </div>
             <div className="welcome-sub">
               🔥 {user?.streak || 1}-day streak · {user?.school || 'Your School'}
