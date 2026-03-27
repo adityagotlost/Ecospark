@@ -2,10 +2,11 @@ import QRCode from 'qrcode';
 import { writeFileSync } from 'fs';
 
 const stations = [
-  { code: 'ECO_FEST_2024', name: 'Eco Fest Station',   emoji: '🎪', color: '#ffd700' },
-  { code: 'GREEN_CAMPUS',  name: 'Green Campus Station', emoji: '🌿', color: '#34d364' },
-  { code: 'SOLAR_PUNK',    name: 'Solar Punk Station',  emoji: '☀️', color: '#f97316' },
-  { code: 'RECYCLE_PRO',   name: 'Recycle Pro Station', emoji: '♻️', color: '#00e5c4' },
+  { code: 'ECO_FEST_2024', name: 'Eco Fest Station',   emoji: '🎪', color: '#ffd700', points: 100 },
+  { code: 'GREEN_CAMPUS',  name: 'Green Campus Station', emoji: '🌿', color: '#34d364', points: 100 },
+  { code: 'SOLAR_PUNK',    name: 'Solar Punk Station',  emoji: '☀️', color: '#f97316', points: 100 },
+  { code: 'RECYCLE_PRO',   name: 'Recycle Pro Station', emoji: '♻️', color: '#00e5c4', points: 100 },
+  { code: 'MEGA_SPARK_10K', name: 'Mega Spark Station', emoji: '💎', color: '#fbbf24', points: 10000 },
 ];
 
 const qrDataURLs = {};
@@ -94,7 +95,7 @@ ${stations.map(s => `
   <div class="poster-title">${s.emoji} <span>${s.name.replace(' Station','')}</span><br>Station</div>
   <div class="qr-wrap"><img src="${qrDataURLs[s.code]}" alt="${s.code}" /></div>
   <div class="code-label">${s.code}</div>
-  <div class="earn">Scan to earn <strong>+100 EcoPoints</strong></div>
+  <div class="earn">Scan to earn <strong>+${s.points.toLocaleString()} EcoPoints</strong></div>
 </div>`).join('\n')}
 </div>
 </body>

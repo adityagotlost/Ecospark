@@ -3,9 +3,9 @@ import './Badges.css';
 
 export default function Badges({ user }) {
   const earned = user?.badges || [];
-  const earnedCount = earned.length;
+  const earnedCount = ALL_BADGES.filter(b => earned.includes(b.id)).length;
   const totalCount  = ALL_BADGES.length;
-  const pct = Math.round((earnedCount / totalCount) * 100);
+  const pct = totalCount > 0 ? Math.round((earnedCount / totalCount) * 100) : 0;
 
   return (
     <div className="badges-page page">

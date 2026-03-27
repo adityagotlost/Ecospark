@@ -268,7 +268,7 @@ export function onLeaderboardChange(callback) {
         photoURL:  u.photoURL,
         ecoPoints: u.ecoPoints || 0,
         weeklyPoints: u.weeklyPoints || [0,0,0,0,0,0,0],
-        badges:    u.badges?.length || 0,
+        badges:    [...new Set(u.badges || [])].filter(id => ALL_BADGES.some(b => b.id === id)).length,
       };
     });
     callback(list);

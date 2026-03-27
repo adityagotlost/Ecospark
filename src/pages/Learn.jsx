@@ -75,7 +75,10 @@ export default function Learn({ user, onUpdate }) {
     onUpdate?.();
   };
 
-  const filtered = filter === 'All' ? LESSONS : LESSONS.filter(l => l.category === filter);
+  const DIFFICULTY_ORDER = { Beginner: 0, Intermediate: 1, Advanced: 2 };
+  const filtered = (filter === 'All' ? LESSONS : LESSONS.filter(l => l.category === filter))
+    .slice()
+    .sort((a, b) => (DIFFICULTY_ORDER[a.difficulty] ?? 0) - (DIFFICULTY_ORDER[b.difficulty] ?? 0));
 
   return (
     <div className="learn-page page">

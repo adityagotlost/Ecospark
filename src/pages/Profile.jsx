@@ -78,7 +78,7 @@ export default function Profile({ user: propUser, onUpdate }) {
   };
 
   // ── derived data ───────────────────────────────────────────────
-  const earned = (user?.badges || []).map(id => ALL_BADGES.find(b => b.id === id)).filter(Boolean);
+  const earned = [...new Set(user?.badges || [])].map(id => ALL_BADGES.find(b => b.id === id)).filter(Boolean);
   const totalActivities = (user?.completedLessons?.length || 0) + (user?.completedChallenges?.length || 0) + (user?.completedQuizzes?.length || 0);
   const joinDate = user?.joinedAt
     ? new Date(user.joinedAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -259,7 +259,7 @@ export default function Profile({ user: propUser, onUpdate }) {
             { label: 'Lessons Done',     value: user?.completedLessons?.length || 0,          icon: '📚', color: '#00e5c4' },
             { label: 'Challenges Done',  value: user?.completedChallenges?.length || 0,       icon: '🎯', color: '#a78bfa' },
             { label: 'Quizzes Done',     value: user?.completedQuizzes?.length || 0,          icon: '🧠', color: '#f59e0b' },
-            { label: 'Badges Earned',    value: user?.badges?.length || 0,                    icon: '🏅', color: '#ffd700' },
+            { label: 'Badges Earned',    value: earned.length,                                icon: '🏅', color: '#ffd700' },
           ].map((s, i) => (
             <div key={i} className="prof-stat glass-card" style={{ '--ps-color': s.color }}>
               <div className="ps-icon">{s.icon}</div>

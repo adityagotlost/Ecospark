@@ -7,7 +7,8 @@ const VALID_CODES = {
   'ECO_FEST_2024': 'station-fest',
   'GREEN_CAMPUS': 'station-campus',
   'SOLAR_PUNK': 'station-solar',
-  'RECYCLE_PRO': 'station-recycle'
+  'RECYCLE_PRO': 'station-recycle',
+  'MEGA_SPARK_10K': 'station-mega'
 };
 
 export default function EcoScan({ user, onClose, onUpdate }) {
@@ -16,6 +17,7 @@ export default function EcoScan({ user, onClose, onUpdate }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [scannedMega, setScannedMega] = useState(false);
   const qrRef = useRef(null);
 
   useEffect(() => {
@@ -101,7 +103,9 @@ export default function EcoScan({ user, onClose, onUpdate }) {
     }
 
     try {
-      await fbScanEcoStation(user.uid, stationId, 100);
+      const isMega = stationId === 'station-mega';
+      await fbScanEcoStation(user.uid, stationId, isMega ? 10000 : 100);
+      setScannedMega(isMega);
       setSuccess(true);
       setTimeout(() => {
         onUpdate?.();
@@ -133,8 +137,8 @@ export default function EcoScan({ user, onClose, onUpdate }) {
           <div className="ecoscan-success anim-pop">
             <div className="success-icon">🎉</div>
             <h3>Station Verified!</h3>
-            <p>+100 EcoPoints Earned</p>
-            <div className="success-badge">📍 Eco Explorer Badge Unlocked!</div>
+            <p>{scannedMega ? '+10,000' : '+100'} EcoPoints Earned</p>
+            <div className="success-badge">📍 {scannedMega ? 'Mega Spark Unlocked!' : 'Eco Explorer Badge Unlocked!'}</div>
           </div>
         ) : mode === 'scanning' ? (
           <div className="scanner-view">
