@@ -68,6 +68,10 @@ export const Component = () => {
           animation: scroll-right 30s linear infinite;
         }
 
+        .scroll-container-outer:hover .infinite-scroll-track {
+          animation-play-state: paused;
+        }
+
         @keyframes scroll-right {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
