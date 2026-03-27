@@ -40,11 +40,16 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [newlyEarned, setNewlyEarned] = useState(null);
   const badgesRef = useRef([]);
+  const streakChecked = useRef(false);
 
   useEffect(() => {
     const unsub = onUserChange((userData) => {
       setLoading(false);
       if (userData) {
+        if (!streakChecked.current) {
+          streakChecked.current = true;
+          import('./firestore').then(({ fbCheckStreak }) => fbCheckStreak(userData.uid));
+        }
         const currentBadges = userData.badges || [];
         const oldBadges = badgesRef.current;
         if (oldBadges.length > 0 && currentBadges.length > oldBadges.length) {

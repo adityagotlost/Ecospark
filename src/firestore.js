@@ -77,7 +77,12 @@ export async function fbLogin({ email, password }) {
   // Streak logic
   const lastLogin  = new Date(user.lastLogin);
   const today      = new Date();
-  const diffDays   = Math.floor((today - lastLogin) / 86400000);
+  
+  // Calculate difference in calendar days
+  const lastLoginDate = new Date(lastLogin.getFullYear(), lastLogin.getMonth(), lastLogin.getDate());
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffDays = Math.round((todayDate - lastLoginDate) / 86400000);
+  
   const newStreak  = diffDays === 1 ? (user.streak || 0) + 1 : diffDays > 1 ? 1 : (user.streak || 1);
 
   await updateDoc(doc(db, 'users', uid), {
@@ -93,6 +98,27 @@ export function fbLogout() {
 
 export async function fbResetPassword(email) {
   return sendPasswordResetEmail(auth, email);
+}
+
+export async function fbCheckStreak(uid) {
+  const snap = await getDoc(doc(db, 'users', uid));
+  if (!snap.exists()) return;
+  const user = snap.data();
+  
+  const lastLogin = new Date(user.lastLogin || user.joinedAt || new Date());
+  const today = new Date();
+  
+  const lastLoginDate = new Date(lastLogin.getFullYear(), lastLogin.getMonth(), lastLogin.getDate());
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffDays = Math.round((todayDate - lastLoginDate) / 86400000);
+  
+  if (diffDays > 0) {
+    const newStreak = diffDays === 1 ? (user.streak || 0) + 1 : 1;
+    await updateDoc(doc(db, 'users', uid), {
+      lastLogin: today.toISOString(),
+      streak: newStreak
+    });
+  }
 }
 
 export function onUserChange(callback) {

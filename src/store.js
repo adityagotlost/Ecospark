@@ -45,8 +45,13 @@ export function loginUser({ email, password }) {
   // update streak
   const lastLogin = new Date(user.lastLogin);
   const today = new Date();
-  const diffDays = Math.floor((today - lastLogin) / 86400000);
-  if (diffDays === 1) user.streak += 1;
+  
+  // Calculate difference in calendar days
+  const lastLoginDate = new Date(lastLogin.getFullYear(), lastLogin.getMonth(), lastLogin.getDate());
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffDays = Math.round((todayDate - lastLoginDate) / 86400000);
+  
+  if (diffDays === 1) user.streak = (user.streak || 0) + 1;
   else if (diffDays > 1) user.streak = 1;
   user.lastLogin = today.toISOString();
   db[email] = user;
