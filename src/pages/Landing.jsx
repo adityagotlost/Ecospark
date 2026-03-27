@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Landing.css';
+import { DemoOne } from '../components/ui/demo';
 
 const LEAVES = Array.from({ length: 18 }, (_, i) => ({
   id: i,
@@ -152,6 +153,11 @@ export default function Landing({ user }) {
             {user ? '🚀 Go to Dashboard' : '🌱 Join EcoSpark Free'}
           </Link>
         </div>
+      </section>
+
+      {/* Image Auto Slider Demo */}
+      <section className="demo-section">
+        <DemoOne />
       </section>
 
       {/* Social Links Card */}
