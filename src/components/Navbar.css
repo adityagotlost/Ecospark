@@ -31,10 +31,9 @@
   flex-shrink: 0;
 }
 .logo-img { 
-  height: 32px; 
+  height: 38px; /* Increased for better presence */
   width: auto; 
-  filter: brightness(1.2); 
-  border-radius: 6px;
+  object-fit: contain;
 }
 .logo-spark { color: var(--color-primary); }
 

@@ -17,6 +17,7 @@ import Calculator from './pages/Calculator';
 import Garden from './pages/Garden';
 import BadgeUnlockModal from './components/BadgeUnlockModal';
 import EcoBuddy from './components/EcoBuddy';
+import Preloader from './components/Preloader';
 import { ALL_BADGES } from './store';
 
 function ProtectedRoute({ user, loading, children }) {
@@ -38,9 +39,23 @@ function ProtectedRoute({ user, loading, children }) {
 export default function App() {
   const [user, setUser]       = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(false);
   const [newlyEarned, setNewlyEarned] = useState(null);
   const badgesRef = useRef([]);
   const streakChecked = useRef(false);
+
+  useEffect(() => {
+    // Check if preloader has already been shown in this session
+    const hasShown = sessionStorage.getItem('ecospark_loader_shown');
+    if (!hasShown) {
+      setShowPreloader(true);
+      const timer = setTimeout(() => {
+        setShowPreloader(false);
+        sessionStorage.setItem('ecospark_loader_shown', 'true');
+      }, 7000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   useEffect(() => {
     const unsub = onUserChange((userData) => {
@@ -88,6 +103,7 @@ export default function App() {
 
   return (
     <>
+      <Preloader isLoading={showPreloader} />
       <Navbar user={user} onLogout={handleLogout} />
       <AnimatePresence>
         {newlyEarned && (
