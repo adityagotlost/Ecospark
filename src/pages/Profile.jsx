@@ -208,7 +208,41 @@ export default function Profile({ user: propUser, onUpdate }) {
           </div>
         </div>
 
+        {/* ── Certificates ── */}
+        <div className="profile-section">
+          <div className="ps-header">
+            <h2 className="ps-title">🏆 My Certificates</h2>
+            <span className="ps-view" style={{ opacity: 0.6, fontSize: '0.8rem' }}>
+              {CERTIFICATE_MILESTONES.filter(c => c.condition(user)).length} / {CERTIFICATE_MILESTONES.length}
+            </span>
+          </div>
+          <div className="cert-milestone-grid">
+            {CERTIFICATE_MILESTONES.map(cert => {
+              const isEarned = cert.condition(user);
+              return (
+                <div
+                  key={cert.id}
+                  className={`cert-milestone-card glass-card ${isEarned ? 'earned' : 'locked'}`}
+                  style={{ '--cm-color': cert.color, cursor: isEarned ? 'pointer' : 'default' }}
+                  onClick={() => isEarned && setSelectedCert(cert)}
+                >
+                  <div className="cmc-icon-wrap" style={isEarned ? { background: `${cert.color}15` } : {}}>
+                    {cert.icon}
+                    {!isEarned && <span style={{ fontSize: '0.8rem' }}>🔒</span>}
+                  </div>
+                  <div className="cmc-body">
+                    <div className="cmc-title" style={isEarned ? { color: cert.color } : {}}>{cert.title}</div>
+                    <div className="cmc-sub">{cert.subtitle}</div>
+                    {isEarned && <span style={{ color: cert.color, fontSize: '0.7rem' }}>Click to view & download →</span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* ── Activity ── */}
+
         <div className="profile-section">
           <h2 className="ps-title">⚡ Recent Activity <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>({totalAct} total)</span></h2>
           <div className="activity-list glass-card">
