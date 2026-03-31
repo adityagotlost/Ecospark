@@ -389,7 +389,7 @@ export default function Dashboard({ user, onUpdate }) {
           <div className="recent-badges-section glass-card">
             <div className="rb-header">
               <span>🏅 Recently Earned Badges</span>
-              <Link to="/badges" className="rb-view">View All →</Link>
+              <Link to="/profile" className="rb-view">View All →</Link>
             </div>
             <div className="rb-list">
               {recentBadges.map(id => <RecentBadge key={id} badgeId={id} />)}

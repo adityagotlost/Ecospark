@@ -14,7 +14,7 @@ const FEATURES = [
   { icon: '🌍', title: 'Real-World Challenges', desc: 'Plant trees, segregate waste, save water — and earn rewards for real sustainable actions.' },
   { icon: '🏆', title: 'Live Leaderboard',      desc: 'School-level and national competitions. Climb the ranks and earn exclusive digital badges.' },
   { icon: '📊', title: 'Impact Tracking',       desc: 'Visualize your environmental impact with beautiful dashboards and progress charts.' },
-  { icon: '🏅', title: 'Digital Badges',        desc: '10+ achievement badges to unlock. Show them off on your profile!' },
+  { icon: '🤖', title: 'AI Eco-Buddy',        desc: 'Your 24/7 AI-powered environmental guide. Ask anything, get instant personalized advice.' },
   { icon: '🤝', title: 'Community Action',      desc: 'Join eco-clubs, collaborate on challenges, and inspire your community.' },
 ];
 

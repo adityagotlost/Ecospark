@@ -1,28 +1,24 @@
-import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
-const NAV_LINKS = [
-  { path: '/dashboard',   label: 'Dashboard',   icon: '🏠' },
-  { path: '/learn',       label: 'Learn',        icon: '📚' },
-  { path: '/quizzes',     label: 'Quizzes',      icon: '🧠' },
-  { path: '/challenges',  label: 'Challenges',   icon: '🎯' },
-  { path: '/garden',      label: 'Garden',       icon: '🌳' },
-  { path: '/leaderboard', label: 'Leaderboard',  icon: '🏆' },
-  { path: '/badges',      label: 'Badges',       icon: '🏅' },
-  { path: '/calculator',  label: 'Calculator',   icon: '🌍' },
-];
-
-export default function Navbar({ user, onLogout }) {
-  const navigate = useNavigate();
-  const location = useLocation();
+const Navbar = ({ user, onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
-  const handleLogout = () => {
-    onLogout();
-    navigate('/');
+  // Close menu on navigation
+  useEffect(() => {
     setMenuOpen(false);
-  };
+  }, [location.pathname]);
+
+  const navLinks = [
+    { name: 'Dashboard', path: '/dashboard', icon: '📊' },
+    { name: 'Learn', path: '/learn', icon: '📖' },
+    { name: 'Quizzes', path: '/quizzes', icon: '🎯' },
+    { name: 'Challenges', path: '/challenges', icon: '⚔️' },
+    { name: 'Leaderboard', path: '/leaderboard', icon: '🏆' },
+    { name: 'Profile', path: '/profile', icon: '👤' },
+  ];
 
   return (
     <nav className="navbar">
@@ -33,73 +29,75 @@ export default function Navbar({ user, onLogout }) {
           <span className="logo-text">Eco<span className="logo-spark">Spark</span></span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop Links */}
         {user && (
           <div className="navbar-links">
-            {NAV_LINKS.map(l => (
-              <Link
-                key={l.path}
-                to={l.path}
-                className={`nav-link ${location.pathname === l.path ? 'active' : ''}`}
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path} 
+                to={link.path} 
+                className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
               >
-                <span className="nav-icon">{l.icon}</span>
-                {l.label}
+                <span className="nav-icon">{link.icon}</span>
+                {link.name}
               </Link>
             ))}
           </div>
         )}
 
-        {/* Right side */}
+        {/* Desktop Right Side */}
         <div className="navbar-right">
           {user ? (
             <>
-              <div className="nav-points" title="Lifetime EcoPoints (Rank/Level)">
+              <div className="nav-points">
                 <span className="points-icon">⚡</span>
-                <span className="points-val">{user.ecoPoints?.toLocaleString() || 0}</span>
+                <span>{(user?.ecoPoints || 0).toLocaleString()}</span>
               </div>
-              <Link to="/profile" className="nav-avatar" title="Profile">
-                {user.photoURL ? <img src={user.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : user.avatar}
-              </Link>
-              <button className="btn-logout" onClick={handleLogout} id="navbar-logout-btn">
-                Logout
+              <button 
+                className={`hamburger ${menuOpen ? 'open' : ''}`} 
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+              >
+                <span />
+                <span />
+                <span />
               </button>
+              <button className="btn-logout" onClick={onLogout}>Logout</button>
             </>
           ) : (
-            <Link to="/auth" className="btn-primary" id="navbar-login-btn">
-              Get Started
-            </Link>
-          )}
-
-          {/* Hamburger */}
-          {user && (
-            <button
-              className={`hamburger ${menuOpen ? 'open' : ''}`}
-              onClick={() => setMenuOpen(!menuOpen)}
-              id="navbar-hamburger"
-              aria-label="Toggle menu"
-            >
-              <span /><span /><span />
-            </button>
+            <Link to="/auth" className="btn-primary">Get Started</Link>
           )}
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {user && menuOpen && (
-        <div className="mobile-menu">
-          {NAV_LINKS.map(l => (
-            <Link
-              key={l.path}
-              to={l.path}
-              className={`mobile-link ${location.pathname === l.path ? 'active' : ''}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {l.icon} {l.label}
-            </Link>
-          ))}
-          <button className="mobile-logout" onClick={handleLogout}>🚪 Logout</button>
+      {/* Mobile Menu */}
+      {menuOpen && user && (
+        <div className="mobile-menu glass-card anim-fade-in">
+          <div className="mobile-points">
+            <span className="m-pts-label">EcoPoints</span>
+            <span className="m-pts-val">⚡ {(user?.ecoPoints || 0).toLocaleString()}</span>
+          </div>
+          
+          <div className="mobile-links-grid">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path} 
+                to={link.path} 
+                className={`mobile-link ${location.pathname === link.path ? 'active' : ''}`}
+              >
+                <span className="nav-icon">{link.icon}</span>
+                {link.name}
+              </Link>
+            ))}
+          </div>
+          
+          <button className="mobile-logout" onClick={onLogout}>
+            <span>🚪</span> Sign Out
+          </button>
         </div>
       )}
     </nav>
   );
-}
+};
+
+export default Navbar;

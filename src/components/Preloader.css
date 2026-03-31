@@ -135,4 +135,28 @@
   100% { transform: translateY(-400%); }
 }
 
+/* Mobile Optimizations */
+@media (max-width: 600px) {
+  .brand-name {
+    font-size: 2rem;
+  }
+  
+  .words-loader-container {
+    font-size: 18px;
+    height: 32px;
+    padding: 0 1rem;
+    gap: 0.35rem;
+  }
+
+  .words {
+    min-width: 130px;
+  }
+  
+  .blob {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+
 
