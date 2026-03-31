@@ -92,39 +92,27 @@ export default function Auth({ onAuth }) {
 
   return (
     <div className="auth-page page">
-      <div className="auth-bg-orbs">
-        <div className="auth-orb auth-orb-1" />
-        <div className="auth-orb auth-orb-2" />
-      </div>
-
       <div className="auth-container">
         {/* Left panel */}
         <div className="auth-left">
           <div className="auth-brand">
-            <div className="auth-logo">🌱</div>
-            <h1>EcoSpark</h1>
-            <p>India's Gamified Environmental Learning Platform</p>
+            <h1 className="auth-logo-text">EcoSpark</h1>
+            <p>India's leading gamified environmental learning platform for students.</p>
           </div>
           <div className="auth-perks">
             {[
-              '🏆 Earn EcoPoints & climb the leaderboard',
+              '🏆 Earn EcoPoints for your school',
               '🎯 Complete real-world eco challenges',
               '🏅 Unlock exclusive digital badges',
               '📊 Track your environmental impact',
-              '🌍 SDG-aligned, NEP 2020 ready',
-              '🔥 Real-time leaderboard powered by Firebase',
             ].map((p, i) => (
               <div key={i} className="auth-perk">{p}</div>
             ))}
           </div>
-          <div className="auth-firebase-badge">
-            <span>⚡ Powered by</span>
-            <span className="fb-logo">Firebase</span>
-          </div>
         </div>
 
         {/* Right panel */}
-        <div className="auth-right glass-card">
+        <div className="auth-right">
           <div className="auth-tabs">
             <button
               className={`auth-tab ${tab === 'login' ? 'active' : ''}`}

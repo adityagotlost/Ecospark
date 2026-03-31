@@ -29,7 +29,7 @@ export default function Navbar({ user, onLogout }) {
       <div className="navbar-inner">
         {/* Logo */}
         <Link to="/" className="navbar-logo">
-          <span className="logo-icon">🌱</span>
+          <img src="/logo.png" alt="EcoSpark Logo" className="logo-img" />
           <span className="logo-text">Eco<span className="logo-spark">Spark</span></span>
         </Link>
 
