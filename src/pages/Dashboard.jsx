@@ -178,9 +178,15 @@ function DailyGreenTip() {
   return (
     <motion.div 
       className="daily-green-tip glass-card"
+      style={{ cursor: 'pointer' }}
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -5, scale: 1.02 }}
+      onClick={() => {
+        window.dispatchEvent(new CustomEvent('ecospark_chat_trigger', { 
+          detail: { message: `I just read this Eco Tip: "${tip?.text}". Can you tell me more about its environmental impact?` } 
+        }));
+      }}
     >
       <div className="dt-header">
         <span className="dt-tag">💡 Eco Tip</span>
@@ -193,7 +199,10 @@ function DailyGreenTip() {
           <p className="dt-text">"{tip?.text}"</p>
         )}
       </div>
-      <Link to="/insights" className="dt-explore">View AI Insights →</Link>
+      <div className="dt-footer">
+        <Link to="/insights" className="dt-explore" onClick={(e) => e.stopPropagation()}>View AI Insights →</Link>
+        <span className="dt-chat-hint">Chat with Eco-Buddy 💬</span>
+      </div>
     </motion.div>
   );
 }

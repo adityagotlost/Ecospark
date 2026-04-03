@@ -329,3 +329,24 @@
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
+
+.dt-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.dt-chat-hint {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  opacity: 0;
+  transform: translateX(5px);
+  transition: all 0.3s ease;
+}
+
+.daily-green-tip:hover .dt-chat-hint {
+  opacity: 1;
+  transform: translateX(0);
+}

@@ -41,12 +41,10 @@ export default function EcoBuddy() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async (e) => {
-    if (e) e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const sendMessage = async (text) => {
+    if (!text.trim() || isLoading) return;
 
-    const userMsg = input.trim();
-    setInput('');
+    const userMsg = text.trim();
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsLoading(true);
 
@@ -54,21 +52,14 @@ export default function EcoBuddy() {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) throw new Error("API Key missing");
 
-      // Dynamically import the SDK
       const { GoogleGenerativeAI } = await import('@google/generative-ai');
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const chat = model.startChat({
         history: [
-          {
-            role: "user",
-            parts: [{ text: ECO_BUDDY_PROMPT }],
-          },
-          {
-            role: "model",
-            parts: [{ text: "Understood! I am Eco-Buddy." }],
-          },
+          { role: "user", parts: [{ text: ECO_BUDDY_PROMPT }] },
+          { role: "model", parts: [{ text: "Understood! I am Eco-Buddy." }] },
           ...messages
              .filter(m => m.role === 'user' || m.role === 'buddy')
              .map(m => ({
@@ -80,9 +71,7 @@ export default function EcoBuddy() {
 
       const result = await chat.sendMessage(userMsg);
       const dataText = result.response.text();
-
       setMessages(prev => [...prev, { role: 'buddy', text: dataText }]);
-
     } catch (err) {
       console.error("EcoBuddy API Error:", err);
       setMessages(prev => [...prev, { 
@@ -93,6 +82,25 @@ export default function EcoBuddy() {
       setIsLoading(false);
     }
   };
+
+  const handleSend = async (e) => {
+    if (e) e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    const msg = input;
+    setInput('');
+    await sendMessage(msg);
+  };
+
+  useEffect(() => {
+    const handleTrigger = (e) => {
+      const { message } = e.detail;
+      setIsOpen(true);
+      if (message) sendMessage(message);
+    };
+
+    window.addEventListener('ecospark_chat_trigger', handleTrigger);
+    return () => window.removeEventListener('ecospark_chat_trigger', handleTrigger);
+  }, [messages, isLoading]); // Re-bind so sendMessage sees latest state if needed
 
   return (
     <div className="ecobuddy-root">

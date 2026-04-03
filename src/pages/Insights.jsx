@@ -128,10 +128,16 @@ export default function Insights() {
               <motion.div 
                 key={idx}
                 className="insight-card"
+                style={{ cursor: 'pointer' }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('ecospark_chat_trigger', { 
+                    detail: { message: `Tell me more about this: ${item.title}. Summary: ${item.body}` } 
+                  }));
+                }}
               >
                 <div className="card-accent" />
                 <span className="insight-tag">{item.tag || activeTopic}</span>
@@ -139,6 +145,7 @@ export default function Insights() {
                 <p>{item.body}</p>
                 <div className="insight-footer">
                   <span className="source-pill">Via {item.source || 'EcoSpark Intelligence'}</span>
+                  <span className="chat-hint">Chat with Eco-Buddy 💬</span>
                 </div>
               </motion.div>
             ))}

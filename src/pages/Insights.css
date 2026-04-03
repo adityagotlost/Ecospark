@@ -150,6 +150,20 @@
   border-radius: 4px;
 }
 
+.chat-hint {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+
+.insight-card:hover .chat-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .shimmer-card {
   padding: 2rem;
   background: var(--color-bg-navbar);
