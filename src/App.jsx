@@ -41,8 +41,19 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [showPreloader, setShowPreloader] = useState(false);
   const [newlyEarned, setNewlyEarned] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem('ecospark_theme') || 'dark');
   const badgesRef = useRef([]);
   const streakChecked = useRef(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('ecospark_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
 
   useEffect(() => {
     // Check if preloader has already been shown in this session
@@ -104,7 +115,8 @@ export default function App() {
   return (
     <>
       <Preloader isLoading={showPreloader} />
-      <Navbar user={user} onLogout={handleLogout} />
+      <Navbar user={user} onLogout={handleLogout} theme={theme} onToggleTheme={toggleTheme} />
+
       <AnimatePresence>
         {newlyEarned && (
           <BadgeUnlockModal 

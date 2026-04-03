@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
-const Navbar = ({ user, onLogout }) => {
+const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -54,6 +54,13 @@ const Navbar = ({ user, onLogout }) => {
                 <span>{(user?.ecoPoints || 0).toLocaleString()}</span>
               </div>
               <button 
+                className="btn-theme" 
+                onClick={onToggleTheme} 
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? '☀️' : '🌙'}
+              </button>
+              <button 
                 className={`hamburger ${menuOpen ? 'open' : ''}`} 
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
@@ -63,9 +70,19 @@ const Navbar = ({ user, onLogout }) => {
                 <span />
               </button>
               <button className="btn-logout" onClick={onLogout}>Logout</button>
+
             </>
           ) : (
-            <Link to="/auth" className="btn-primary">Get Started</Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+              <button 
+                className="btn-theme" 
+                onClick={onToggleTheme} 
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? '☀️' : '🌙'}
+              </button>
+              <Link to="/auth" className="btn-primary">Get Started</Link>
+            </div>
           )}
         </div>
       </div>
