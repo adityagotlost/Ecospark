@@ -1,3 +1,42 @@
+/* ── Impact Ticker ── */
+.impact-ticker-wrapper {
+  background: rgba(52, 211, 100, 0.05);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.6rem 0;
+  margin: -50px -5% 2.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.impact-ticker {
+  display: inline-flex;
+  animation: ticker-slide 60s linear infinite;
+}
+
+.ticker-content {
+  display: flex;
+  gap: 3rem;
+  padding-right: 3rem;
+}
+
+.ticker-content span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ticker-content strong {
+  color: var(--color-primary);
+}
+
+@keyframes ticker-slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* ── Welcome banner ── */
 .welcome-banner {
   display: flex;

@@ -330,6 +330,20 @@ export default function Dashboard({ user, onUpdate }) {
       {showScan && <EcoScan user={user} onClose={() => setShowScan(false)} onUpdate={refreshUser} />}
       <Confetti active={confetti} onDone={() => setConfetti(false)} />
 
+      {/* Live impact ticker */}
+      <div className="impact-ticker-wrapper">
+        <div className="impact-ticker">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="ticker-content">
+              <span>🌍 <strong>12,458kg</strong> of CO2 saved by EcoSpark students today!</span>
+              <span>🔋 <strong>8,920</strong> units of energy conserved!</span>
+              <span>🌱 <strong>4,210</strong> new saplings verified by Eco-Eye!</span>
+              <span>🌊 <strong>120,400L</strong> of water saved from pollution!</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="section">
         {/* Welcome */}
         <motion.div 
@@ -357,10 +371,13 @@ export default function Dashboard({ user, onUpdate }) {
             </div>
           </div>
           <div className="welcome-right">
-            <button className="btn-primary scan-cta-btn" onClick={() => setShowScan(true)} id="dash-scan-btn">
+            <Link to="/eco-eye" className="btn-primary eco-eye-cta-btn" id="dash-eco-eye-btn" style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+              👁️ AI Eco-Eye Scanner
+            </Link>
+            <button className="btn-outline scan-cta-btn" onClick={() => setShowScan(true)} id="dash-scan-btn">
               📸 Scan Eco-Station
             </button>
-            <Link to="/calculator" className="btn-outline calc-cta-btn" id="dash-calc-btn">
+            <Link to="/calculator" className="btn-text calc-cta-btn" id="dash-calc-btn">
               🌍 Carbon Calculator
             </Link>
           </div>
