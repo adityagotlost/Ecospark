@@ -18,11 +18,20 @@ export default function Insights() {
   }, [activeTopic]);
 
   const fetchInsights = async (topic) => {
-    // Session-based caching to avoid redundant API calls during development/refresh
-    const cached = sessionStorage.getItem(`insight_${topic}`);
+    const CACHE_KEY = `insight_${topic}`;
+    const TTL = 6 * 60 * 60 * 1000; // 6 hours in ms
+    
+    const cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
-      setInsights(JSON.parse(cached));
-      return;
+      try {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < TTL) {
+          setInsights(data);
+          return;
+        }
+      } catch (e) {
+        console.error("Cache read error", e);
+      }
     }
 
     setLoading(true);
@@ -48,7 +57,7 @@ export default function Insights() {
       
       if (Array.isArray(data)) {
         setInsights(data);
-        sessionStorage.setItem(`insight_${topic}`, JSON.stringify(data));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
       } else {
         throw new Error('Invalid format received');
       }

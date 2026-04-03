@@ -138,19 +138,20 @@ function DailyGreenTip() {
 
   useEffect(() => {
     const fetchTip = async () => {
-      const todayStr = new Date().toDateString();
-      const cached = sessionStorage.getItem('daily_green_tip');
+      const CACHE_KEY = 'daily_green_tip';
+      const TTL = 6 * 60 * 60 * 1000; // 6 hours in ms
       
+      const cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
         try {
-          const parsed = JSON.parse(cached);
-          if (parsed.date === todayStr) {
-            setTip(parsed.tip);
+          const { data, timestamp } = JSON.parse(cached);
+          if (Date.now() - timestamp < TTL) {
+            setTip(data);
             setLoading(false);
             return;
           }
         } catch (e) {
-          console.error("Cache parse error", e);
+          console.error("Cache read error", e);
         }
       }
 
@@ -164,7 +165,7 @@ function DailyGreenTip() {
         const data = JSON.parse(cleanJson);
         
         setTip(data);
-        sessionStorage.setItem('daily_green_tip', JSON.stringify({ date: todayStr, tip: data }));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
       } catch (err) {
         setTip(DEFAULT_TIPS[Math.floor(Math.random() * DEFAULT_TIPS.length)]);
       } finally {
