@@ -175,6 +175,25 @@ export const ALL_BADGES = [
   { id: 'quiz_grandmaster',   icon: '🏆', name: 'Quiz Grandmaster',    desc: 'Complete 15 quizzes',                          color: '#22c55e', condition: u => u.completedQuizzes?.length >= 15 },
 ];
 
+// ── Eco Insights Data ────────────────────────────────
+export const INSIGHTS_TOPICS = [
+  'Climate Action',
+  'Renewable Energy',
+  'Sustainable Cities',
+  'Ocean Health',
+  'Plastic Solutions',
+  'Biodiversity',
+  'Green Tech'
+];
+
+export const DEFAULT_TIPS = [
+  { text: "Replacing one plastic bottle saves about 80g of CO2 emissions.", metric: "80g CO2" },
+  { text: "Turning off the tap while brushing saves up to 12 liters of water.", metric: "12L Water" },
+  { text: "Using an LED bulb instead of incandescent saves 75% more energy.", metric: "75% Energy" },
+  { text: "Composting kitchen scraps can reduce your household waste by 30%.", metric: "30% Waste" },
+  { text: "One tree can absorb up to 22kg of CO2 per year.", metric: "22kg CO2" }
+];
+
 // ── Profile Themes (unlocked by level / ecoPoints) ────────────
 export const PROFILE_THEMES = [
   {

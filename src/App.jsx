@@ -15,6 +15,7 @@ import Badges from './pages/Badges';
 import Profile from './pages/Profile';
 import Calculator from './pages/Calculator';
 import Garden from './pages/Garden';
+import Insights from './pages/Insights';
 import BadgeUnlockModal from './components/BadgeUnlockModal';
 import EcoBuddy from './components/EcoBuddy';
 import Preloader from './components/Preloader';
@@ -138,6 +139,7 @@ export default function App() {
         <Route path="/profile"     element={<ProtectedRoute user={user} loading={loading}><Profile user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
         <Route path="/calculator"  element={<ProtectedRoute user={user} loading={loading}><Calculator user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
         <Route path="/garden"      element={<ProtectedRoute user={user} loading={loading}><Garden user={user} /></ProtectedRoute>} />
+        <Route path="/insights"    element={<ProtectedRoute user={user} loading={loading}><Insights user={user} /></ProtectedRoute>} />
         <Route path="*"            element={<Navigate to="/" replace />} />
       </Routes>
     </>

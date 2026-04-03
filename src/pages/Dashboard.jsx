@@ -7,12 +7,15 @@ import {
   CategoryScale, LinearScale, PointElement,
   LineElement, Filler, Tooltip, Legend,
 } from 'chart.js';
-import { LESSONS, CHALLENGES, ALL_BADGES, QUIZZES } from '../store';
+import { LESSONS, CHALLENGES, ALL_BADGES, QUIZZES, DEFAULT_TIPS } from '../store';
 import OnboardingModal from '../components/OnboardingModal';
 import EcoScan from '../components/EcoScan';
 import Confetti from '../components/Confetti';
 import SplitText from '../components/SplitText';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import './Dashboard.css';
+
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -126,6 +129,71 @@ function DailyChallenge({ user, onUpdate, onConfetti }) {
         </button>
       )}
     </div>
+  );
+}
+
+function DailyGreenTip() {
+  const [tip, setTip] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTip = async () => {
+      const todayStr = new Date().toDateString();
+      const cached = sessionStorage.getItem('daily_green_tip');
+      
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (parsed.date === todayStr) {
+            setTip(parsed.tip);
+            setLoading(false);
+            return;
+          }
+        } catch (e) {
+          console.error("Cache parse error", e);
+        }
+      }
+
+      try {
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const prompt = `Give me a one-sentence "Sustainable Hack of the Day" for students. Include a specific impact metric (e.g. "Saves 50g CO2"). Return ONLY JSON: { "text": "...", "metric": "..." }`;
+        
+        const result = await model.generateContent(prompt);
+        const resText = result.response.text();
+        const cleanJson = resText.replace(/```json|```/g, '').trim();
+        const data = JSON.parse(cleanJson);
+        
+        setTip(data);
+        sessionStorage.setItem('daily_green_tip', JSON.stringify({ date: todayStr, tip: data }));
+      } catch (err) {
+        setTip(DEFAULT_TIPS[Math.floor(Math.random() * DEFAULT_TIPS.length)]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTip();
+  }, []);
+
+  return (
+    <motion.div 
+      className="daily-green-tip glass-card"
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      whileHover={{ y: -5 }}
+    >
+      <div className="dt-header">
+        <span className="dt-tag">💡 Eco Tip</span>
+        {tip?.metric && <span className="dt-metric">{tip.metric}</span>}
+      </div>
+      <div className="dt-content">
+        {loading ? (
+          <div className="shimmer-text" style={{height: '24px', width: '100%', borderRadius: '4px', background: 'rgba(255,255,255,0.05)'}}></div>
+        ) : (
+          <p className="dt-text">"{tip?.text}"</p>
+        )}
+      </div>
+      <Link to="/insights" className="dt-explore">View AI Insights →</Link>
+    </motion.div>
   );
 }
 
@@ -356,7 +424,10 @@ export default function Dashboard({ user, onUpdate }) {
           </div>
 
           {/* Daily challenge */}
-          <DailyChallenge user={user} onUpdate={refreshUser} onConfetti={() => setConfetti(true)} />
+          <div className="dash-interactive-grid">
+            <DailyChallenge user={user} onUpdate={refreshUser} onConfetti={() => setConfetti(true)} />
+            <DailyGreenTip />
+          </div>
         </div>
 
         {/* SDG + Quick actions */}

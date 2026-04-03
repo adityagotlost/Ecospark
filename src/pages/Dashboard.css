@@ -249,3 +249,83 @@
   .dash-stats { grid-template-columns: repeat(2, 1fr); }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── Interactive grid ── */
+.dash-interactive-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Daily Green Tip ── */
+.daily-green-tip {
+  padding: 2rem;
+  background: var(--color-bg-navbar);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.dt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dt-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  background: rgba(52, 211, 100, 0.1);
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+}
+
+.dt-metric {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #34d364;
+  background: rgba(52, 211, 100, 0.05);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.dt-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.dt-explore {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dt-explore:hover {
+  gap: 0.75rem;
+  opacity: 0.8;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, 
+    var(--color-bg-card) 25%, 
+    var(--color-border) 50%, 
+    var(--color-bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
