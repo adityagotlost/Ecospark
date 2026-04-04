@@ -190,8 +190,8 @@ ul, ol { list-style: none; }
 }
 
 /* ── Layout ── */
-.page { min-height: 100vh; padding-top: 80px; }
-.section { padding: var(--sp-3xl) var(--sp-xl); max-width: 1200px; margin: 0 auto; }
+.page { min-height: 100vh; padding-top: 64px; }
+.section { padding: 2rem var(--sp-xl); max-width: 1440px; margin: 0 auto; }
 
 /* ── Animations (Subtle & Intentional) ── */
 @keyframes fadeIn {
