@@ -330,19 +330,6 @@ export default function Dashboard({ user, onUpdate }) {
       {showScan && <EcoScan user={user} onClose={() => setShowScan(false)} onUpdate={refreshUser} />}
       <Confetti active={confetti} onDone={() => setConfetti(false)} />
 
-      {/* Live impact ticker */}
-      <div className="impact-ticker-wrapper">
-        <div className="impact-ticker">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="ticker-content">
-              <span>🌍 <strong>12,458kg</strong> of CO2 saved by EcoSpark students today!</span>
-              <span>🔋 <strong>8,920</strong> units of energy conserved!</span>
-              <span>🌱 <strong>4,210</strong> new saplings verified by Eco-Eye!</span>
-              <span>🌊 <strong>120,400L</strong> of water saved from pollution!</span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div className="section">
         {/* Welcome */}
@@ -371,13 +358,10 @@ export default function Dashboard({ user, onUpdate }) {
             </div>
           </div>
           <div className="welcome-right">
-            <Link to="/eco-eye" className="btn-primary eco-eye-cta-btn" id="dash-eco-eye-btn" style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
-              👁️ AI Eco-Eye Scanner
-            </Link>
-            <button className="btn-outline scan-cta-btn" onClick={() => setShowScan(true)} id="dash-scan-btn">
+            <button className="btn-primary scan-cta-btn" onClick={() => setShowScan(true)} id="dash-scan-btn">
               📸 Scan Eco-Station
             </button>
-            <Link to="/calculator" className="btn-text calc-cta-btn" id="dash-calc-btn">
+            <Link to="/calculator" className="btn-outline calc-cta-btn" id="dash-calc-btn">
               🌍 Carbon Calculator
             </Link>
           </div>
@@ -391,6 +375,20 @@ export default function Dashboard({ user, onUpdate }) {
           <StatCard icon="🏅" label="Badges Earned"           value={uniqueBadges.length}                   color="#ffd700" delay={200} />
           <StatCard icon="🔥" label="Day Streak"              value={user?.streak || 1}                     color="#ef4444" delay={250} />
           <StatCard icon="🧠" label="Quizzes Completed"       value={user?.completedQuizzes?.length || 0}   color="#fb923c" delay={300} />
+        </div>
+
+        {/* Live impact ticker - Relocated from top */}
+        <div className="impact-ticker-wrapper" style={{ margin: '1rem 0 2rem' }}>
+          <div className="impact-ticker">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="ticker-content">
+                <span>🌍 <strong>12,458kg</strong> of CO2 saved by EcoSpark students today!</span>
+                <span>🔋 <strong>8,920</strong> units of energy conserved!</span>
+                <span>🌱 <strong>4,210</strong> new saplings verified by Eco-Eye!</span>
+                <span>🌊 <strong>120,400L</strong> of water saved from pollution!</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Progress bar */}
@@ -467,9 +465,10 @@ export default function Dashboard({ user, onUpdate }) {
             <div className="qa-grid">
               {[
                 { icon: '📚', label: 'Continue Learning', sub: `${LESSONS.length - (user?.completedLessons?.length||0)} lessons left`,   path: '/learn',       color: '#00e5c4' },
+                { icon: '👁️', label: 'AI Eco-Eye Scanner', sub: 'Verify your eco-actions',                                          path: '/eco-eye',     color: '#34d364' },
                 { icon: '🧠', label: 'Take a Quiz',        sub: 'Test your knowledge',                                                    path: '/quizzes',     color: '#a78bfa' },
                 { icon: '🎯', label: 'Eco Challenges',     sub: `${CHALLENGES.length - (user?.completedChallenges?.length||0)} pending`,  path: '/challenges',  color: '#ffd700' },
-                { icon: '🏆', label: 'Leaderboard',        sub: 'See your rank',                                                          path: '/leaderboard', color: '#34d364' },
+                { icon: '🏆', label: 'Leaderboard',        sub: 'See your rank',                                                          path: '/leaderboard', color: '#3b82f6' },
               ].map((a, i) => (
                 <Link to={a.path} key={i} className="qa-card glass-card" style={{ '--qa-color': a.color }}>
                   <div className="qa-icon" style={{ color: a.color }}>{a.icon}</div>

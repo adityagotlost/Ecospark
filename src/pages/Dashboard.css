@@ -1,9 +1,10 @@
 /* ── Impact Ticker ── */
 .impact-ticker-wrapper {
   background: rgba(52, 211, 100, 0.05);
-  border-bottom: 1px solid var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 0.6rem 0;
-  margin: -50px -5% 2.5rem;
+  margin: 1rem 0 2.5rem;
   overflow: hidden;
   white-space: nowrap;
 }
