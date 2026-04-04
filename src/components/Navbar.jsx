@@ -15,7 +15,6 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
     { name: 'Dashboard', path: '/dashboard', icon: '📊' },
     { name: 'Learn', path: '/learn', icon: '📖' },
     { name: 'Insights', path: '/insights', icon: '✨' },
-    { name: 'Eco-Eye', path: '/eco-eye', icon: '👁️' },
     { name: 'Quizzes', path: '/quizzes', icon: '🎯' },
     { name: 'Challenges', path: '/challenges', icon: '⚔️' },
     { name: 'Leaderboard', path: '/leaderboard', icon: '🏆' },
