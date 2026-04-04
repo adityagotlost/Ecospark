@@ -358,12 +358,7 @@ export default function Dashboard({ user, onUpdate }) {
             </div>
           </div>
           <div className="welcome-right">
-            <button className="btn-primary scan-cta-btn" onClick={() => setShowScan(true)} id="dash-scan-btn">
-              📸 Scan Eco-Station
-            </button>
-            <Link to="/calculator" className="btn-outline calc-cta-btn" id="dash-calc-btn">
-              🌍 Carbon Calculator
-            </Link>
+            <div className="welcome-date">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
           </div>
         </motion.div>
 
@@ -447,12 +442,29 @@ export default function Dashboard({ user, onUpdate }) {
               <Line data={chartData} options={chartOptions} />
             </div>
           </div>
+        </div>
 
-          {/* Daily challenge */}
-          <div className="dash-interactive-grid">
-            <DailyChallenge user={user} onUpdate={refreshUser} onConfetti={() => setConfetti(true)} />
-            <DailyGreenTip />
+        {/* Interactive Stats Grid - 3 Columns */}
+        <div className="dash-interactive-grid">
+          <DailyChallenge user={user} onUpdate={refreshUser} onConfetti={() => setConfetti(true)} />
+          <div className="dash-verify-card glass-card">
+            <div className="v-header">
+              <span className="v-tag">👁️ Eco-Eye AI</span>
+              <span className="v-status">Ready to scan 📡</span>
+            </div>
+            <h3 className="v-title">Verify Your Eco-Actions</h3>
+            <p className="v-desc">Use AI vision to verify tasks or scan physical Eco-Stations for extra points!</p>
+            
+            <div className="v-actions">
+              <Link to="/eco-eye" className="btn-primary v-btn">
+                👁️ AI Eco-Eye Scanner
+              </Link>
+              <button className="btn-outline v-btn-alt" onClick={() => setShowScan(true)}>
+                📸 Scan QR Station
+              </button>
+            </div>
           </div>
+          <DailyGreenTip />
         </div>
 
         {/* SDG + Quick actions */}
