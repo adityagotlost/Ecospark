@@ -11,15 +11,30 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinks = [
+  const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-    { name: 'Learn', path: '/learn', icon: '📖' },
-    { name: 'Insights', path: '/insights', icon: '✨' },
-    { name: 'Quizzes', path: '/quizzes', icon: '🎯' },
-    { name: 'Challenges', path: '/challenges', icon: '⚔️' },
-    { name: 'Leaderboard', path: '/leaderboard', icon: '🏆' },
-    { name: 'Badges', path: '/badges', icon: '🏅' },
-    { name: 'Eco Map', path: '/eco-map', icon: '🗺️' },
+    { 
+      name: 'Learning', icon: '📚',
+      subLinks: [
+        { name: 'Lessons', path: '/learn', icon: '📖' },
+        { name: 'Quizzes', path: '/quizzes', icon: '🎯' },
+        { name: 'Insights', path: '/insights', icon: '✨' },
+      ]
+    },
+    {
+      name: 'Impact', icon: '🌍',
+      subLinks: [
+        { name: 'Eco Map', path: '/eco-map', icon: '🗺️' },
+        { name: 'Challenges', path: '/challenges', icon: '⚔️' },
+      ]
+    },
+    {
+      name: 'Community', icon: '👥',
+      subLinks: [
+        { name: 'Leaderboard', path: '/leaderboard', icon: '🏆' },
+        { name: 'Badges', path: '/badges', icon: '🏅' },
+      ]
+    },
     { name: 'Profile', path: '/profile', icon: '👤' },
   ];
 
@@ -35,15 +50,37 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
         {/* Desktop Links */}
         {user && (
           <div className="navbar-links">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.path} 
-                to={link.path} 
-                className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
-              >
-                <span className="nav-icon">{link.icon}</span>
-                {link.name}
-              </Link>
+            {navItems.map((item) => (
+              item.subLinks ? (
+                <div key={item.name} className="nav-dropdown-wrapper">
+                  <div className={`nav-link dropdown-toggle ${item.subLinks.some(sub => location.pathname === sub.path) ? 'active' : ''}`}>
+                    <span className="nav-icon">{item.icon}</span>
+                    {item.name}
+                    <span className="chevron">▾</span>
+                  </div>
+                  <div className="nav-dropdown-menu">
+                    {item.subLinks.map(sub => (
+                      <Link 
+                        key={sub.path} 
+                        to={sub.path} 
+                        className={`dropdown-link ${location.pathname === sub.path ? 'active' : ''}`}
+                      >
+                        <span className="nav-icon">{sub.icon}</span>
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link 
+                  key={item.path} 
+                  to={item.path} 
+                  className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                >
+                  <span className="nav-icon">{item.icon}</span>
+                  {item.name}
+                </Link>
+              )
             ))}
           </div>
         )}
@@ -99,7 +136,7 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
           </div>
           
           <div className="mobile-links-grid">
-            {navLinks.map((link) => (
+            {navItems.flatMap(item => item.subLinks || [item]).map((link) => (
               <Link 
                 key={link.path} 
                 to={link.path} 
