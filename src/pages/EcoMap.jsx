@@ -31,36 +31,27 @@ const ICONS = {
 
 // ── Real Roorkee eco-stations & hotspots ──
 const ECO_STATIONS = [
-  // IIT Roorkee Campus & Academic
+  // IIT Roorkee
   { id: 1,  name: 'IIT Roorkee — Green Campus',         type: 'school',   lat: 29.8644, lng: 77.8960, desc: 'Zero-waste campus with Miyawaki forests, rooftop solar, and LED-sensor lighting across 365 acres', impact: '85% waste diverted from landfill',   verified: 342, category: 'station' },
-  { id: 2,  name: 'IIT Roorkee Solar Array',             type: 'solar',    lat: 29.8628, lng: 77.9010, desc: 'Extensive solar PV and thermal systems powering campus infrastructure and research labs',            impact: '24,000 kWh generated/year',         verified: 187, category: 'energy' },
-  { id: 3,  name: 'IIT Roorkee Miyawaki Forest',         type: 'tree',     lat: 29.8680, lng: 77.8930, desc: 'Dense self-sustaining mini-forest with 50+ native species using Miyawaki technique',                impact: '500+ native trees planted',         verified: 256, category: 'nature' },
 
   // Ganges Canal & Water
-  { id: 4,  name: 'Upper Ganges Canal — Eco Point',      type: 'water',    lat: 29.8663, lng: 77.8912, desc: 'Historic irrigation canal built in 1854, running through the heart of Roorkee city',               impact: '1,200 km of canal irrigating crops', verified: 198, category: 'water' },
-  { id: 5,  name: 'Solani Aqueduct Heritage Site',       type: 'water',    lat: 29.8822, lng: 77.8961, desc: 'Engineering marvel carrying the Ganges Canal over Solani River — 19th century brick masonry',       impact: 'Rainwater harvesting demo site',     verified: 276, category: 'water' },
-  { id: 6,  name: 'Solani River Cleanup Zone',           type: 'cleanup',  lat: 29.8780, lng: 77.8880, desc: 'Community-driven river cleanup drives every Sunday along the Solani River banks',                  impact: '800 kg plastic removed/month',       verified: 189, category: 'water' },
+  { id: 2,  name: 'Upper Ganges Canal — Eco Point',      type: 'water',    lat: 29.8663, lng: 77.8912, desc: 'Historic irrigation canal built in 1854, running through the heart of Roorkee city',               impact: '1,200 km of canal irrigating crops', verified: 198, category: 'water' },
+  { id: 3,  name: 'Solani Aqueduct Heritage Site',       type: 'water',    lat: 29.8822, lng: 77.8961, desc: 'Engineering marvel carrying the Ganges Canal over Solani River — 19th century brick masonry',       impact: 'Rainwater harvesting demo site',     verified: 276, category: 'water' },
 
-  // Recycling & Waste Management
-  { id: 7,  name: 'Green Cycler — Recycling Center',     type: 'recycle',  lat: 29.8590, lng: 77.8850, desc: 'PP, LD & EPS plastic recycling facility serving Roorkee and Haridwar district',                    impact: '3,200 kg plastic recycled/month',   verified: 134, category: 'station' },
-  { id: 8,  name: 'Root Recycling — E-Waste Center',     type: 'recycle',  lat: 29.8550, lng: 77.9050, desc: 'Govt-authorized e-waste recycler handling batteries, circuit boards, and electronic waste',        impact: '1,500 kg e-waste processed/month',  verified: 98,  category: 'station' },
-
-  // Energy
-  { id: 9,  name: 'Shree Cement Solar Plant',            type: 'solar',    lat: 29.8400, lng: 77.8750, desc: '7 MWp solar power plant at Shree Cement Roorkee unit — one of the largest in the district',        impact: '12,000+ MWh clean energy/year',     verified: 145, category: 'energy' },
+  // Recycling
+  { id: 4,  name: 'Green Cycler — Recycling Center',     type: 'recycle',  lat: 29.8590, lng: 77.8850, desc: 'PP, LD & EPS plastic recycling facility serving Roorkee and Haridwar district',                    impact: '3,200 kg plastic recycled/month',   verified: 134, category: 'station' },
 
   // Nature & Parks
-  { id: 10, name: 'Solani Park & Green Trail',           type: 'garden',   lat: 29.8750, lng: 77.8920, desc: 'Popular park along the canal with walking trails, native plantations, and biodiversity spots',     impact: '30+ bird species documented',       verified: 312, category: 'nature' },
-  { id: 11, name: 'Roorkee Cantonment Greenbelt',        type: 'tree',     lat: 29.8570, lng: 77.8815, desc: 'Historic Bengal Sappers cantonment area with century-old trees and maintained green cover',         impact: '200+ heritage trees preserved',     verified: 167, category: 'nature' },
-  { id: 12, name: 'Bhagwanpur Community Nursery',        type: 'garden',   lat: 29.8450, lng: 77.9150, desc: 'Community-run plant nursery providing free saplings for local tree-planting drives',                impact: '5,000+ saplings distributed/year',  verified: 223, category: 'nature' },
+  { id: 5,  name: 'Solani Park & Green Trail',           type: 'garden',   lat: 29.8750, lng: 77.8920, desc: 'Popular park along the canal with walking trails, native plantations, and biodiversity spots',     impact: '30+ bird species documented',       verified: 312, category: 'nature' },
 
-  // Transport & Community
-  { id: 13, name: 'Civil Lines Cycle Hub',               type: 'bike',     lat: 29.8700, lng: 77.8870, desc: 'Student-driven cycle repair and sharing station promoting green commute in Roorkee',               impact: '2,400 kg CO₂ saved/month',          verified: 178, category: 'transport' },
-  { id: 14, name: 'National Institute of Hydrology',     type: 'school',   lat: 29.8610, lng: 77.9080, desc: 'Premier research institute studying water resources, flood management, and climate impact',        impact: 'Water quality monitoring network',  verified: 156, category: 'station' },
-  { id: 15, name: 'CBRI Green Building Research',        type: 'school',   lat: 29.8690, lng: 77.9040, desc: 'Central Building Research Institute developing eco-friendly construction and sustainable materials', impact: 'Low-carbon building prototypes',    verified: 112, category: 'energy' },
+  // Transport & Research
+  { id: 6,  name: 'Civil Lines Cycle Hub',               type: 'bike',     lat: 29.8700, lng: 77.8870, desc: 'Student-driven cycle repair and sharing station promoting green commute in Roorkee',               impact: '2,400 kg CO₂ saved/month',          verified: 178, category: 'transport' },
+  { id: 7,  name: 'National Institute of Hydrology',     type: 'school',   lat: 29.8610, lng: 77.9080, desc: 'Premier research institute studying water resources, flood management, and climate impact',        impact: 'Water quality monitoring network',  verified: 156, category: 'station' },
+  { id: 8,  name: 'CBRI Green Building Research',        type: 'school',   lat: 29.8690, lng: 77.9040, desc: 'Central Building Research Institute developing eco-friendly construction and sustainable materials', impact: 'Low-carbon building prototypes',    verified: 112, category: 'energy' },
 
   // Haridwar University (Roorkee College of Engineering) — 5th Km, Upper Ganga Canal Rd, Bajuheri
-  { id: 16, name: 'Haridwar University — Green Campus',   type: 'school',   lat: 29.9080, lng: 77.9258, desc: 'Haridwar University (formerly RCE), 5th Km, Upper Ganga Canal Rd, Bajuheri — tree-planting drives, clean energy workshops, and waste segregation programs', impact: '1,200+ saplings planted on campus', verified: 198, category: 'station' },
-  { id: 17, name: 'Haridwar University Canal Plantation',  type: 'tree',     lat: 29.9095, lng: 77.9240, desc: 'Student-led canal-side plantation and biodiversity documentation along Upper Ganga Canal near Bajuheri campus', impact: '300+ native trees along canal bank', verified: 145, category: 'nature' },
+  { id: 9,  name: 'Haridwar University — Green Campus',   type: 'school',   lat: 29.9080, lng: 77.9258, desc: 'Haridwar University (formerly RCE), 5th Km, Upper Ganga Canal Rd, Bajuheri — tree-planting drives, clean energy workshops, and waste segregation programs', impact: '1,200+ saplings planted on campus', verified: 198, category: 'station' },
+  { id: 10, name: 'Haridwar University Canal Plantation',  type: 'tree',     lat: 29.9095, lng: 77.9240, desc: 'Student-led canal-side plantation and biodiversity documentation along Upper Ganga Canal near Bajuheri campus', impact: '300+ native trees along canal bank', verified: 145, category: 'nature' },
 ];
 
 // ── Impact hotspots (circles) ──
