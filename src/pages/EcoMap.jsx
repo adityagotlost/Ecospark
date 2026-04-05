@@ -243,6 +243,7 @@ export default function EcoMap({ user }) {
             className="leaflet-map"
             scrollWheelZoom={true}
             zoomControl={false}
+            attributionControl={false}
           >
             <TileLayer
               attribution='&copy; <a href="https://carto.com/">CARTO</a>'
