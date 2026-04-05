@@ -29,41 +29,55 @@ const ICONS = {
   user: createIcon('🌟', 34),
 };
 
-// ── Sample eco-stations & hotspots data ──
+// ── Real Roorkee eco-stations & hotspots ──
 const ECO_STATIONS = [
-  { id: 1, name: 'Green Valley Eco-Station',    type: 'station',  lat: 28.6139, lng: 77.2090, desc: 'Central Delhi recycling & awareness hub', impact: '2,400 kg waste recycled',        verified: 156, category: 'station' },
-  { id: 2, name: 'Solar Panel Array — JNU',      type: 'solar',    lat: 28.5402, lng: 77.1662, desc: 'University solar energy demonstration',     impact: '18,000 kWh generated/year',     verified: 89,  category: 'energy' },
-  { id: 3, name: 'Yamuna Cleanup Point',         type: 'water',    lat: 28.6328, lng: 77.2197, desc: 'Weekly river cleanup drive location',       impact: '1,200 kg plastic removed',      verified: 234, category: 'water' },
-  { id: 4, name: 'Lodhi Garden Eco-Trail',       type: 'garden',   lat: 28.5931, lng: 77.2197, desc: 'Heritage park with biodiversity trail',     impact: '50+ native species documented', verified: 312, category: 'nature' },
-  { id: 5, name: 'IIT Delhi Green Campus',       type: 'school',   lat: 28.5450, lng: 77.1926, desc: 'Zero-waste campus initiative',              impact: '85% waste diverted from landfill', verified: 178, category: 'station' },
-  { id: 6, name: 'Hauz Khas Lake Restoration',   type: 'water',    lat: 28.5494, lng: 77.2001, desc: 'Lake rejuvenation & wetland conservation',  impact: '40% water quality improvement', verified: 145, category: 'water' },
-  { id: 7, name: 'Saket Cycle Station',          type: 'bike',     lat: 28.5244, lng: 77.2167, desc: 'Public bike-sharing & green commute hub',   impact: '3,600 kg CO₂ saved/month',      verified: 267, category: 'transport' },
-  { id: 8, name: 'Nehru Place E-Waste Drive',    type: 'recycle',  lat: 28.5491, lng: 77.2533, desc: 'Responsible e-waste collection center',     impact: '800 kg e-waste recycled',       verified: 98,  category: 'station' },
-  { id: 9, name: 'Delhi Ridge Forest Walk',      type: 'tree',     lat: 28.6880, lng: 77.1740, desc: 'Urban forest conservation & tree tagging',  impact: '500+ trees tagged & monitored', verified: 203, category: 'nature' },
-  { id: 10, name: 'Connaught Place Rain Garden', type: 'garden',   lat: 28.6315, lng: 77.2167, desc: 'Rainwater harvesting demonstration site',   impact: '50,000L rainwater harvested',   verified: 167, category: 'water' },
-  { id: 11, name: 'Dwarka Solar Community',      type: 'solar',    lat: 28.5823, lng: 77.0500, desc: 'Residential rooftop solar cooperative',     impact: '12,000 kWh generated/year',     verified: 76,  category: 'energy' },
-  { id: 12, name: 'Okhla Bird Sanctuary',        type: 'tree',     lat: 28.5600, lng: 77.3100, desc: 'Wetland bird conservation area',            impact: '320+ bird species recorded',    verified: 289, category: 'nature' },
-  { id: 13, name: 'Janakpuri Community Garden',  type: 'garden',   lat: 28.6219, lng: 77.0861, desc: 'Urban farming & composting center',          impact: '2 tonnes organic produce/year', verified: 134, category: 'nature' },
-  { id: 14, name: 'Rohini Waste Segregation Hub',type: 'recycle',  lat: 28.7325, lng: 77.1201, desc: 'Model waste management facility',           impact: '95% segregation rate achieved', verified: 112, category: 'station' },
-  { id: 15, name: 'Mayur Vihar River Trail',     type: 'cleanup',  lat: 28.6100, lng: 77.2900, desc: 'Monthly river bank cleanup initiative',     impact: '600 kg litter collected/month', verified: 189, category: 'water' },
+  // IIT Roorkee Campus & Academic
+  { id: 1,  name: 'IIT Roorkee — Green Campus',         type: 'school',   lat: 29.8644, lng: 77.8960, desc: 'Zero-waste campus with Miyawaki forests, rooftop solar, and LED-sensor lighting across 365 acres', impact: '85% waste diverted from landfill',   verified: 342, category: 'station' },
+  { id: 2,  name: 'IIT Roorkee Solar Array',             type: 'solar',    lat: 29.8628, lng: 77.9010, desc: 'Extensive solar PV and thermal systems powering campus infrastructure and research labs',            impact: '24,000 kWh generated/year',         verified: 187, category: 'energy' },
+  { id: 3,  name: 'IIT Roorkee Miyawaki Forest',         type: 'tree',     lat: 29.8680, lng: 77.8930, desc: 'Dense self-sustaining mini-forest with 50+ native species using Miyawaki technique',                impact: '500+ native trees planted',         verified: 256, category: 'nature' },
+
+  // Ganges Canal & Water
+  { id: 4,  name: 'Upper Ganges Canal — Eco Point',      type: 'water',    lat: 29.8663, lng: 77.8912, desc: 'Historic irrigation canal built in 1854, running through the heart of Roorkee city',               impact: '1,200 km of canal irrigating crops', verified: 198, category: 'water' },
+  { id: 5,  name: 'Solani Aqueduct Heritage Site',       type: 'water',    lat: 29.8822, lng: 77.8961, desc: 'Engineering marvel carrying the Ganges Canal over Solani River — 19th century brick masonry',       impact: 'Rainwater harvesting demo site',     verified: 276, category: 'water' },
+  { id: 6,  name: 'Solani River Cleanup Zone',           type: 'cleanup',  lat: 29.8780, lng: 77.8880, desc: 'Community-driven river cleanup drives every Sunday along the Solani River banks',                  impact: '800 kg plastic removed/month',       verified: 189, category: 'water' },
+
+  // Recycling & Waste Management
+  { id: 7,  name: 'Green Cycler — Recycling Center',     type: 'recycle',  lat: 29.8590, lng: 77.8850, desc: 'PP, LD & EPS plastic recycling facility serving Roorkee and Haridwar district',                    impact: '3,200 kg plastic recycled/month',   verified: 134, category: 'station' },
+  { id: 8,  name: 'Root Recycling — E-Waste Center',     type: 'recycle',  lat: 29.8550, lng: 77.9050, desc: 'Govt-authorized e-waste recycler handling batteries, circuit boards, and electronic waste',        impact: '1,500 kg e-waste processed/month',  verified: 98,  category: 'station' },
+
+  // Energy
+  { id: 9,  name: 'Shree Cement Solar Plant',            type: 'solar',    lat: 29.8400, lng: 77.8750, desc: '7 MWp solar power plant at Shree Cement Roorkee unit — one of the largest in the district',        impact: '12,000+ MWh clean energy/year',     verified: 145, category: 'energy' },
+
+  // Nature & Parks
+  { id: 10, name: 'Solani Park & Green Trail',           type: 'garden',   lat: 29.8750, lng: 77.8920, desc: 'Popular park along the canal with walking trails, native plantations, and biodiversity spots',     impact: '30+ bird species documented',       verified: 312, category: 'nature' },
+  { id: 11, name: 'Roorkee Cantonment Greenbelt',        type: 'tree',     lat: 29.8570, lng: 77.8815, desc: 'Historic Bengal Sappers cantonment area with century-old trees and maintained green cover',         impact: '200+ heritage trees preserved',     verified: 167, category: 'nature' },
+  { id: 12, name: 'Bhagwanpur Community Nursery',        type: 'garden',   lat: 29.8450, lng: 77.9150, desc: 'Community-run plant nursery providing free saplings for local tree-planting drives',                impact: '5,000+ saplings distributed/year',  verified: 223, category: 'nature' },
+
+  // Transport & Community
+  { id: 13, name: 'Civil Lines Cycle Hub',               type: 'bike',     lat: 29.8700, lng: 77.8870, desc: 'Student-driven cycle repair and sharing station promoting green commute in Roorkee',               impact: '2,400 kg CO₂ saved/month',          verified: 178, category: 'transport' },
+  { id: 14, name: 'National Institute of Hydrology',     type: 'school',   lat: 29.8610, lng: 77.9080, desc: 'Premier research institute studying water resources, flood management, and climate impact',        impact: 'Water quality monitoring network',  verified: 156, category: 'station' },
+  { id: 15, name: 'CBRI Green Building Research',        type: 'school',   lat: 29.8690, lng: 77.9040, desc: 'Central Building Research Institute developing eco-friendly construction and sustainable materials', impact: 'Low-carbon building prototypes',    verified: 112, category: 'energy' },
 ];
 
 // ── Impact hotspots (circles) ──
 const IMPACT_ZONES = [
-  { lat: 28.6139, lng: 77.2090, radius: 2000, color: '#10b981', label: 'High Impact Zone — Central Delhi',    level: 'high' },
-  { lat: 28.5450, lng: 77.1926, radius: 1500, color: '#3b82f6', label: 'University Green Belt',              level: 'medium' },
-  { lat: 28.6880, lng: 77.1740, radius: 1800, color: '#22c55e', label: 'Delhi Ridge Conservation Area',      level: 'high' },
-  { lat: 28.5600, lng: 77.3100, radius: 1200, color: '#06b6d4', label: 'Okhla Wetland Protected Zone',       level: 'medium' },
+  { lat: 29.8644, lng: 77.8960, radius: 800,  color: '#10b981', label: 'IIT Roorkee Green Campus Zone',         level: 'high' },
+  { lat: 29.8663, lng: 77.8912, radius: 1200, color: '#3b82f6', label: 'Ganges Canal Heritage Corridor',        level: 'high' },
+  { lat: 29.8822, lng: 77.8961, radius: 600,  color: '#22c55e', label: 'Solani Aqueduct Conservation Area',      level: 'medium' },
+  { lat: 29.8570, lng: 77.8815, radius: 900,  color: '#06b6d4', label: 'Cantonment Greenbelt Protected Zone',    level: 'medium' },
+  { lat: 29.8450, lng: 77.9150, radius: 700,  color: '#a78bfa', label: 'Bhagwanpur Community Green Hub',         level: 'medium' },
 ];
 
-// Community actions by users
+// Community actions by Roorkee users
 const COMMUNITY_ACTIONS = [
-  { id: 'a1', user: 'Priya S.',    action: 'Planted 5 saplings',           lat: 28.6200, lng: 77.2150, time: '2h ago',  pts: 150, emoji: '🌱' },
-  { id: 'a2', user: 'Arjun M.',    action: 'Cleaned 2km river bank',       lat: 28.6350, lng: 77.2210, time: '4h ago',  pts: 200, emoji: '🧹' },
-  { id: 'a3', user: 'Sneha K.',    action: 'Verified solar panel install',  lat: 28.5410, lng: 77.1680, time: '6h ago',  pts: 180, emoji: '☀️' },
-  { id: 'a4', user: 'Rahul P.',    action: 'Recycled 15kg e-waste',         lat: 28.5500, lng: 77.2540, time: '8h ago',  pts: 120, emoji: '♻️' },
-  { id: 'a5', user: 'Ananya R.',   action: 'Documented 12 bird species',    lat: 28.5620, lng: 77.3080, time: '1d ago',  pts: 160, emoji: '🦜' },
-  { id: 'a6', user: 'Karthik V.',  action: 'Organized campus cleanup',      lat: 28.5460, lng: 77.1940, time: '1d ago',  pts: 250, emoji: '🏫' },
+  { id: 'a1', user: 'Aditya G.',   action: 'Planted 8 saplings near Solani Park',        lat: 29.8740, lng: 77.8930, time: '1h ago',  pts: 200, emoji: '🌱' },
+  { id: 'a2', user: 'Priya S.',    action: 'Cleaned Solani River bank (2km stretch)',     lat: 29.8790, lng: 77.8870, time: '3h ago',  pts: 250, emoji: '🧹' },
+  { id: 'a3', user: 'Rohan K.',    action: 'Verified IIT Roorkee solar panel output',     lat: 29.8630, lng: 77.9005, time: '5h ago',  pts: 180, emoji: '☀️' },
+  { id: 'a4', user: 'Sneha M.',    action: 'Recycled 20kg e-waste at Root Recycling',     lat: 29.8545, lng: 77.9055, time: '7h ago',  pts: 150, emoji: '♻️' },
+  { id: 'a5', user: 'Arjun T.',    action: 'Documented 15 bird species at Solani Park',   lat: 29.8755, lng: 77.8915, time: '12h ago', pts: 160, emoji: '🦜' },
+  { id: 'a6', user: 'Kavya D.',    action: 'Organized IIT campus Miyawaki planting drive', lat: 29.8675, lng: 77.8935, time: '1d ago',  pts: 300, emoji: '🌳' },
+  { id: 'a7', user: 'Vikram S.',   action: 'Set up cycle-sharing at Civil Lines',          lat: 29.8705, lng: 77.8865, time: '1d ago',  pts: 200, emoji: '🚲' },
+  { id: 'a8', user: 'Nisha R.',    action: 'Distributed 50 saplings from Bhagwanpur Nursery', lat: 29.8455, lng: 77.9145, time: '2d ago', pts: 220, emoji: '🌻' },
 ];
 
 const CATEGORIES = [
@@ -147,13 +161,13 @@ function ActivityFeed({ actions, onLocate }) {
 export default function EcoMap({ user }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [flyTarget, setFlyTarget] = useState(null);
-  const [flyZoom, setFlyZoom] = useState(12);
+  const [flyZoom, setFlyZoom] = useState(14);
   const [showHotspots, setShowHotspots] = useState(true);
   const [showCommunity, setShowCommunity] = useState(true);
   const [selectedStation, setSelectedStation] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const defaultCenter = [28.6139, 77.2090]; // New Delhi
+  const defaultCenter = [29.8663, 77.8912]; // Roorkee, Uttarakhand
 
   const filteredStations = activeCategory === 'all'
     ? ECO_STATIONS
@@ -180,7 +194,7 @@ export default function EcoMap({ user }) {
             🗺️ Eco Impact Map
           </h1>
           <p className="map-subtitle">
-            Explore eco-stations, community actions, and impact hotspots across your city
+            Explore eco-stations, community actions, and impact hotspots across Roorkee
           </p>
         </div>
         <div className="map-header-right">
