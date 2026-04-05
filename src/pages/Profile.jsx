@@ -1,23 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ALL_BADGES, LESSONS, CHALLENGES, QUIZZES, PROFILE_THEMES, AVATAR_FRAMES, CERTIFICATE_MILESTONES } from '../store';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fbUpdateProfile } from '../firestore';
 import CertificateModal from '../components/CertificateModal';
 import './Profile.css';
 
 export default function Profile({ user: propUser, onUpdate }) {
   const user = propUser;
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(user?.name || '');
+  const [editBio, setEditBio] = useState(user?.bio || '');
   const [editFile, setEditFile] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [showCustomize, setShowCustomize] = useState(false);
   const [selectedCert, setSelectedCert] = useState(null);
 
+  const [localTheme, setLocalTheme] = useState(user?.profileTheme || 'seedling');
+  const [localFrame, setLocalFrame] = useState(user?.profileFrame || 'default');
+
+  useEffect(() => {
+    if (user?.profileTheme) setLocalTheme(user.profileTheme);
+    if (user?.profileFrame) setLocalFrame(user.profileFrame);
+  }, [user?.profileTheme, user?.profileFrame]);
+
   // 1. Safe Theme/Frame check
-  const activeThemeId = user?.profileTheme || 'seedling';
-  const activeFrameId = user?.profileFrame  || 'default';
+  const activeThemeId = localTheme;
+  const activeFrameId = localFrame;
   const activeTheme   = PROFILE_THEMES.find(t => t.id === activeThemeId) || PROFILE_THEMES[0];
   const activeFrame   = AVATAR_FRAMES.find(f => f.id === activeFrameId)  || AVATAR_FRAMES[0];
 
@@ -88,7 +98,7 @@ export default function Profile({ user: propUser, onUpdate }) {
     try {
       let photoDataUrl = null;
       if (editFile) photoDataUrl = await processImage(editFile);
-      await fbUpdateProfile(user.uid, editName, photoDataUrl);
+      await fbUpdateProfile(user.uid, editName, photoDataUrl, null, null, editBio);
       if (onUpdate) onUpdate();
       setIsEditing(false);
     } catch (e) {
@@ -98,15 +108,19 @@ export default function Profile({ user: propUser, onUpdate }) {
     }
   };
 
+
   const applyTheme = async (themeId) => {
-    await fbUpdateProfile(user.uid, user.name, null, themeId, null).catch(console.error);
+    setLocalTheme(themeId);
+    await fbUpdateProfile(user.uid, editName, null, themeId, null, editBio).catch(console.error);
     if (onUpdate) onUpdate();
   };
 
   const applyFrame = async (frameId) => {
-    await fbUpdateProfile(user.uid, user.name, null, null, frameId).catch(console.error);
+    setLocalFrame(frameId);
+    await fbUpdateProfile(user.uid, editName, null, null, frameId, editBio).catch(console.error);
     if (onUpdate) onUpdate();
   };
+
 
   const heroStyle = {
     '--theme-primary':    activeTheme.primary || '#34d364',
@@ -117,6 +131,8 @@ export default function Profile({ user: propUser, onUpdate }) {
     '--frame-color':      activeFrame.isRainbow ? 'transparent' : (activeFrame.borderColor || '#34d364'),
     '--frame-glow':       activeFrame.glow || 'rgba(52,211,100,0.5)',
   };
+
+  const nextGoals = ALL_BADGES.filter(b => !user?.badges?.includes(b.id)).slice(0, 3);
 
   return (
     <div className="profile-page page">
@@ -133,7 +149,7 @@ export default function Profile({ user: propUser, onUpdate }) {
           <div className="profile-avatar-wrap">
             <div className="profile-avatar themed-avatar">
               {user?.photoURL ? (
-                <img src={user.photoURL} alt="avatar" className="avatar-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={user.photoURL} alt="avatar" className="avatar-img" />
               ) : (
                 <span style={{ fontSize: '2rem' }}>{user?.name?.[0] || '🌱'}</span>
               )}
@@ -142,29 +158,79 @@ export default function Profile({ user: propUser, onUpdate }) {
           </div>
 
           <div className="profile-info">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
-              <h1 className="profile-name" style={{ margin: 0 }}>{user?.name}</h1>
-              <button className="btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }} onClick={() => { setEditName(user?.name || ''); setIsEditing(true); }}>✎ Edit</button>
-              <button className="btn-outline customize-btn" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', borderColor: activeTheme.primary }} onClick={() => setShowCustomize(v => !v)}>🎨 Customize</button>
+            <h1 className="profile-name">{user?.name}</h1>
+            <p className="profile-bio" style={{ color: 'var(--color-text-muted)', marginBottom: '0.5rem', fontStyle: 'italic', maxWidth: '500px' }}>
+              {user?.bio || 'Eco Citizen on a mission to save the planet. 🌍'}
+            </p>
+            <p className="profile-meta">🏫 {user?.school} &nbsp;·&nbsp; 📚 Grade {user?.grade}</p>
+            
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
+              <button className="btn-primary customize-btn" onClick={() => setShowCustomize(v => !v)}>
+                {showCustomize ? '✨ Close Studio' : '🎨 Profile Studio'}
+              </button>
             </div>
-            <p className="profile-meta">🏫 {user?.school || 'School'} &nbsp;·&nbsp; 📚 Grade {user?.grade || '-'}</p>
-            <p className="profile-join">Eco Citizen since {joinDate}</p>
           </div>
         </motion.div>
 
-        {/* ── Customize Panel ── */}
+        {/* ── Profile Studio (Extended Customize) ── */}
         <AnimatePresence>
           {showCustomize && (
-            <motion.div className="customize-panel glass-card" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-              <div className="cp-section">
-                <div className="cp-label">🖌️ Profile Theme</div>
-                <div className="cp-row">
-                  {PROFILE_THEMES.map(theme => (
-                    <div key={theme.id} className={`theme-swatch ${activeThemeId === theme.id ? 'active' : ''} ${!isThemeUnlocked(theme) ? 'locked' : ''}`} style={{ '--sw-grad': theme.gradient }} onClick={() => isThemeUnlocked(theme) && applyTheme(theme.id)}>
-                      <div className="sw-circle">{!isThemeUnlocked(theme) && '🔒'}</div>
-                      <div className="sw-name">{theme.name}</div>
+            <motion.div 
+              className="customize-panel glass-card anim-fade-up"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+            >
+              <div className="studio-grid">
+                <div className="studio-left">
+                  <div className="cp-section">
+                    <div className="cp-label">✏️ Identity</div>
+                    <div className="form-group">
+                      <label>Eco Name</label>
+                      <input type="text" className="form-input" value={editName} onChange={e => setEditName(e.target.value)} />
                     </div>
-                  ))}
+                    <div className="form-group">
+                      <label>Eco Bio</label>
+                      <textarea className="form-input" style={{ minHeight: '80px' }} value={editBio} onChange={e => setEditBio(e.target.value)} placeholder="Tell us your eco mission..." />
+                    </div>
+                    <div className="form-group">
+                      <label>Profile Picture</label>
+                      <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files[0])} style={{ fontSize: '0.8rem' }} />
+                    </div>
+                    <button className="btn-outline" onClick={handleSaveProfile} disabled={isSaving}>
+                      {isSaving ? 'Processing...' : 'Update Profile'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="studio-right">
+                  <div className="cp-section">
+                    <div className="cp-label">🖌️ Profile Theme <span className="cp-sub">Colors & Glow</span></div>
+                    <div className="cp-row">
+                      {PROFILE_THEMES.map(theme => (
+                        <div key={theme.id} className={`theme-swatch ${activeThemeId === theme.id ? 'active' : ''} ${!isThemeUnlocked(theme) ? 'locked' : ''}`} style={{ '--sw-grad': theme.gradient }} onClick={() => isThemeUnlocked(theme) && applyTheme(theme.id)}>
+                          <div className="sw-circle">{!isThemeUnlocked(theme) && '🔒'}</div>
+                          <div className="sw-name">{theme.name}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="cp-section" style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)' }}>
+                    <div className="cp-label">✨ Avatar Frame <span className="cp-sub">Cosmetic Rings</span></div>
+                    <div className="cp-row">
+                      {AVATAR_FRAMES.map(frame => (
+                        <div key={frame.id} className={`frame-option ${activeFrameId === frame.id ? 'active' : ''} ${!isFrameUnlocked(frame) ? 'locked' : ''}`} onClick={() => isFrameUnlocked(frame) && applyFrame(frame.id)}>
+                          <div className="fo-preview">
+                            <div className="fo-ring" style={{ borderColor: frame.borderColor, boxShadow: `0 0 10px ${frame.glow}` }} />
+                            <div className="fo-dot" style={{ background: frame.isRainbow ? 'linear-gradient(90deg,#fbbf24,#f43f5e,#a78bfa,#00e5c4)' : (frame.borderColor || '#34d364') }} />
+                            {!isFrameUnlocked(frame) && <span className="fo-lock">🔒</span>}
+                          </div>
+                          <div className="fo-name">{frame.name}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -192,7 +258,10 @@ export default function Profile({ user: propUser, onUpdate }) {
 
         {/* ── Badges ── */}
         <div className="profile-section">
-          <h2 className="ps-title">🏅 My Badges <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>({earned.length}/{ALL_BADGES.length})</span></h2>
+          <div className="ps-header">
+            <h2 className="ps-title">🏅 My Badges <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>({earned.length}/{ALL_BADGES.length})</span></h2>
+            <Link to="/badges" className="ps-view">View Roadmap →</Link>
+          </div>
           <div className="prof-badges-grid">
             {earned.length === 0 ? (
               <p className="empty-msg">No badges earned yet. 🌱</p>
@@ -205,6 +274,15 @@ export default function Profile({ user: propUser, onUpdate }) {
                 </div>
               ))
             )}
+            
+            {/* Next Goals Preview */}
+            {nextGoals.map(b => (
+              <div key={b.id} className="prof-badge-card locked-preview" onClick={() => navigate('/badges')}>
+                <div className="pbc-icon-wrap" style={{ background: 'rgba(255,255,255,0.03)', opacity: 0.3 }}>{b.icon}</div>
+                <div className="pbc-name" style={{ opacity: 0.4 }}>{b.name}</div>
+                <div className="pbc-status" style={{ fontSize: '0.65rem', color: 'var(--color-text-faint)' }}>Next Goal 🔒</div>
+              </div>
+            ))}
           </div>
         </div>
 

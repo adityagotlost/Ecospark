@@ -113,15 +113,29 @@
 .pl-bar-track { height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
 .pl-bar-fill  { height: 100%; border-radius: 10px; transition: width 1s var(--ease-smooth); }
 
+.profile-bio { font-size: 0.95rem; line-height: 1.5; color: var(--color-text-muted); }
+
 /* ─────────────────────────────────────────────────────────────
-   Customize Panel
+   Profile Studio (Customizer)
 ───────────────────────────────────────────────────────────── */
 .customize-panel {
-  margin-bottom: 1.5rem;
-  padding: 1.75rem 2rem;
-  border-color: var(--theme-primary, var(--color-border-glow));
+  margin-bottom: 2rem;
+  padding: 2.5rem;
   overflow: hidden;
 }
+.studio-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 3rem;
+}
+.studio-left { display: flex; flex-direction: column; gap: 1.5rem; }
+.studio-right { border-left: 1px solid var(--color-border); padding-left: 3rem; }
+
+@media (max-width: 1000px) {
+  .studio-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .studio-right { border-left: none; padding-left: 0; border-top: 1px solid var(--color-border); padding-top: 2rem; }
+}
+
 .cp-section  { margin-bottom: 1.5rem; }
 .cp-section:last-child { margin-bottom: 0; }
 .cp-label {
@@ -232,11 +246,19 @@
 .prof-badge-card {
   padding: 1.25rem 1rem;
   display: flex; flex-direction: column; align-items: center;
-  text-align: center; gap: 0.4rem;
+  text-align: center; gap: 0.5rem;
   transition: all var(--t-normal) var(--ease-smooth);
-  cursor: default;
+  cursor: pointer;
 }
 .prof-badge-card:hover { transform: translateY(-4px); border-color: var(--badge-color, var(--color-border-glow)); }
+
+.locked-preview {
+  opacity: 0.8;
+  border: 1px dashed var(--color-border);
+  background: transparent;
+  cursor: pointer;
+}
+.locked-preview:hover { border-style: solid; border-color: var(--color-text-faint); background: rgba(255,255,255,0.02); }
 .pbc-icon-wrap {
   width: 56px; height: 56px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -354,11 +376,12 @@
   .customize-panel   { padding: 1.25rem 1.25rem; }
 }
 @media (max-width: 600px)  {
-  .profile-hero      { flex-direction: column; align-items: flex-start; }
+  .profile-hero      { flex-direction: column; align-items: center; text-align: center; }
+  .profile-info      { align-items: center; display: flex; flex-direction: column; }
   .prof-badges-grid  { grid-template-columns: 1fr; }
-  .cert-milestone-grid { grid-template-columns: 1fr 1fr; }
-  .cp-row            { gap: 0.5rem; }
-  .theme-swatch, .frame-option { width: 60px; }
-  .sw-circle, .fo-preview { width: 40px; height: 40px; }
+  .cert-milestone-grid { grid-template-columns: 1fr; }
+  .cp-row            { gap: 0.5rem; justify-content: center; }
+  .theme-swatch, .frame-option { width: 66px; }
+  .sw-circle, .fo-preview { width: 44px; height: 44px; }
 }
 

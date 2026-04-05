@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ALL_BADGES } from '../store';
 import './Badges.css';
 
@@ -65,24 +67,43 @@ export default function Badges({ user }) {
               <div
                 key={badge.id}
                 className={`badge-card glass-card ${isEarned ? 'badge-earned' : 'badge-locked'}`}
-                style={{ '--badge-color': badge.color, animationDelay: `${i * 50}ms` }}
+                style={{ 
+                  '--badge-color': badge.color, 
+                  animationDelay: `${i * 50}ms`,
+                  '--badge-glow': `${badge.color}40`
+                }}
                 id={`badge-${badge.id}`}
               >
-                {isEarned && <div className="badge-sparkle">✨</div>}
-                <div className="badge-icon-wrap" style={isEarned ? { background: `${badge.color}20`, boxShadow: `0 0 20px ${badge.color}40` } : {}}>
-                  <span className="badge-icon" style={isEarned ? {} : { filter: 'grayscale(1) opacity(0.3)' }}>
-                    {badge.icon}
-                  </span>
+                <div className="badge-card-inner">
+                  
+                  <div className="badge-icon-container">
+                    <div className="badge-icon-bg" style={isEarned ? { background: `${badge.color}15` } : {}} />
+                    <span className="badge-icon" style={isEarned ? {} : { filter: 'grayscale(1) brightness(0.5)', opacity: 0.4 }}>
+                      {badge.icon}
+                    </span>
+                    {!isEarned && (
+                      <div className="badge-lock-overlay">
+                        <span className="lock-icon">🔒</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="badge-info">
+                    <div className="badge-name" style={isEarned ? { color: badge.color } : {}}>
+                      {badge.name}
+                    </div>
+                    <div className="badge-desc">{badge.desc}</div>
+                  </div>
+
+                  <div className={`badge-status ${isEarned ? 'earned' : 'locked'}`}>
+                    {isEarned ? (
+                      <><span className="status-dot"></span> Unlocked</>
+                    ) : (
+                      'Keep exploring to unlock'
+                    )}
+                  </div>
                 </div>
-                <div className="badge-name" style={isEarned ? { color: badge.color } : {}}>
-                  {badge.name}
-                </div>
-                <div className="badge-desc">{badge.desc}</div>
-                {isEarned ? (
-                  <div className="badge-status-earned">✅ Unlocked</div>
-                ) : (
-                  <div className="badge-status-locked">🔒 Locked</div>
-                )}
+
                 {isEarned && (
                   <div className="badge-glow-ring" style={{ borderColor: badge.color }} />
                 )}

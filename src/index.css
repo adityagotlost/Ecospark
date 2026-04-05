@@ -193,6 +193,16 @@ ul, ol { list-style: none; }
 .page { min-height: 100vh; padding-top: 64px; }
 .section { padding: 2rem var(--sp-xl); max-width: 1440px; margin: 0 auto; }
 
+.page-header { margin-bottom: 2.5rem; text-align: left; }
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.03em;
+}
+.page-sub { color: var(--color-text-muted); font-size: 1.1rem; max-width: 700px; }
+
 /* ── Animations (Subtle & Intentional) ── */
 @keyframes fadeIn {
   from { opacity: 0; }

@@ -161,11 +161,12 @@ export async function fbUpdateUser(uid, updates) {
   await updateDoc(doc(db, 'users', uid), updates);
 }
 
-export async function fbUpdateProfile(uid, name, photoDataUrl, profileTheme, profileFrame) {
+export async function fbUpdateProfile(uid, name, photoDataUrl, profileTheme, profileFrame, bio) {
   const updates = { name };
   if (photoDataUrl) updates.photoURL = photoDataUrl;
   if (profileTheme !== undefined && profileTheme !== null) updates.profileTheme = profileTheme;
   if (profileFrame !== undefined && profileFrame !== null) updates.profileFrame = profileFrame;
+  if (bio !== undefined && bio !== null) updates.bio = bio;
   await fbUpdateUser(uid, updates);
   return updates;
 }
