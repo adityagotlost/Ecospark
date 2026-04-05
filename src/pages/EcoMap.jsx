@@ -58,9 +58,9 @@ const ECO_STATIONS = [
   { id: 14, name: 'National Institute of Hydrology',     type: 'school',   lat: 29.8610, lng: 77.9080, desc: 'Premier research institute studying water resources, flood management, and climate impact',        impact: 'Water quality monitoring network',  verified: 156, category: 'station' },
   { id: 15, name: 'CBRI Green Building Research',        type: 'school',   lat: 29.8690, lng: 77.9040, desc: 'Central Building Research Institute developing eco-friendly construction and sustainable materials', impact: 'Low-carbon building prototypes',    verified: 112, category: 'energy' },
 
-  // Haridwar University
-  { id: 16, name: 'Haridwar University — Green Campus',   type: 'school',   lat: 29.8700, lng: 77.8500, desc: 'University campus on Roorkee–Haridwar Canal Road with tree-planting drives, clean energy workshops, and waste segregation programs', impact: '1,200+ saplings planted on campus', verified: 198, category: 'station' },
-  { id: 17, name: 'Haridwar University Canal Plantation',  type: 'tree',     lat: 29.8720, lng: 77.8470, desc: 'Student-led canal-side plantation and biodiversity documentation initiative along the Ganges Canal near campus', impact: '300+ native trees along canal bank', verified: 145, category: 'nature' },
+  // Haridwar University (Roorkee College of Engineering) — Canal Road, Bajuheri
+  { id: 16, name: 'Haridwar University — Green Campus',   type: 'school',   lat: 29.8800, lng: 77.8600, desc: 'Haridwar University (formerly RCE), Canal Road, Bajuheri — tree-planting drives, clean energy workshops, and waste segregation programs', impact: '1,200+ saplings planted on campus', verified: 198, category: 'station' },
+  { id: 17, name: 'Haridwar University Canal Plantation',  type: 'tree',     lat: 29.8820, lng: 77.8580, desc: 'Student-led canal-side plantation and biodiversity documentation initiative along the Ganges Canal near Bajuheri campus', impact: '300+ native trees along canal bank', verified: 145, category: 'nature' },
 ];
 
 // ── Impact hotspots (circles) ──
