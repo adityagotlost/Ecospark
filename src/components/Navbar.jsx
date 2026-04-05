@@ -19,6 +19,7 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
     { name: 'Challenges', path: '/challenges', icon: '⚔️' },
     { name: 'Leaderboard', path: '/leaderboard', icon: '🏆' },
     { name: 'Badges', path: '/badges', icon: '🏅' },
+    { name: 'Eco Map', path: '/eco-map', icon: '🗺️' },
     { name: 'Profile', path: '/profile', icon: '👤' },
   ];
 
