@@ -59,8 +59,8 @@ const ECO_STATIONS = [
   { id: 15, name: 'CBRI Green Building Research',        type: 'school',   lat: 29.8690, lng: 77.9040, desc: 'Central Building Research Institute developing eco-friendly construction and sustainable materials', impact: 'Low-carbon building prototypes',    verified: 112, category: 'energy' },
 
   // Haridwar University (Roorkee College of Engineering) — 5th Km, Upper Ganga Canal Rd, Bajuheri
-  { id: 16, name: 'Haridwar University — Green Campus',   type: 'school',   lat: 29.8350, lng: 77.9250, desc: 'Haridwar University (formerly RCE), 5th Km, Upper Ganga Canal Rd, Bajuheri — tree-planting drives, clean energy workshops, and waste segregation programs', impact: '1,200+ saplings planted on campus', verified: 198, category: 'station' },
-  { id: 17, name: 'Haridwar University Canal Plantation',  type: 'tree',     lat: 29.8365, lng: 77.9230, desc: 'Student-led canal-side plantation and biodiversity documentation along Upper Ganga Canal near Bajuheri campus', impact: '300+ native trees along canal bank', verified: 145, category: 'nature' },
+  { id: 16, name: 'Haridwar University — Green Campus',   type: 'school',   lat: 29.9080, lng: 77.9258, desc: 'Haridwar University (formerly RCE), 5th Km, Upper Ganga Canal Rd, Bajuheri — tree-planting drives, clean energy workshops, and waste segregation programs', impact: '1,200+ saplings planted on campus', verified: 198, category: 'station' },
+  { id: 17, name: 'Haridwar University Canal Plantation',  type: 'tree',     lat: 29.9095, lng: 77.9240, desc: 'Student-led canal-side plantation and biodiversity documentation along Upper Ganga Canal near Bajuheri campus', impact: '300+ native trees along canal bank', verified: 145, category: 'nature' },
 ];
 
 // ── Impact hotspots (circles) ──
