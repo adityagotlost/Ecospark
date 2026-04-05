@@ -58,21 +58,17 @@ const ECO_STATIONS = [
 const IMPACT_ZONES = [
   { lat: 29.8644, lng: 77.8960, radius: 800,  color: '#10b981', label: 'IIT Roorkee Green Campus Zone',         level: 'high' },
   { lat: 29.8663, lng: 77.8912, radius: 1200, color: '#3b82f6', label: 'Ganges Canal Heritage Corridor',        level: 'high' },
-  { lat: 29.8822, lng: 77.8961, radius: 600,  color: '#22c55e', label: 'Solani Aqueduct Conservation Area',      level: 'medium' },
-  { lat: 29.8570, lng: 77.8815, radius: 900,  color: '#06b6d4', label: 'Cantonment Greenbelt Protected Zone',    level: 'medium' },
-  { lat: 29.8450, lng: 77.9150, radius: 700,  color: '#a78bfa', label: 'Bhagwanpur Community Green Hub',         level: 'medium' },
+  { lat: 29.9080, lng: 77.9258, radius: 600,  color: '#a78bfa', label: 'Haridwar University Campus Zone',       level: 'medium' },
 ];
 
 // Community actions by Roorkee users
 const COMMUNITY_ACTIONS = [
   { id: 'a1', user: 'Aditya G.',   action: 'Planted 8 saplings near Solani Park',        lat: 29.8740, lng: 77.8930, time: '1h ago',  pts: 200, emoji: '🌱' },
-  { id: 'a2', user: 'Priya S.',    action: 'Cleaned Solani River bank (2km stretch)',     lat: 29.8790, lng: 77.8870, time: '3h ago',  pts: 250, emoji: '🧹' },
-  { id: 'a3', user: 'Rohan K.',    action: 'Verified IIT Roorkee solar panel output',     lat: 29.8630, lng: 77.9005, time: '5h ago',  pts: 180, emoji: '☀️' },
-  { id: 'a4', user: 'Sneha M.',    action: 'Recycled 20kg e-waste at Root Recycling',     lat: 29.8545, lng: 77.9055, time: '7h ago',  pts: 150, emoji: '♻️' },
+  { id: 'a2', user: 'Priya S.',    action: 'Cleaned canal bank near Aqueduct',            lat: 29.8820, lng: 77.8955, time: '3h ago',  pts: 250, emoji: '🧹' },
+  { id: 'a3', user: 'Rohan K.',    action: 'Verified IIT Roorkee Green Campus data',      lat: 29.8640, lng: 77.8965, time: '5h ago',  pts: 180, emoji: '☀️' },
+  { id: 'a4', user: 'Sneha M.',    action: 'Recycled 20kg plastic at Green Cycler',       lat: 29.8590, lng: 77.8850, time: '7h ago',  pts: 150, emoji: '♻️' },
   { id: 'a5', user: 'Arjun T.',    action: 'Documented 15 bird species at Solani Park',   lat: 29.8755, lng: 77.8915, time: '12h ago', pts: 160, emoji: '🦜' },
-  { id: 'a6', user: 'Kavya D.',    action: 'Organized IIT campus Miyawaki planting drive', lat: 29.8675, lng: 77.8935, time: '1d ago',  pts: 300, emoji: '🌳' },
-  { id: 'a7', user: 'Vikram S.',   action: 'Set up cycle-sharing at Civil Lines',          lat: 29.8705, lng: 77.8865, time: '1d ago',  pts: 200, emoji: '🚲' },
-  { id: 'a8', user: 'Nisha R.',    action: 'Distributed 50 saplings from Bhagwanpur Nursery', lat: 29.8455, lng: 77.9145, time: '2d ago', pts: 220, emoji: '🌻' },
+  { id: 'a6', user: 'Kavya D.',    action: 'Organized tree drive at Haridwar University', lat: 29.9085, lng: 77.9250, time: '1d ago',  pts: 300, emoji: '🌳' },
 ];
 
 const CATEGORIES = [
