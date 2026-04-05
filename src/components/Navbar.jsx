@@ -26,6 +26,7 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
       subLinks: [
         { name: 'Eco Map', path: '/eco-map', icon: '🗺️' },
         { name: 'Challenges', path: '/challenges', icon: '⚔️' },
+        { name: 'Calculator', path: '/calculator', icon: '🧮' },
       ]
     },
     {
