@@ -41,7 +41,8 @@ export default function Auth({ onAuth }) {
     try {
       await fbLogin(loginData);
       onAuth();
-      navigate('/dashboard');
+      const redirectTo = searchParams.get('redirect') || '/dashboard';
+      navigate(redirectTo);
     } catch (err) {
       setError(
         err.code === 'auth/user-not-found'    ? 'No account found with this email.' :
@@ -64,7 +65,8 @@ export default function Auth({ onAuth }) {
     try {
       await fbRegister(signupData);
       onAuth();
-      navigate('/dashboard');
+      const redirectTo = searchParams.get('redirect') || '/dashboard';
+      navigate(redirectTo);
     } catch (err) {
       setError(
         err.code === 'auth/email-already-in-use' ? 'Email already registered. Please login.' :

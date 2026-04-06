@@ -6,41 +6,59 @@ import './Redeem.css';
 
 const PARTICLES = Array.from({ length: 20 }, (_, i) => i);
 
-export default function Redeem({ user }) {
+export default function Redeem({ user, loading }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const code = searchParams.get('code') || '';
 
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error | already
+  const [status, setStatus] = useState('idle'); // idle | loading | success | error | already | needsLogin
   const [message, setMessage] = useState('');
   const [reward, setReward] = useState(null);
+  const [redeemTriggered, setRedeemTriggered] = useState(false);
 
   useEffect(() => {
-    if (!user) return; // wait for auth
-    if (!code) {
-      setStatus('error');
-      setMessage('No redemption code found in this QR code.');
+    if (loading) return; // wait for Firebase auth to resolve
+
+    if (!user) {
+      // Save the full redeem URL and redirect to login
+      sessionStorage.setItem('ecospark_redeem_code', code);
+      setStatus('needsLogin');
       return;
     }
-    handleRedeem();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
 
-  const handleRedeem = async () => {
+    // If user just logged in and a saved code exists, use that
+    const savedCode = sessionStorage.getItem('ecospark_redeem_code');
+    const finalCode = code || savedCode || '';
+
+    if (!finalCode) {
+      setStatus('error');
+      setMessage('No redemption code found in this link.');
+      return;
+    }
+
+    if (!redeemTriggered) {
+      setRedeemTriggered(true);
+      handleRedeem(finalCode);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loading]);
+
+  const handleRedeem = async (finalCode) => {
     setStatus('loading');
-    const result = await fbRedeemQrCode(user.uid, code);
+    const result = await fbRedeemQrCode(user.uid, finalCode);
+    sessionStorage.removeItem('ecospark_redeem_code');
     if (result.success) {
       setReward({ points: result.points, coins: result.coins, label: result.label });
       setStatus('success');
     } else {
       setMessage(result.error);
-      setStatus(result.error.includes('already') ? 'already' : 'error');
+      setStatus(result.error.toLowerCase().includes('already') ? 'already' : 'error');
     }
   };
 
   return (
     <div className="redeem-page">
-      {/* Background particles on success */}
+      {/* Confetti particles on success */}
       <AnimatePresence>
         {status === 'success' && PARTICLES.map(i => (
           <motion.div
@@ -54,11 +72,7 @@ export default function Redeem({ user }) {
               scale: Math.random() * 1.5 + 0.5,
             }}
             transition={{ duration: Math.random() * 2 + 1.5, delay: Math.random() * 0.5 }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: '60%',
-              fontSize: `${Math.random() * 1.5 + 0.8}rem`,
-            }}
+            style={{ left: `${Math.random() * 100}%`, top: '60%', fontSize: `${Math.random() * 1.5 + 0.8}rem` }}
           >
             {['🌱', '⚡', '🪙', '✨', '🌿', '💚'][Math.floor(Math.random() * 6)]}
           </motion.div>
@@ -73,21 +87,42 @@ export default function Redeem({ user }) {
       >
         <AnimatePresence mode="wait">
 
-          {/* Loading */}
-          {status === 'loading' && (
-            <motion.div key="loading" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          {/* Checking auth */}
+          {(status === 'idle' || loading) && (
+            <motion.div key="idle" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="redeem-spinner" />
-              <h2>Verifying Code...</h2>
-              <p>Hold tight while we process your reward 🌿</p>
+              <h2>Checking...</h2>
+              <p>Verifying your session 🌿</p>
             </motion.div>
           )}
 
-          {/* Waiting for user auth */}
-          {status === 'idle' && (
-            <motion.div key="idle" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          {/* Not logged in */}
+          {status === 'needsLogin' && (
+            <motion.div key="needslogin" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="redeem-icon">🔐</div>
-              <h2>Authenticating...</h2>
-              <p>Please make sure you're logged in.</p>
+              <h2>Login to Claim!</h2>
+              <p>You've scanned a reward code for</p>
+              <div className="code-preview">
+                ⚡ 500 Eco Points &nbsp;+&nbsp; 🪙 500 Spark Coins
+              </div>
+              <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>Login or create a free account to claim your reward instantly.</p>
+              <motion.button
+                className="redeem-btn"
+                onClick={() => navigate(`/auth?redirect=/redeem?code=${code}`)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Login / Sign Up 🚀
+              </motion.button>
+            </motion.div>
+          )}
+
+          {/* Processing */}
+          {status === 'loading' && (
+            <motion.div key="loading" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <div className="redeem-spinner" />
+              <h2>Claiming Reward...</h2>
+              <p>Adding points and coins to your account 🌿</p>
             </motion.div>
           )}
 
@@ -105,42 +140,17 @@ export default function Redeem({ user }) {
               <p className="redeem-label">{reward.label}</p>
 
               <div className="reward-chips">
-                <motion.div
-                  className="reward-chip points"
-                  initial={{ x: -40, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
+                <motion.div className="reward-chip points" initial={{ x: -40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
                   <span className="chip-icon">⚡</span>
-                  <div>
-                    <div className="chip-val">+{reward.points}</div>
-                    <div className="chip-name">Eco Points</div>
-                  </div>
+                  <div><div className="chip-val">+{reward.points}</div><div className="chip-name">Eco Points</div></div>
                 </motion.div>
-
-                <motion.div
-                  className="reward-chip coins"
-                  initial={{ x: 40, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.45 }}
-                >
+                <motion.div className="reward-chip coins" initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
                   <span className="chip-icon">🪙</span>
-                  <div>
-                    <div className="chip-val">+{reward.coins}</div>
-                    <div className="chip-name">Spark Coins</div>
-                  </div>
+                  <div><div className="chip-val">+{reward.coins}</div><div className="chip-name">Spark Coins</div></div>
                 </motion.div>
               </div>
 
-              <motion.button
-                className="redeem-btn"
-                onClick={() => navigate('/dashboard')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-              >
+              <motion.button className="redeem-btn" onClick={() => navigate('/dashboard')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
                 Go to Dashboard 🚀
               </motion.button>
             </motion.div>
@@ -148,7 +158,7 @@ export default function Redeem({ user }) {
 
           {/* Already redeemed */}
           {status === 'already' && (
-            <motion.div key="already" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div key="already" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="redeem-icon">☑️</div>
               <h2>Already Redeemed</h2>
               <p>{message}</p>
@@ -158,7 +168,7 @@ export default function Redeem({ user }) {
 
           {/* Error */}
           {status === 'error' && (
-            <motion.div key="error" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div key="error" className="redeem-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="redeem-icon">❌</div>
               <h2>Invalid Code</h2>
               <p>{message}</p>
@@ -169,7 +179,7 @@ export default function Redeem({ user }) {
         </AnimatePresence>
       </motion.div>
 
-      <p className="redeem-brand">EcoSpark 🌿 · Smart India Hackathon 2025</p>
+      <p className="redeem-brand">EcoSpark 🌿 · TechSangram 2026</p>
     </div>
   );
 }

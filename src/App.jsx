@@ -147,7 +147,7 @@ export default function App() {
         <Route path="/insights"    element={<ProtectedRoute user={user} loading={loading}><Insights user={user} /></ProtectedRoute>} />
         <Route path="/eco-eye"     element={<ProtectedRoute user={user} loading={loading}><EcoEye user={user} /></ProtectedRoute>} />
         <Route path="/eco-map"     element={<ProtectedRoute user={user} loading={loading}><EcoMap user={user} /></ProtectedRoute>} />
-        <Route path="/redeem"      element={<ProtectedRoute user={user} loading={loading}><Redeem user={user} /></ProtectedRoute>} />
+        <Route path="/redeem"      element={<Redeem user={user} loading={loading} />} />
         <Route path="*"            element={<Navigate to="/" replace />} />
       </Routes>
     </>
