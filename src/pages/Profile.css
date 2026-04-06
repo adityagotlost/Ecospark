@@ -70,10 +70,10 @@
 @keyframes frame-pulse-solar   { 0%,100%{border-color:#facc15;box-shadow:0 0 10px rgba(250,204,21,0.55)} 50%{border-color:#fde68a;box-shadow:0 0 24px rgba(253,230,138,0.95)} }
 @keyframes frame-pulse-diamond { 0%,100%{border-color:#bae6fd;box-shadow:0 0 10px rgba(186,230,253,0.5)} 50%{border-color:#e0f2fe;box-shadow:0 0 22px rgba(224,242,254,0.9)} }
 @keyframes rainbow-pan         { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-@keyframes gold-shimmer-anim { 
-  0% { background-position: 0% 50%; filter: drop-shadow(0 0 10px rgba(212,175,55,0.4)); transform: scale(1); }
-  50% { background-position: 100% 50%; filter: drop-shadow(0 0 25px rgba(255,215,0,0.9)); transform: scale(1.04); }
-  100% { background-position: 0% 50%; filter: drop-shadow(0 0 10px rgba(212,175,55,0.4)); transform: scale(1); }
+@keyframes gold-spin           { 100% { transform: rotate(360deg); } }
+@keyframes gold-float          { 
+  0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0.8; filter: drop-shadow(0 0 5px #ffb300); }
+  100% { transform: translateY(-5px) scale(1.2) rotate(15deg); opacity: 1; filter: drop-shadow(0 0 15px #fff7c0); }
 }
 
 .frame-pulse-green   { animation: frame-pulse-green   2.5s ease-in-out infinite; }
@@ -97,20 +97,49 @@
   filter: drop-shadow(0 0 10px rgba(251,191,36,0.6));
 }
 
+/* Ultimate Premium Gold Animation */
 .frame-pulse-gold {
-  border: 3.5px solid transparent !important;
-  background: linear-gradient(135deg, #FFDF73, #D4AF37, #FFF8DC, #D4AF37, #FFDF73) border-box !important;
-  background-size: 300% 300% !important;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box !important;
-  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box !important;
-  -webkit-mask-composite: destination-out !important;
-  mask-composite: exclude !important;
-  animation: gold-shimmer-anim 3s ease-in-out infinite !important;
+  border: none !important;
+  background: transparent !important;
   box-shadow: none !important;
+  animation: none !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  filter: drop-shadow(0 0 12px rgba(255, 179, 0, 0.4)) !important;
+}
+
+.frame-pulse-gold::before {
+  content: '';
+  position: absolute;
+  inset: -3.5px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  background: conic-gradient(from 0deg, #FFB300, #FFF7C0, #FFB300, #FF8C00, #FFF7C0, #FFB300) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box;
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: gold-spin 2.5s linear infinite;
+  z-index: 1;
+}
+
+.frame-pulse-gold::after {
+  content: '✦';
+  position: absolute;
+  color: #FFF7C0;
+  font-family: system-ui, sans-serif;
+  line-height: 1;
+  font-size: 1.8rem;
+  top: -12px;
+  right: -5px;
+  animation: gold-float 2s ease-in-out infinite alternate;
+  z-index: 10;
 }
 
 /* Fix inner padding for preview ring */
-.fo-ring.frame-pulse-gold, .fo-ring.rainbow-frame { border-width: 2.5px !important; inset: 0 !important; }
+.fo-ring.rainbow-frame { border-width: 2.5px !important; inset: 0 !important; }
+.fo-ring.frame-pulse-gold::before { inset: -1px !important; border-width: 2.5px !important; }
+.fo-ring.frame-pulse-gold::after { font-size: 1.2rem; top: -6px; right: 0; }
 
 /* ── Profile Info ── */
 .profile-name {
