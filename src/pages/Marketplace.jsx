@@ -32,8 +32,9 @@ const Marketplace = () => {
 
   const handleBuy = async (item) => {
     if (!user) return;
-    if ((user.ecoPoints || 0) < item.price) {
-      showToast('Insufficient EcoPoints!', 'error');
+    const currentCoins = user.sparkCoins !== undefined ? user.sparkCoins : (user.ecoPoints || 0);
+    if (currentCoins < item.price) {
+      showToast('Insufficient Eco Coins!', 'error');
       return;
     }
 
@@ -70,7 +71,7 @@ const Marketplace = () => {
           <div className="marketplace-balance-card">
             <div className="balance-info">
               <span className="balance-label">Your Balance</span>
-              <h2 className="balance-value">⚡ {user?.ecoPoints || 0} <span className="pts">EcoPoints</span></h2>
+              <h2 className="balance-value">🪙 {user?.sparkCoins !== undefined ? user.sparkCoins : (user?.ecoPoints || 0)} <span className="pts">Eco Coins</span></h2>
             </div>
             <div className="balance-icon">💰</div>
           </div>
@@ -113,7 +114,7 @@ const Marketplace = () => {
                     
                     <div className="item-footer">
                       <div className="item-price">
-                        <span className="coin-icon">⚡</span> {item.price}
+                        <span className="coin-icon">🪙</span> {item.price}
                       </div>
                       <button 
                         className={`buy-btn ${isPurchased ? 'owned' : ''}`}

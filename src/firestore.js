@@ -188,6 +188,7 @@ export async function fbAddEcoPoints(uid, points) {
 
   await updateDoc(doc(db, 'users', uid), {
     ecoPoints:  increment(points),
+    sparkCoins: increment(points),
     weeklyPoints: weeklyData,
   });
   return fbCheckAndAwardBadges(uid);
@@ -212,22 +213,25 @@ export const fbSpendEcoPoints = async (uid, amount, itemId) => {
     const snap = await getDoc(userRef);
     if (!snap.exists()) return;
 
-    const currentPoints = snap.data().ecoPoints || 0;
-    if (currentPoints < amount) {
-      throw new Error('Insufficient EcoPoints');
+    const data = snap.data();
+    // Use sparkCoins if it exists, otherwise fallback to ecoPoints for backward compatibility
+    const currentCoins = data.sparkCoins !== undefined ? data.sparkCoins : (data.ecoPoints || 0);
+    
+    if (currentCoins < amount) {
+      throw new Error('Insufficient Eco Coins');
     }
 
-    const newPoints = currentPoints - amount;
+    const newCoins = currentCoins - amount;
     
     // Add to purchased items array to keep track
     await updateDoc(userRef, {
-      ecoPoints: newPoints,
+      sparkCoins: newCoins,
       purchasedItems: arrayUnion(itemId),
       lastPurchaseAt: serverTimestamp()
     });
 
     // Notify listeners or store
-    return newPoints;
+    return newCoins;
   } catch (err) {
     console.error('Error spending points:', err);
     throw err;

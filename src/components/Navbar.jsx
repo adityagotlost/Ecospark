@@ -91,9 +91,13 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
         <div className="navbar-right">
           {user ? (
             <>
-              <div className="nav-points">
+              <div className="nav-points" title="EcoPoints (Lifetime)">
                 <span className="points-icon">⚡</span>
                 <span>{(user?.ecoPoints || 0).toLocaleString()}</span>
+              </div>
+              <div className="nav-points" title="Eco Coins (Spendable)">
+                <span className="points-icon">🪙</span>
+                <span>{(user?.sparkCoins !== undefined ? user.sparkCoins : (user?.ecoPoints || 0)).toLocaleString()}</span>
               </div>
               <button 
                 className="btn-theme" 
@@ -132,9 +136,15 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
       {/* Mobile Menu */}
       {menuOpen && user && (
         <div className="mobile-menu glass-card anim-fade-in">
-          <div className="mobile-points">
-            <span className="m-pts-label">EcoPoints</span>
-            <span className="m-pts-val">⚡ {(user?.ecoPoints || 0).toLocaleString()}</span>
+          <div className="mobile-points-container" style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+            <div className="mobile-points" style={{ flex: 1, marginBottom: 0 }}>
+              <span className="m-pts-label">Points</span>
+              <span className="m-pts-val">⚡ {(user?.ecoPoints || 0).toLocaleString()}</span>
+            </div>
+            <div className="mobile-points" style={{ flex: 1, marginBottom: 0 }}>
+              <span className="m-pts-label">Coins</span>
+              <span className="m-pts-val">🪙 {(user?.sparkCoins !== undefined ? user.sparkCoins : (user?.ecoPoints || 0)).toLocaleString()}</span>
+            </div>
           </div>
           
           <div className="mobile-links-grid">
