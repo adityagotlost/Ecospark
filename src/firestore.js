@@ -11,7 +11,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import {
-  doc, getDoc, setDoc, updateDoc, collection,
+  doc, getDoc, setDoc, updateDoc, collection, addDoc,
   query, orderBy, limit, getDocs, increment, arrayUnion, onSnapshot, serverTimestamp,
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
@@ -234,6 +234,32 @@ export const fbSpendEcoPoints = async (uid, amount, itemId) => {
     return newCoins;
   } catch (err) {
     console.error('Error spending points:', err);
+    throw err;
+  }
+};
+
+/**
+ * Place an order for a physical item, deducting points and saving shipping details.
+ */
+export const fbPlaceOrder = async (uid, amount, item, orderDetails) => {
+  try {
+    // 1. Deduct points via existing function
+    await fbSpendEcoPoints(uid, amount, item.id);
+    
+    // 2. Save order details to a new 'orders' collection
+    await addDoc(collection(db, 'orders'), {
+      userId: uid,
+      itemId: item.id,
+      itemName: item.name,
+      amountPaid: amount,
+      orderDetails,
+      status: 'pending',
+      createdAt: serverTimestamp()
+    });
+    
+    return true;
+  } catch (err) {
+    console.error('Error placing order:', err);
     throw err;
   }
 };
