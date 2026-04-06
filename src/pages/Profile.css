@@ -69,8 +69,12 @@
 @keyframes frame-pulse-ocean   { 0%{transform:scale(1);box-shadow:0 0 10px rgba(14,165,233,0.5)} 50%{transform:scale(1.05);box-shadow:0 0 22px rgba(14,165,233,0.85)} 100%{transform:scale(1);box-shadow:0 0 10px rgba(14,165,233,0.5)} }
 @keyframes frame-pulse-solar   { 0%,100%{border-color:#facc15;box-shadow:0 0 10px rgba(250,204,21,0.55)} 50%{border-color:#fde68a;box-shadow:0 0 24px rgba(253,230,138,0.95)} }
 @keyframes frame-pulse-diamond { 0%,100%{border-color:#bae6fd;box-shadow:0 0 10px rgba(186,230,253,0.5)} 50%{border-color:#e0f2fe;box-shadow:0 0 22px rgba(224,242,254,0.9)} }
-@keyframes frame-pulse-gold { 0%,100%{border-color:#fbbf24;box-shadow:0 0 10px rgba(251,191,36,0.6)} 50%{border-color:#ffd700;box-shadow:0 0 25px rgba(255,215,0,1)} }
-@keyframes rainbow-rotate      { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
+@keyframes rainbow-pan         { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+@keyframes gold-shimmer-anim { 
+  0% { background-position: 0% 50%; filter: drop-shadow(0 0 10px rgba(212,175,55,0.4)); transform: scale(1); }
+  50% { background-position: 100% 50%; filter: drop-shadow(0 0 25px rgba(255,215,0,0.9)); transform: scale(1.04); }
+  100% { background-position: 0% 50%; filter: drop-shadow(0 0 10px rgba(212,175,55,0.4)); transform: scale(1); }
+}
 
 .frame-pulse-green   { animation: frame-pulse-green   2.5s ease-in-out infinite; }
 .frame-pulse-leaf    { animation: frame-pulse-leaf    2.2s ease-in-out infinite; }
@@ -79,15 +83,34 @@
 .frame-pulse-ocean   { animation: frame-pulse-ocean   2s   ease-in-out infinite; }
 .frame-pulse-solar   { animation: frame-pulse-solar   2s   ease-in-out infinite; }
 .frame-pulse-diamond { animation: frame-pulse-diamond 1.8s ease-in-out infinite; }
-.frame-pulse-rainbow { animation: frame-pulse-green   2s ease-in-out infinite; }
-.frame-pulse-gold    { animation: frame-pulse-gold    1.8s ease-in-out infinite; }
 
 .rainbow-frame {
-  border: 2.5px solid transparent;
-  background: linear-gradient(#0d1f15,#0d1f15) padding-box,
-              linear-gradient(90deg,#fbbf24,#f43f5e,#a78bfa,#00e5c4,#fbbf24) border-box !important;
-  animation: rainbow-rotate 3s linear infinite, frame-pulse-green 2s ease-in-out infinite !important;
+  border: 3.5px solid transparent !important;
+  background: linear-gradient(90deg, #fbbf24, #f43f5e, #a78bfa, #00e5c4, #fbbf24) border-box !important;
+  background-size: 200% 100% !important;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box !important;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box !important;
+  -webkit-mask-composite: destination-out !important;
+  mask-composite: exclude !important;
+  animation: rainbow-pan 3s linear infinite !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 0 10px rgba(251,191,36,0.6));
 }
+
+.frame-pulse-gold {
+  border: 3.5px solid transparent !important;
+  background: linear-gradient(135deg, #FFDF73, #D4AF37, #FFF8DC, #D4AF37, #FFDF73) border-box !important;
+  background-size: 300% 300% !important;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box !important;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box !important;
+  -webkit-mask-composite: destination-out !important;
+  mask-composite: exclude !important;
+  animation: gold-shimmer-anim 3s ease-in-out infinite !important;
+  box-shadow: none !important;
+}
+
+/* Fix inner padding for preview ring */
+.fo-ring.frame-pulse-gold, .fo-ring.rainbow-frame { border-width: 2.5px !important; inset: 0 !important; }
 
 /* ── Profile Info ── */
 .profile-name {

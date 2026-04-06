@@ -224,8 +224,8 @@ export default function Profile({ user: propUser, onUpdate }) {
                       {AVATAR_FRAMES.map(frame => (
                         <div key={frame.id} className={`frame-option ${activeFrameId === frame.id ? 'active' : ''} ${!isFrameUnlocked(frame) ? 'locked' : ''}`} onClick={() => isFrameUnlocked(frame) && applyFrame(frame.id)}>
                           <div className="fo-preview">
-                            <div className="fo-ring" style={{ borderColor: frame.borderColor, boxShadow: `0 0 10px ${frame.glow}` }} />
-                            <div className="fo-dot" style={{ background: frame.isRainbow ? 'linear-gradient(90deg,#fbbf24,#f43f5e,#a78bfa,#00e5c4)' : (frame.borderColor || '#34d364') }} />
+                            <div className={`fo-ring ${frame.animation || ''} ${frame.isRainbow ? 'rainbow-frame' : ''}`} style={{ borderColor: frame.borderColor, boxShadow: `0 0 10px ${frame.glow}` }} />
+                            <div className="fo-dot" style={{ background: frame.isRainbow ? 'linear-gradient(90deg,#fbbf24,#f43f5e,#a78bfa,#00e5c4)' : (frame.id === 'marketplace_gold' ? 'linear-gradient(135deg, #FFDF73, #D4AF37)' : frame.borderColor || '#34d364') }} />
                             {!isFrameUnlocked(frame) && <span className="fo-lock">🔒</span>}
                           </div>
                           <div className="fo-name">{frame.name}</div>
