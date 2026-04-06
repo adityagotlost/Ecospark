@@ -5,14 +5,17 @@ import './EcoEye.css';
 
 const ECO_EYE_SYSTEM_PROMPT = `Analyze this image for the EcoSpark Sustainability Platform. 
 Identify if it relates to environmental conservation, waste management, renewable energy, or plants.
-Return a JSON object with:
+Return a JSON object strictly following this structure:
 {
   "isEco": boolean,
   "label": "Name of the object/action",
   "score": number (1-10),
   "tip": "One concise sustainable tip",
   "points": number (suggested points: 50 for common items, 150 for rare/high impact),
-  "reason": "Short explanation if not eco-related"
+  "reason": "Short explanation if not eco-related",
+  "isPlant": boolean (true if the image is a plant, tree, or flower),
+  "plantUseCases": ["string array of exactly 3 interesting uses (medicinal, environmental, or culinary)"],
+  "funFact": "One fascinating fun fact about this plant"
 }`;
 
 export default function EcoEye({ user }) {
@@ -39,7 +42,8 @@ export default function EcoEye({ user }) {
   const startAIScan = async (base64Data) => {
     setIsScanning(true);
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      // Prioritize the separate plant API key if configured, otherwise fallback to the global one
+      const apiKey = import.meta.env.VITE_GEMINI_PLANT_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) throw new Error("API Key missing");
 
       const { GoogleGenerativeAI } = await import('@google/generative-ai');
@@ -168,6 +172,37 @@ export default function EcoEye({ user }) {
                 <span className="tip-icon">💡</span>
                 <p className="tip-text">{result.tip}</p>
               </div>
+            )}
+
+            {result.isPlant && (
+              <motion.div 
+                className="plant-profile"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="plant-header">
+                  <span className="plant-icon">🌿</span>
+                  <h4>Botanical Profile</h4>
+                </div>
+                
+                {result.plantUseCases && result.plantUseCases.length > 0 && (
+                  <div className="plant-uses">
+                    <h5>Key Benefits & Uses:</h5>
+                    <ul className="use-cases-list">
+                      {result.plantUseCases.map((use, idx) => (
+                        <li key={idx}><span>🌱</span> {use}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {result.funFact && (
+                  <div className="fun-fact-box">
+                    <strong>Did you know?</strong> {result.funFact}
+                  </div>
+                )}
+              </motion.div>
             )}
           </motion.div>
         )}
