@@ -168,12 +168,12 @@ export default function Auth({ onAuth }) {
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="signup-name">Full Name *</label>
-                  <input id="signup-name" type="text" className="form-input" placeholder="Priya Sharma"
+                  <input id="signup-name" type="text" className="form-input" placeholder="e.g. John Doe"
                     value={signupData.name} onChange={e => setSignupData(p => ({...p, name: e.target.value}))} required />
                 </div>
                 <div className="form-group">
                   <label htmlFor="signup-grade">Grade / Year</label>
-                  <input id="signup-grade" type="text" className="form-input" placeholder="10th / B.Tech 2nd"
+                  <input id="signup-grade" type="text" className="form-input" placeholder="e.g. 2nd Year"
                     value={signupData.grade} onChange={e => setSignupData(p => ({...p, grade: e.target.value}))} />
                 </div>
               </div>
