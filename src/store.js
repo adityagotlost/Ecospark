@@ -181,7 +181,7 @@ export const MARKETPLACE_ITEMS = [
   { 
     id: 'bamboo_kit', 
     name: 'Eco-Bamboo Kit', 
-    icon: '🎋', 
+    image: '/bamboo_kit_prod.png', 
     price: 300, 
     desc: 'Sustainable bamboo toothbrush & straw set.',
     category: 'Voucher',
@@ -190,7 +190,7 @@ export const MARKETPLACE_ITEMS = [
   { 
     id: 'tree_certificate', 
     name: 'Plant-a-Tree', 
-    icon: '🌳', 
+    image: '/tree_cert_prod.png', 
     price: 500, 
     desc: 'Get a certificate for a real tree planted in your name.',
     category: 'Impact',
@@ -199,7 +199,7 @@ export const MARKETPLACE_ITEMS = [
   { 
     id: 'organic_seeds', 
     name: 'Organic Herb Seeds', 
-    icon: '🌱', 
+    image: '/organic_seeds_prod.png', 
     price: 200, 
     desc: 'Grow your own balcony garden with heirloom seeds.',
     category: 'Voucher',
@@ -208,7 +208,7 @@ export const MARKETPLACE_ITEMS = [
   { 
     id: 'solar_lamp', 
     name: 'Solar Study Lamp', 
-    icon: '☀️', 
+    image: '/solar_lamp_prod.png', 
     price: 1200, 
     desc: 'Discount voucher for a premium solar-powered lamp.',
     category: 'Gear',
@@ -217,7 +217,7 @@ export const MARKETPLACE_ITEMS = [
   { 
     id: 'compost_bin', 
     name: 'Home Composter', 
-    icon: '🥬', 
+    image: '/compost_bin_prod.png', 
     price: 800, 
     desc: 'A stylish indoor composter for your kitchen waste.',
     category: 'Gear',
@@ -226,7 +226,7 @@ export const MARKETPLACE_ITEMS = [
   { 
     id: 'profile_frame_gold', 
     name: 'Gold Guardian Frame', 
-    icon: '✨', 
+    image: '/gold_frame_prod.png', 
     price: 1500, 
     desc: 'Exclusive golden profile frame for ultimate eco-heroes.',
     category: 'Digital',

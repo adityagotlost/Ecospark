@@ -103,11 +103,11 @@ const Marketplace = () => {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className={`market-card ${isPurchased ? 'purchased' : ''}`}
                 >
-                  <div className="item-icon" style={{ background: item.color + '15', color: item.color }}>
-                    {item.icon}
+                  <div className="item-image-container">
+                    <img src={item.image} alt={item.name} className="item-image" />
                   </div>
                   <div className="item-content">
-                    <div className="item-type">{item.category}</div>
+                    <div className="item-type" style={{ color: item.color }}>{item.category}</div>
                     <h3 className="item-name">{item.name}</h3>
                     <p className="item-desc">{item.desc}</p>
                     
