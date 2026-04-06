@@ -13,12 +13,14 @@
 .mr-label { font-size: 0.7rem; color: var(--color-text-muted); text-transform: uppercase; }
 .mr-mid { display: flex; align-items: center; gap: 0.75rem; flex: 1; }
 .mr-avatar {
+  position: relative;
   width: 44px; height: 44px;
   border-radius: 50%;
   background: var(--grad-primary);
   display: flex; align-items: center; justify-content: center;
   font-weight: 800; font-size: 1.1rem; color: #050d0a;
   box-shadow: var(--glow-primary);
+  z-index: 2;
 }
 .mr-name  { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; }
 .mr-school{ font-size: 0.8rem; color: var(--color-text-muted); }
