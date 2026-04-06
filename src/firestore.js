@@ -367,7 +367,7 @@ export function onLeaderboardChange(callback) {
 // ── QR Code Redemption ─────────────────────────────────────────
 
 const VALID_QR_CODES = {
-  'SIH2025': { points: 500, coins: 500, label: 'SIH 2025 Hackathon Bonus' },
+  'TechSangram-2026': { points: 500, coins: 500, label: 'TechSangram 2026 Bonus' },
 };
 
 export async function fbRedeemQrCode(uid, code) {
