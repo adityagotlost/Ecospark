@@ -182,7 +182,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'bamboo_kit', 
     name: 'Eco-Bamboo Kit', 
     image: '/bamboo_kit_prod.png', 
-    price: 300, 
+    price: 1800, 
     desc: 'Sustainable bamboo toothbrush & straw set.',
     category: 'Voucher',
     color: '#10b981'
@@ -191,7 +191,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'tree_certificate', 
     name: 'Plant-a-Tree', 
     image: '/tree_cert_prod.png', 
-    price: 500, 
+    price: 3500, 
     desc: 'Get a certificate for a real tree planted in your name.',
     category: 'Impact',
     color: '#059669'
@@ -200,7 +200,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'organic_seeds', 
     name: 'Organic Herb Seeds', 
     image: '/organic_seeds_prod.png', 
-    price: 200, 
+    price: 1200, 
     desc: 'Grow your own balcony garden with heirloom seeds.',
     category: 'Voucher',
     color: '#84cc16'
@@ -209,7 +209,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'solar_lamp', 
     name: 'Solar Study Lamp', 
     image: '/solar_lamp_prod.png', 
-    price: 1200, 
+    price: 4500, 
     desc: 'Discount voucher for a premium solar-powered lamp.',
     category: 'Gear',
     color: '#facc15'
@@ -218,7 +218,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'compost_bin', 
     name: 'Home Composter', 
     image: '/compost_bin_prod.png', 
-    price: 800, 
+    price: 3800, 
     desc: 'A stylish indoor composter for your kitchen waste.',
     category: 'Gear',
     color: '#65a30d'
@@ -236,7 +236,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'steel_flask', 
     name: 'EcoSpark Steel Flask', 
     image: '/steel_flask_prod.png', 
-    price: 1500, 
+    price: 4800, 
     desc: 'Premium vacuum-insulated flask to eliminate single-use plastic.',
     category: 'Gear',
     color: '#0ea5e9'
@@ -245,7 +245,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'eco_tote', 
     name: 'Canvas Eco Tote', 
     image: '/eco_tote_prod.png', 
-    price: 400, 
+    price: 2200, 
     desc: 'Sturdy cotton canvas shopping bag with elegant leaf patterns.',
     category: 'Voucher',
     color: '#6ee7b7'
@@ -254,7 +254,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'ebike_pass', 
     name: '1-Month E-Bike Pass', 
     image: '/ebike_pass_prod.png', 
-    price: 2500, 
+    price: 8500, 
     desc: 'Unlimited rides on campus electric bikes for a month.',
     category: 'Voucher',
     color: '#3b82f6'
@@ -263,7 +263,7 @@ export const MARKETPLACE_ITEMS = [
     id: 'recycling_bin_sponsor', 
     name: 'Sponsor a Recycling Bin', 
     image: '/recycling_bin_prod.png', 
-    price: 3000, 
+    price: 12000, 
     desc: 'The ultimate flex. Place a real recycling bin on campus with your name on it.',
     category: 'Impact',
     color: '#22c55e'
