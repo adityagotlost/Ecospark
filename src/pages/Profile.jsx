@@ -63,7 +63,9 @@ export default function Profile({ user: propUser, onUpdate }) {
   ) || levels[0];
 
   const isThemeUnlocked = (t) => (user?.ecoPoints || 0) >= (t?.unlockPoints || 0);
-  const isFrameUnlocked = (f) => f.unlockBadge === null || (user?.badges || []).includes(f.unlockBadge);
+  const isFrameUnlocked = (f) => f.unlockBadge === null || 
+                                 (f.unlockBadge && (user?.badges || []).includes(f.unlockBadge)) || 
+                                 (f.unlockItem && (user?.purchasedItems || []).includes(f.unlockItem));
 
   // ── handlers ──────────────────────────────────────────────────
   const processImage = (file) =>

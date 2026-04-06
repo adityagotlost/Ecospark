@@ -69,6 +69,7 @@
 @keyframes frame-pulse-ocean   { 0%{transform:scale(1);box-shadow:0 0 10px rgba(14,165,233,0.5)} 50%{transform:scale(1.05);box-shadow:0 0 22px rgba(14,165,233,0.85)} 100%{transform:scale(1);box-shadow:0 0 10px rgba(14,165,233,0.5)} }
 @keyframes frame-pulse-solar   { 0%,100%{border-color:#facc15;box-shadow:0 0 10px rgba(250,204,21,0.55)} 50%{border-color:#fde68a;box-shadow:0 0 24px rgba(253,230,138,0.95)} }
 @keyframes frame-pulse-diamond { 0%,100%{border-color:#bae6fd;box-shadow:0 0 10px rgba(186,230,253,0.5)} 50%{border-color:#e0f2fe;box-shadow:0 0 22px rgba(224,242,254,0.9)} }
+@keyframes frame-pulse-gold { 0%,100%{border-color:#fbbf24;box-shadow:0 0 10px rgba(251,191,36,0.6)} 50%{border-color:#ffd700;box-shadow:0 0 25px rgba(255,215,0,1)} }
 @keyframes rainbow-rotate      { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
 
 .frame-pulse-green   { animation: frame-pulse-green   2.5s ease-in-out infinite; }
@@ -79,6 +80,7 @@
 .frame-pulse-solar   { animation: frame-pulse-solar   2s   ease-in-out infinite; }
 .frame-pulse-diamond { animation: frame-pulse-diamond 1.8s ease-in-out infinite; }
 .frame-pulse-rainbow { animation: frame-pulse-green   2s ease-in-out infinite; }
+.frame-pulse-gold    { animation: frame-pulse-gold    1.8s ease-in-out infinite; }
 
 .rainbow-frame {
   border: 2.5px solid transparent;

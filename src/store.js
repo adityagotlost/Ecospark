@@ -398,6 +398,16 @@ export const AVATAR_FRAMES = [
     glow: 'rgba(251,191,36,0.5)',
     isRainbow: true,
   },
+  {
+    id: 'marketplace_gold',
+    name: '🌟 Gold Guardian',
+    unlockBadge: 'NONE', // explicitly null or unused string so default check fails
+    unlockItem: 'profile_frame_gold',
+    unlockLabel: 'Buy in Marketplace',
+    borderColor: '#fbbf24',
+    animation: 'frame-pulse-gold',
+    glow: 'rgba(251,191,36,0.6)',
+  },
 ];
 
 export function checkAndAwardBadges(user) {
