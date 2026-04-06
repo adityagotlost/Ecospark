@@ -33,7 +33,8 @@ const Navbar = ({ user, onLogout, theme, onToggleTheme }) => {
       name: 'Community', icon: '👥',
       subLinks: [
         { name: 'Leaderboard', path: '/leaderboard', icon: '🏆' },
-        { name: 'Badges', path: '/badges', icon: '🏅' },
+        { name: 'Badges',      path: '/badges',      icon: '🏅' },
+        { name: 'Marketplace', path: '/marketplace', icon: '🛒' },
       ]
     },
     { name: 'Profile', path: '/profile', icon: '👤' },

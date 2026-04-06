@@ -11,6 +11,7 @@ import Learn from './pages/Learn';
 import Quizzes from './pages/Quizzes';
 import Challenges from './pages/Challenges';
 import Leaderboard from './pages/Leaderboard';
+import Marketplace from './pages/Marketplace';
 import Badges from './pages/Badges';
 import Profile from './pages/Profile';
 import Calculator from './pages/Calculator';
@@ -137,6 +138,7 @@ export default function App() {
         <Route path="/quizzes"     element={<ProtectedRoute user={user} loading={loading}><Quizzes user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
         <Route path="/challenges"  element={<ProtectedRoute user={user} loading={loading}><Challenges user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute user={user} loading={loading}><Leaderboard user={user} /></ProtectedRoute>} />
+        <Route path="/marketplace" element={<ProtectedRoute user={user} loading={loading}><Marketplace user={user} /></ProtectedRoute>} />
         <Route path="/badges"      element={<ProtectedRoute user={user} loading={loading}><Badges user={user} /></ProtectedRoute>} />
         <Route path="/profile"     element={<ProtectedRoute user={user} loading={loading}><Profile user={user} onUpdate={refreshUser} /></ProtectedRoute>} />
         <Route path="/calculator"  element={<ProtectedRoute user={user} loading={loading}><Calculator user={user} onUpdate={refreshUser} /></ProtectedRoute>} />

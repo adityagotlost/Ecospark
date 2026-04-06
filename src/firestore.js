@@ -12,7 +12,7 @@ import {
 } from 'firebase/auth';
 import {
   doc, getDoc, setDoc, updateDoc, collection,
-  query, orderBy, limit, getDocs, increment, arrayUnion, onSnapshot,
+  query, orderBy, limit, getDocs, increment, arrayUnion, onSnapshot, serverTimestamp,
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 import { ALL_BADGES } from './store';
@@ -202,6 +202,37 @@ export async function fbCompleteLesson(uid, lessonId, points = 50) {
   });
   await fbAddEcoPoints(uid, points);
 }
+
+/**
+ * Deduct EcoPoints when buying an item from Marketplace
+ */
+export const fbSpendEcoPoints = async (uid, amount, itemId) => {
+  try {
+    const userRef = doc(db, 'users', uid);
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) return;
+
+    const currentPoints = snap.data().ecoPoints || 0;
+    if (currentPoints < amount) {
+      throw new Error('Insufficient EcoPoints');
+    }
+
+    const newPoints = currentPoints - amount;
+    
+    // Add to purchased items array to keep track
+    await updateDoc(userRef, {
+      ecoPoints: newPoints,
+      purchasedItems: arrayUnion(itemId),
+      lastPurchaseAt: serverTimestamp()
+    });
+
+    // Notify listeners or store
+    return newPoints;
+  } catch (err) {
+    console.error('Error spending points:', err);
+    throw err;
+  }
+};
 
 // ── Challenges ────────────────────────────────────────────────
 

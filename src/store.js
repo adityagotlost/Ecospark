@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   COMPLETED_CHALLENGES: 'ecospark_challenges',
   COMPLETED_QUIZZES: 'ecospark_quizzes',
   BADGES: 'ecospark_badges',
+  PURCHASED: 'ecospark_purchased',
 };
 
 // ── Auth ──────────────────────────────────────────
@@ -173,6 +174,64 @@ export const ALL_BADGES = [
   // Expanded milestone badges
   { id: 'eco_grandmaster',    icon: '🌟', name: 'Eco Grandmaster',     desc: 'Complete 20 lessons',                          color: '#f59e0b', condition: u => u.completedLessons?.length >= 20 },
   { id: 'quiz_grandmaster',   icon: '🏆', name: 'Quiz Grandmaster',    desc: 'Complete 15 quizzes',                          color: '#22c55e', condition: u => u.completedQuizzes?.length >= 15 },
+];
+
+// ── Marketplace Items ──────────────────────────────
+export const MARKETPLACE_ITEMS = [
+  { 
+    id: 'bamboo_kit', 
+    name: 'Eco-Bamboo Kit', 
+    icon: '🎋', 
+    price: 300, 
+    desc: 'Sustainable bamboo toothbrush & straw set.',
+    category: 'Voucher',
+    color: '#10b981'
+  },
+  { 
+    id: 'tree_certificate', 
+    name: 'Plant-a-Tree', 
+    icon: '🌳', 
+    price: 500, 
+    desc: 'Get a certificate for a real tree planted in your name.',
+    category: 'Impact',
+    color: '#059669'
+  },
+  { 
+    id: 'organic_seeds', 
+    name: 'Organic Herb Seeds', 
+    icon: '🌱', 
+    price: 200, 
+    desc: 'Grow your own balcony garden with heirloom seeds.',
+    category: 'Voucher',
+    color: '#84cc16'
+  },
+  { 
+    id: 'solar_lamp', 
+    name: 'Solar Study Lamp', 
+    icon: '☀️', 
+    price: 1200, 
+    desc: 'Discount voucher for a premium solar-powered lamp.',
+    category: 'Gear',
+    color: '#facc15'
+  },
+  { 
+    id: 'compost_bin', 
+    name: 'Home Composter', 
+    icon: '🥬', 
+    price: 800, 
+    desc: 'A stylish indoor composter for your kitchen waste.',
+    category: 'Gear',
+    color: '#65a30d'
+  },
+  { 
+    id: 'profile_frame_gold', 
+    name: 'Gold Guardian Frame', 
+    icon: '✨', 
+    price: 1500, 
+    desc: 'Exclusive golden profile frame for ultimate eco-heroes.',
+    category: 'Digital',
+    color: '#fbbf24'
+  }
 ];
 
 // ── Eco Insights Data ────────────────────────────────
