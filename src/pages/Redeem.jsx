@@ -9,7 +9,7 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => i);
 export default function Redeem({ user, loading }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const code = searchParams.get('code') || '';
+  const code = (searchParams.get('code') || '').trim();
 
   const [status, setStatus] = useState('idle'); // idle | loading | success | error | already | needsLogin
   const [message, setMessage] = useState('');
@@ -108,7 +108,7 @@ export default function Redeem({ user, loading }) {
               <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>Login or create a free account to claim your reward instantly.</p>
               <motion.button
                 className="redeem-btn"
-                onClick={() => navigate(`/auth?redirect=/redeem?code=${code}`)}
+                onClick={() => navigate(`/auth?redirect=${encodeURIComponent(`/redeem?code=${code}`)}`)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

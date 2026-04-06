@@ -368,9 +368,11 @@ export function onLeaderboardChange(callback) {
 
 const VALID_QR_CODES = {
   'TechSangram-2026': { points: 500, coins: 500, label: 'TechSangram 2026 Bonus' },
+  'SIH2025': { points: 500, coins: 500, label: 'SIH 2025 Hackathon Bonus' },
 };
 
-export async function fbRedeemQrCode(uid, code) {
+export async function fbRedeemQrCode(uid, rawCode) {
+  const code = (rawCode || '').trim();
   const config = VALID_QR_CODES[code];
   if (!config) return { success: false, error: 'Invalid QR code.' };
 
