@@ -328,6 +328,7 @@ export function onLeaderboardChange(callback) {
         school:    u.school,
         avatar:    u.avatar,
         photoURL:  u.photoURL,
+        profileFrame: u.profileFrame || 'default',
         ecoPoints: u.ecoPoints || 0,
         weeklyPoints: u.weeklyPoints || [0,0,0,0,0,0,0],
         badges:    [...new Set(u.badges || [])].filter(id => ALL_BADGES.some(b => b.id === id)).length,

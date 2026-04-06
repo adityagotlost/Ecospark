@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { onLeaderboardChange } from '../firestore';
+import { AVATAR_FRAMES } from '../store';
 import './Leaderboard.css';
+import './Profile.css'; // Make sure profile frame animations load
 
 const RANK_STYLES = [
   { icon: '🥇', color: '#ffd700', glow: '0 0 30px rgba(255,215,0,0.5)', bg: 'rgba(255,215,0,0.08)' },
@@ -12,13 +14,20 @@ function PodiumCard({ user, rank }) {
   if (!user) return null; // Handle case where there are < 3 people in a school
   const safeRank = Math.min(rank, 3);
   const rs = RANK_STYLES[safeRank - 1] || RANK_STYLES[2];
+  
+  const frameObj = AVATAR_FRAMES.find(f => f.id === user.profileFrame) || AVATAR_FRAMES[0];
+  const hasCustomFrame = frameObj.id !== 'default';
+  
   return (
     <div
       className={`podium-card podium-rank-${rank}`}
       style={{ '--rank-color': rs.color, '--rank-glow': rs.glow, '--rank-bg': rs.bg }}
     >
       <div className="podium-medal">{rs.icon}</div>
-      <div className="podium-avatar" style={{ background: rs.bg, border: `2px solid ${rs.color}`, boxShadow: rs.glow }}>
+      <div 
+        className={`podium-avatar ${frameObj.animation || ''} ${frameObj.isRainbow ? 'rainbow-frame' : ''}`} 
+        style={hasCustomFrame ? {} : { background: rs.bg, border: `2px solid ${rs.color}`, boxShadow: rs.glow }}
+      >
         {user.photoURL ? <img src={user.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : (user.avatar || '🌱')}
       </div>
       <div className="podium-name">{user.name}</div>
@@ -155,7 +164,7 @@ function LeaderboardContent({ user }) {
               <div className="mr-label">Your Rank</div>
             </div>
             <div className="mr-mid">
-              <div className="mr-avatar">
+              <div className={`mr-avatar ${(AVATAR_FRAMES.find(f => f.id === currentUser?.profileFrame) || AVATAR_FRAMES[0]).animation || ''} ${(AVATAR_FRAMES.find(f => f.id === currentUser?.profileFrame) || AVATAR_FRAMES[0]).isRainbow ? 'rainbow-frame' : ''}`}>
                 {currentUser?.photoURL ? <img src={currentUser.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : currentUser?.avatar}
               </div>
               <div>
@@ -208,9 +217,14 @@ function LeaderboardContent({ user }) {
                       {rank <= 10 ? <span className="rank-num top10">{rank}</span> : <span className="rank-num">{rank}</span>}
                     </span>
                     <div className="lb-user">
-                      <div className="lb-avatar">
-                        {entry.photoURL ? <img src={entry.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : entry.avatar}
-                      </div>
+                      {(() => {
+                        const frameObj = AVATAR_FRAMES.find(f => f.id === entry.profileFrame) || AVATAR_FRAMES[0];
+                        return (
+                          <div className={`lb-avatar ${frameObj.animation || ''} ${frameObj.isRainbow ? 'rainbow-frame' : ''}`}>
+                            {entry.photoURL ? <img src={entry.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : entry.avatar}
+                          </div>
+                        );
+                      })()}
                       <div className="lb-user-info">
                         <div className="lb-user-name">
                           {entry.name}

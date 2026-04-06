@@ -61,6 +61,7 @@
 .podium-rank-1 .podium-medal { font-size: 3rem; }
 
 .podium-avatar {
+  position: relative;
   width: 56px; height: 56px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -69,6 +70,7 @@
   font-size: 1.5rem;
   color: var(--rank-color);
   margin: 0.25rem 0;
+  z-index: 2;
 }
 .podium-rank-1 .podium-avatar { width: 70px; height: 70px; font-size: 1.8rem; }
 
@@ -126,12 +128,14 @@
 
 .lb-user { display: flex; align-items: center; gap: 0.75rem; }
 .lb-avatar {
+  position: relative;
   width: 36px; height: 36px;
   border-radius: 50%;
   background: var(--grad-primary);
   display: flex; align-items: center; justify-content: center;
   font-weight: 700; font-size: 0.9rem; color: #050d0a;
   flex-shrink: 0;
+  z-index: 2;
 }
 .lb-user-name { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; }
 .you-badge {
