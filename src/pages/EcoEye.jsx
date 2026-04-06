@@ -131,7 +131,6 @@ export default function EcoEye({ user }) {
         <input 
           type="file" 
           accept="image/*" 
-          capture="environment" // Hint for mobile camera
           style={{ display: 'none' }}
           ref={fileInputRef}
           onChange={handleFileSelect}
