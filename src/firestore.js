@@ -363,3 +363,43 @@ export function onLeaderboardChange(callback) {
     callback(list);
   });
 }
+
+// ── QR Code Redemption ─────────────────────────────────────────
+
+const VALID_QR_CODES = {
+  'SIH2025': { points: 500, coins: 500, label: 'SIH 2025 Hackathon Bonus' },
+};
+
+export async function fbRedeemQrCode(uid, code) {
+  const config = VALID_QR_CODES[code];
+  if (!config) return { success: false, error: 'Invalid QR code.' };
+
+  const userRef = doc(db, 'users', uid);
+  const snap = await getDoc(userRef);
+  if (!snap.exists()) return { success: false, error: 'User not found.' };
+
+  const data = snap.data();
+  const redeemed = data.redeemedCodes || [];
+  if (redeemed.includes(code)) {
+    return { success: false, error: 'You have already redeemed this code!' };
+  }
+
+  const today = new Date().getDay();
+  let weeklyData = data.weeklyPoints || [0, 0, 0, 0, 0, 0, 0];
+  if (!Array.isArray(weeklyData)) {
+    const arr = [0, 0, 0, 0, 0, 0, 0];
+    Object.keys(weeklyData).forEach(k => arr[parseInt(k)] = weeklyData[k] || 0);
+    weeklyData = arr;
+  }
+  weeklyData[today] += config.points;
+
+  await updateDoc(userRef, {
+    ecoPoints:    increment(config.points),
+    sparkCoins:   increment(config.coins),
+    weeklyPoints: weeklyData,
+    redeemedCodes: arrayUnion(code),
+  });
+
+  return { success: true, points: config.points, coins: config.coins, label: config.label };
+}
+

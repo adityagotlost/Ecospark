@@ -19,6 +19,7 @@ import Garden from './pages/Garden';
 import Insights from './pages/Insights';
 import EcoEye from './pages/EcoEye';
 import EcoMap from './pages/EcoMap';
+import Redeem from './pages/Redeem';
 import BadgeUnlockModal from './components/BadgeUnlockModal';
 import EcoBuddy from './components/EcoBuddy';
 import Preloader from './components/Preloader';
@@ -146,6 +147,7 @@ export default function App() {
         <Route path="/insights"    element={<ProtectedRoute user={user} loading={loading}><Insights user={user} /></ProtectedRoute>} />
         <Route path="/eco-eye"     element={<ProtectedRoute user={user} loading={loading}><EcoEye user={user} /></ProtectedRoute>} />
         <Route path="/eco-map"     element={<ProtectedRoute user={user} loading={loading}><EcoMap user={user} /></ProtectedRoute>} />
+        <Route path="/redeem"      element={<ProtectedRoute user={user} loading={loading}><Redeem user={user} /></ProtectedRoute>} />
         <Route path="*"            element={<Navigate to="/" replace />} />
       </Routes>
     </>
