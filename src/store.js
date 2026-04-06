@@ -231,6 +231,51 @@ export const MARKETPLACE_ITEMS = [
     desc: 'Exclusive golden profile frame for ultimate eco-heroes.',
     category: 'Digital',
     color: '#fbbf24'
+  },
+  { 
+    id: 'steel_flask', 
+    name: 'EcoSpark Steel Flask', 
+    image: '/steel_flask_prod.png', 
+    price: 1500, 
+    desc: 'Premium vacuum-insulated flask to eliminate single-use plastic.',
+    category: 'Gear',
+    color: '#0ea5e9'
+  },
+  { 
+    id: 'eco_tote', 
+    name: 'Canvas Eco Tote', 
+    image: '/eco_tote_prod.png', 
+    price: 400, 
+    desc: 'Sturdy cotton canvas shopping bag with elegant leaf patterns.',
+    category: 'Voucher',
+    color: '#6ee7b7'
+  },
+  { 
+    id: 'ebike_pass', 
+    name: '1-Month E-Bike Pass', 
+    image: '/ebike_pass_prod.png', 
+    price: 2500, 
+    desc: 'Unlimited rides on campus electric bikes for a month.',
+    category: 'Voucher',
+    color: '#3b82f6'
+  },
+  { 
+    id: 'recycling_bin_sponsor', 
+    name: 'Sponsor a Recycling Bin', 
+    image: '/recycling_bin_prod.png', 
+    price: 3000, 
+    desc: 'The ultimate flex. Place a real recycling bin on campus with your name on it.',
+    category: 'Impact',
+    color: '#22c55e'
+  },
+  { 
+    id: 'profile_frame_neon', 
+    name: 'Cyber Green Frame', 
+    image: '/neon_frame_prod.png', 
+    price: 2000, 
+    desc: 'A highly animated neon cyberpunk profile frame.',
+    category: 'Digital',
+    color: '#10b981'
   }
 ];
 
@@ -400,14 +445,23 @@ export const AVATAR_FRAMES = [
   },
   {
     id: 'marketplace_gold',
-    name: '🌟 Gold Guardian',
-    unlockBadge: 'NONE', // explicitly null or unused string so default check fails
+    name: 'Gold Guardian',
+    animation: 'frame-pulse-gold',
     unlockItem: 'profile_frame_gold',
     unlockLabel: 'Buy in Marketplace',
     borderColor: '#fbbf24',
-    animation: 'frame-pulse-gold',
     glow: 'rgba(251,191,36,0.6)',
   },
+  {
+    id: 'marketplace_neon',
+    name: 'Cyber Green',
+    animation: 'frame-pulse-neon',
+    isRainbow: false,
+    unlockItem: 'profile_frame_neon',
+    unlockLabel: 'Buy in Marketplace',
+    borderColor: '#10b981',
+    glow: 'rgba(16,185,129,0.6)',
+  }
 ];
 
 export function checkAndAwardBadges(user) {
