@@ -1,6 +1,6 @@
 # 🌿 EcoSpark: Project Overview & Technical Guide
 
-**EcoSpark** is a next-generation sustainability platform designed for the **Smart India Hackathon**. It gamifies environmental consciousness by turning real-world sustainable actions into digital rewards through AI verification and community competition.
+**EcoSpark** is a next-generation sustainability platform designed for the **TechSangram**. It gamifies environmental consciousness by turning real-world sustainable actions into digital rewards through AI verification and community competition.
 
 ---
 
