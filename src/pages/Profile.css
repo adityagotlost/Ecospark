@@ -14,9 +14,9 @@
   flex-wrap: wrap;
 }
 .themed-hero {
-  border-color: var(--theme-primary, var(--color-border-glow)) !important;
-  box-shadow: 0 0 40px var(--theme-glow, rgba(52,211,100,0.15)), var(--shadow-card) !important;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
+  transition: border-color 0.4s ease;
 }
 .profile-bg-glow {
   position: absolute;
@@ -26,8 +26,7 @@
   pointer-events: none;
 }
 .themed-bg-glow {
-  background: radial-gradient(circle, var(--theme-bg, rgba(52,211,100,0.06)) 0%, transparent 70%);
-  transition: background 0.4s ease;
+  background: var(--color-bg-subtle);
 }
 
 /* ── Avatar ── */
@@ -35,19 +34,18 @@
 .profile-avatar {
   width: 90px; height: 90px;
   border-radius: 50%;
-  background: var(--grad-primary);
+  background: var(--color-bg-subtle);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 900;
-  color: #050d0a;
-  box-shadow: var(--glow-strong);
+  color: var(--color-text-primary);
+  box-shadow: none;
   position: relative; z-index: 2;
 }
 .themed-avatar {
-  background: var(--theme-gradient, var(--grad-primary));
-  box-shadow: 0 0 24px var(--theme-glow, rgba(52,211,100,0.4));
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  background: var(--color-bg-subtle);
+  box-shadow: none;
 }
 
 /* ── Frame Ring ── */
@@ -55,10 +53,9 @@
   position: absolute;
   inset: -7px;
   border-radius: 50%;
-  border: 2.5px solid var(--frame-color, #34d364);
-  box-shadow: 0 0 12px var(--frame-glow, rgba(52,211,100,0.5));
+  border: 1px solid var(--color-border);
+  box-shadow: none;
   z-index: 3;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 /* Frame animations */
@@ -200,7 +197,7 @@
 .profile-level-badge {
   display: inline-flex; align-items: center;
   padding: 0.35rem 1rem;
-  border: 1px solid var(--color-border-glow);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   font-weight: 700; font-size: 0.875rem; width: fit-content;
 }
@@ -263,8 +260,8 @@
 .sw-circle {
   width: 48px; height: 48px;
   border-radius: 50%;
-  background: var(--sw-grad);
-  box-shadow: 0 0 12px var(--sw-glow, rgba(52,211,100,0.3));
+  background: var(--sw-grad, var(--color-bg-subtle));
+  box-shadow: none;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1rem;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
@@ -298,8 +295,8 @@
 }
 .fo-ring {
   position: absolute; inset: 0; border-radius: 50%;
-  border: 2.5px solid var(--frame-color, #34d364);
-  box-shadow: 0 0 10px var(--frame-glow, rgba(52,211,100,0.4));
+  border: 1px solid var(--color-border);
+  box-shadow: none;
 }
 .fo-dot {
   width: 28px; height: 28px;
@@ -350,7 +347,7 @@
   transition: all var(--t-normal) var(--ease-smooth);
   cursor: pointer;
 }
-.prof-badge-card:hover { transform: translateY(-4px); border-color: var(--badge-color, var(--color-border-glow)); }
+.prof-badge-card:hover { transform: translateY(-4px); border-color: var(--color-primary); }
 
 .locked-preview {
   opacity: 0.8;
@@ -410,15 +407,7 @@
 }
 .cert-milestone-card.earned {
   cursor: pointer;
-  border-color: var(--cm-color, var(--color-border-glow));
-}
-.cert-milestone-card.earned::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top left, var(--cm-color, #34d364) 0%, transparent 60%);
-  opacity: 0.04;
-  pointer-events: none;
+  border-color: var(--color-primary);
 }
 .cert-milestone-card.locked {
   opacity: 0.55;

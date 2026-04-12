@@ -5,65 +5,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  /* ── Neutral Color Palette (Zinc/Slate) ── */
-  --color-bg-deep:      #09090b;   /* Zinc-950 */
-  --color-bg-dark:      #121214;   /* Zinc-900 */
-  --color-bg-card:      #18181b;   /* Zinc-800 */
-  --color-bg-subtle:    #27272a;   /* Zinc-700 */
-  --color-bg-navbar:    rgba(9, 9, 11, 0.82);
-  --color-bg-menu:      rgba(18, 18, 20, 0.98);
-
+  /* ── Neutral Color Palette (Nike Podium CDS) ── */
+  --color-bg-deep:      #FFFFFF;   /* Nike White */
+  --color-bg-dark:      #FAFAFA;   /* Snow */
+  --color-bg-card:      #FFFFFF;
+  --color-bg-subtle:    #F5F5F5;   /* Light Gray */
+  --color-bg-navbar:    #FFFFFF;
+  --color-bg-menu:      #FFFFFF;
 
   /* Borders & Dividers */
-  --color-border:       rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-border:       #CACACB;
+  --color-border-hover: #111111;
 
-  /* Brand: Sustainable Emerald */
-  --color-primary:      #10b981;   /* Emerald-500 */
-  --color-primary-dim:  #059669;   /* Emerald-600 */
-  --color-secondary:    #3b82f6;   /* Blue-500 */
-  --color-accent:       #f59e0b;   /* Amber-500 */
+  /* Brand: Nike Black */
+  --color-primary:      #111111;
+  --color-primary-dim:  #707072;
+  --color-secondary:    #E5E5E5;
+  --color-accent:       #EE0005;
 
   /* Status Colors */
-  --color-success:      #10b981;
-  --color-danger:       #ef4444;
-  --color-warn:         #f59e0b;
-  --color-info:         #3b82f6;
+  --color-success:      #007D48;
+  --color-danger:       #D30005;
+  --color-warn:         #FEDF35;
+  --color-info:         #1151FF;
 
   /* Text Hierarchy */
-  --color-text-primary: #fafafa;
-  --color-text-muted:   #a1a1aa;   /* Zinc-400 */
-  --color-text-dim:     #71717a;   /* Zinc-500 */
-  --color-text-faint:   #3f3f46;   /* Zinc-600 */
+  --color-text-primary: #111111;
+  --color-text-muted:   #707072;
+  --color-text-dim:     #9E9EA0;
+  --color-text-faint:   #CACACB;
 
   /* ── Gradients ── */
-  --grad-primary: linear-gradient(135deg, #10b981, #3b82f6);
-  --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  --grad-primary: #111111;
+  --grad-surface: none;
 
-  /* ── Shadows (Natural & Soft) ── */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.2), 0 8px 10px -6px rgba(0,0,0,0.2);
+  /* ── Shadows (Radically Flat) ── */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
 
   /* ── Spacing ── */
-  --sp-xs: 0.25rem;
-  --sp-sm: 0.5rem;
-  --sp-md: 1rem;
-  --sp-lg: 1.5rem;
-  --sp-xl: 2rem;
-  --sp-2xl: 3rem;
-  --sp-3xl: 4rem;
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 48px;
+  --sp-3xl: 64px;
 
-  /* ── Border radius (Consistent & Subtle) ── */
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   14px;
-  --radius-xl:   20px;
-  --radius-full: 9999px;
+  /* ── Border radius (Sharp edges, pill buttons) ── */
+  --radius-sm:   0px;
+  --radius-md:   8px;
+  --radius-lg:   20px;
+  --radius-xl:   24px;
+  --radius-full: 30px;
 
   /* ── Typography ── */
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: 'Helvetica Now Text Medium', Helvetica, Arial, sans-serif;
+  --font-body:    'Helvetica Now Text', Helvetica, Arial, sans-serif;
 
   /* ── Transitions ── */
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -73,29 +72,30 @@
 }
 
 /* ── Light Theme Overrides ── */
-[data-theme='light'] {
-  --color-bg-deep:      #f9fafb;   /* Gray-50 */
-  --color-bg-dark:      #f3f4f6;   /* Gray-100 */
-  --color-bg-card:      #ffffff;
-  --color-bg-subtle:    #e5e7eb;   /* Gray-200 */
+/* The design system relies on a unified black/white stark contrast */
+[data-theme='light'], [data-theme='dark'] {
+  --color-bg-deep:      #FFFFFF;
+  --color-bg-dark:      #FAFAFA;
+  --color-bg-card:      #FFFFFF;
+  --color-bg-subtle:    #F5F5F5;
 
-  --color-border:       rgba(0, 0, 0, 0.08);
-  --color-border-hover: rgba(0, 0, 0, 0.15);
+  --color-border:       #CACACB;
+  --color-border-hover: #111111;
 
-  --color-text-primary: #111827;   /* Gray-900 */
-  --color-text-muted:   #4b5563;   /* Gray-600 */
-  --color-text-dim:     #6b7280;   /* Gray-500 */
-  --color-text-faint:   #9ca3af;   /* Gray-400 */
-  --color-bg-navbar:    rgba(255, 255, 255, 0.82);
-  --color-bg-menu:      rgba(255, 255, 255, 0.98);
+  --color-text-primary: #111111;
+  --color-text-muted:   #707072;
+  --color-text-dim:     #9E9EA0;
+  --color-text-faint:   #CACACB;
+  --color-bg-navbar:    #FFFFFF;
+  --color-bg-menu:      #FFFFFF;
 
-
-  --grad-surface: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, transparent 100%);
+  --grad-surface: none;
   
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
 }
+
 
 
 /* ── Global Reset ── */
@@ -125,10 +125,15 @@ ul, ol { list-style: none; }
 
 /* ── Typography Utilities ── */
 .text-gradient {
-  background: var(--grad-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-text-primary);
+}
+.nike-display {
+  font-family: var(--font-display);
+  font-size: 96px;
+  line-height: 0.90;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: -2px;
 }
 .text-muted { color: var(--color-text-muted); }
 .text-sm { font-size: 0.875rem; }
@@ -139,14 +144,12 @@ ul, ol { list-style: none; }
 .glass-card, .card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: transform var(--t-normal) var(--ease-out), border-color var(--t-normal) var(--ease-out), box-shadow var(--t-normal) var(--ease-out);
+  border-radius: var(--radius-md); /* 8px container radius per spec */
+  box-shadow: none;
   overflow: hidden;
 }
 .glass-card:hover, .card:hover {
-  border-color: var(--color-border-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  /* No hover lift effects in Nike CDS */
 }
 
 /* ── Buttons (Modern Utility) ── */
@@ -155,53 +158,60 @@ ul, ol { list-style: none; }
   align-items: center;
   justify-content: center;
   gap: var(--sp-sm);
-  padding: 0.75rem 1.75rem;
-  background: var(--color-primary);
+  padding: 12px 24px;
+  background: var(--color-primary); /* Nike Black */
   color: #ffffff;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  border-radius: var(--radius-md);
-  transition: all var(--t-normal) var(--ease-out);
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: var(--radius-full); /* 30px fully rounded pill */
+  border: none;
+  transition: background 0.2s ease;
 }
 .btn-primary:hover {
-  background: var(--color-primary-dim);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  background: var(--color-primary-dim); /* Grey-500 */
 }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:active { 
+  transform: scale(0.98); 
+  opacity: 0.8;
+}
+.btn-primary:focus {
+  box-shadow: 0 0 0 2px rgba(39, 93, 197, 1);
+}
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--sp-sm);
-  padding: 0.75rem 1.75rem;
+  padding: 12px 24px;
   background: transparent;
   color: var(--color-text-primary);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: all var(--t-normal) var(--ease-out);
+  font-weight: 500;
+  font-size: 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
 }
 .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--color-text-muted);
+  background: var(--color-secondary);
+  border-color: var(--color-primary-dim);
 }
 
 /* ── Layout ── */
 .page { min-height: 100vh; padding-top: 64px; }
-.section { padding: 2rem var(--sp-xl); max-width: 1440px; margin: 0 auto; }
+.section { padding: var(--sp-xl) var(--sp-xl); max-width: 1440px; margin: 0 auto; }
 
-.page-header { margin-bottom: 2.5rem; text-align: left; }
+.page-header { margin-bottom: var(--sp-2xl); text-align: left; }
 .page-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.03em;
+  font-size: clamp(32px, 5vw, 48px); /* slightly smaller than 96 for inner pages, but still display */
+  line-height: 0.90;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
 }
-.page-sub { color: var(--color-text-muted); font-size: 1.1rem; max-width: 700px; }
+.page-sub { color: var(--color-text-muted); font-size: 16px; max-width: 700px; font-weight: 400; }
 
 /* ── Animations (Subtle & Intentional) ── */
 @keyframes fadeIn {
@@ -219,23 +229,23 @@ ul, ol { list-style: none; }
 /* ── Form Elements ── */
 .form-group { display: flex; flex-direction: column; gap: var(--sp-sm); margin-bottom: var(--sp-lg); }
 .form-group label {
-  font-size: 0.8125rem;
+  font-size: 14px;
   font-weight: 500;
   color: var(--color-text-muted);
 }
 .form-input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background: var(--color-bg-deep);
+  padding: 12px 16px;
+  background: var(--color-bg-subtle); /* F5F5F5 */
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md); /* 8px for non-search */
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
-  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  font-size: 16px;
+  transition: border-color 0.2s ease;
 }
 .form-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+  border-color: var(--color-primary); /* #111111 */
+  box-shadow: 0 0 0 2px rgba(39, 93, 197, 1);
 }
 
 /* ── Badge & Chips ── */

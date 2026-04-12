@@ -5,9 +5,9 @@ import './Leaderboard.css';
 import './Profile.css'; // Make sure profile frame animations load
 
 const RANK_STYLES = [
-  { icon: '🥇', color: '#ffd700', glow: '0 0 30px rgba(255,215,0,0.5)', bg: 'rgba(255,215,0,0.08)' },
-  { icon: '🥈', color: '#c0c0c0', glow: '0 0 20px rgba(192,192,192,0.35)', bg: 'rgba(192,192,192,0.06)' },
-  { icon: '🥉', color: '#cd7f32', glow: '0 0 20px rgba(205,127,50,0.35)', bg: 'rgba(205,127,50,0.06)' },
+  { icon: '🥇', color: '#111111', glow: 'none', bg: '#FAFAFA' },
+  { icon: '🥈', color: '#707072', glow: 'none', bg: '#F5F5F5' },
+  { icon: '🥉', color: '#9E9EA0', glow: 'none', bg: '#F5F5F5' },
 ];
 
 function PodiumCard({ user, rank }) {
@@ -25,14 +25,14 @@ function PodiumCard({ user, rank }) {
     >
       <div className="podium-medal">{rs.icon}</div>
       <div 
-        className={`podium-avatar ${frameObj.animation || ''} ${frameObj.isRainbow ? 'rainbow-frame' : ''}`} 
-        style={hasCustomFrame ? {} : { background: rs.bg, border: `2px solid ${rs.color}`, boxShadow: rs.glow }}
+        className={`podium-avatar`} 
+        style={hasCustomFrame ? {} : { background: rs.bg }}
       >
-        {user.photoURL ? <img src={user.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : (user.avatar || '🌱')}
+        {user.photoURL ? <img src={user.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'0%',objectFit:'cover'}} /> : (user.avatar || '🌱')}
       </div>
       <div className="podium-name">{user.name}</div>
       <div className="podium-school">{user.school}</div>
-      <div className="podium-points gradient-text">{user.displayPoints?.toLocaleString() || 0}</div>
+      <div className="podium-points">{user.displayPoints?.toLocaleString() || 0}</div>
       <div className="podium-pts-label">EcoPoints</div>
       <div className="podium-base" style={{ background: rs.color }} />
     </div>
@@ -138,8 +138,8 @@ function LeaderboardContent({ user }) {
     <div className="leaderboard-page page">
       <div className="section">
         <div className="page-header">
-          <h1 className="page-title">🏆 EcoSpark Leaderboard</h1>
-          <p className="page-sub">Top eco-warriors from across India. Your rank: <span className="gradient-text">#{myRank || '—'}</span></p>
+          <h1 className="page-title nike-display">Leaderboard</h1>
+          <p className="page-sub">Top eco-warriors from across India. Your rank: <span style={{fontWeight: 700}}>#{myRank || '—'}</span></p>
         </div>
 
         {/* Filter */}
@@ -158,14 +158,14 @@ function LeaderboardContent({ user }) {
 
         {/* My rank card */}
         {myRank > 0 && (
-          <div className="my-rank-card glass-card anim-pulse">
+          <div className="my-rank-card glass-card">
             <div className="mr-left">
-              <div className="mr-rank gradient-text">#{myRank}</div>
+              <div className="mr-rank">#{myRank}</div>
               <div className="mr-label">Your Rank</div>
             </div>
             <div className="mr-mid">
-              <div className={`mr-avatar ${(AVATAR_FRAMES.find(f => f.id === currentUser?.profileFrame) || AVATAR_FRAMES[0]).animation || ''} ${(AVATAR_FRAMES.find(f => f.id === currentUser?.profileFrame) || AVATAR_FRAMES[0]).isRainbow ? 'rainbow-frame' : ''}`}>
-                {currentUser?.photoURL ? <img src={currentUser.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : currentUser?.avatar}
+              <div className={`mr-avatar`}>
+                {currentUser?.photoURL ? <img src={currentUser.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'0%',objectFit:'cover'}} /> : currentUser?.avatar}
               </div>
               <div>
                 <div className="mr-name">{currentUser?.name}</div>
@@ -173,7 +173,7 @@ function LeaderboardContent({ user }) {
               </div>
             </div>
             <div className="mr-right">
-              <div className="mr-pts gradient-text">{myRankUser?.displayPoints?.toLocaleString() || 0}</div>
+              <div className="mr-pts">{myRankUser?.displayPoints?.toLocaleString() || 0}</div>
               <div className="mr-pts-label">EcoPoints</div>
             </div>
           </div>
@@ -218,10 +218,9 @@ function LeaderboardContent({ user }) {
                     </span>
                     <div className="lb-user">
                       {(() => {
-                        const frameObj = AVATAR_FRAMES.find(f => f.id === entry.profileFrame) || AVATAR_FRAMES[0];
                         return (
-                          <div className={`lb-avatar ${frameObj.animation || ''} ${frameObj.isRainbow ? 'rainbow-frame' : ''}`}>
-                            {entry.photoURL ? <img src={entry.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} /> : entry.avatar}
+                          <div className={`lb-avatar`}>
+                            {entry.photoURL ? <img src={entry.photoURL} alt="avatar" style={{width:'100%',height:'100%',borderRadius:'0%',objectFit:'cover'}} /> : entry.avatar}
                           </div>
                         );
                       })()}
@@ -237,7 +236,7 @@ function LeaderboardContent({ user }) {
                       <span className="lb-badge-count">🏅 {entry.badges}</span>
                     </div>
                     <div className="lb-points">
-                      <span className="lb-pts-val gradient-text">{entry.displayPoints?.toLocaleString() || 0}</span>
+                      <span className="lb-pts-val">{entry.displayPoints?.toLocaleString() || 0}</span>
                       <div className="lb-pts-bar">
                         <div className="lb-pts-fill" style={{ width: `${((entry.displayPoints || 0) / (filteredBoard[0]?.displayPoints || 1)) * 100}%` }} />
                       </div>
