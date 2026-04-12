@@ -1,209 +1,235 @@
 /* =============================================
-   EcoSpark — Minimalist Zen Design System
+   EcoSpark — Notion Design System
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* ── Neutral Color Palette (Zinc/Slate) ── */
-  --color-bg-deep:      #09090b;   /* Zinc-950 */
-  --color-bg-dark:      #121214;   /* Zinc-900 */
-  --color-bg-card:      #18181b;   /* Zinc-800 */
-  --color-bg-subtle:    #27272a;   /* Zinc-700 */
-  --color-bg-navbar:    rgba(9, 9, 11, 0.82);
-  --color-bg-menu:      rgba(18, 18, 20, 0.98);
-
+  /* ── Neutral Color Palette (Notion Warm) ── */
+  --color-bg-deep:      #f6f5f4;   /* Warm White */
+  --color-bg-dark:      #31302e;   /* Warm Dark */
+  --color-bg-card:      #ffffff;   /* Pure White */
+  --color-bg-subtle:    #f6f5f4;   /* Warm White */
+  --color-bg-navbar:    rgba(255, 255, 255, 0.98);
+  --color-bg-menu:      rgba(255, 255, 255, 1);
 
   /* Borders & Dividers */
-  --color-border:       rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-border:       rgba(0, 0, 0, 0.1);
+  --color-border-hover: rgba(0, 0, 0, 0.15);
 
-  /* Brand: Sustainable Emerald */
-  --color-primary:      #10b981;   /* Emerald-500 */
-  --color-primary-dim:  #059669;   /* Emerald-600 */
-  --color-secondary:    #3b82f6;   /* Blue-500 */
-  --color-accent:       #f59e0b;   /* Amber-500 */
+  /* Brand: Notion */
+  --color-primary:      #0075de;   /* Notion Blue */
+  --color-primary-dim:  #005bab;   /* Active Blue */
+  --color-secondary:    #213183;   /* Deep Navy */
+  --color-accent:       #f2f9ff;   /* Badge Bg */
 
   /* Status Colors */
-  --color-success:      #10b981;
-  --color-danger:       #ef4444;
-  --color-warn:         #f59e0b;
-  --color-info:         #3b82f6;
+  --color-success:      #1aae39;
+  --color-danger:       #dd5b00;
+  --color-warn:         #dd5b00;
+  --color-info:         #0075de;
 
   /* Text Hierarchy */
-  --color-text-primary: #fafafa;
-  --color-text-muted:   #a1a1aa;   /* Zinc-400 */
-  --color-text-dim:     #71717a;   /* Zinc-500 */
-  --color-text-faint:   #3f3f46;   /* Zinc-600 */
+  --color-text-primary: rgba(0, 0, 0, 0.95);
+  --color-text-muted:   #615d59;   /* Warm Gray 500 */
+  --color-text-dim:     #a39e98;   /* Warm Gray 300 */
+  --color-text-faint:   rgba(0, 0, 0, 0.4);
 
   /* ── Gradients ── */
-  --grad-primary: linear-gradient(135deg, #10b981, #3b82f6);
-  --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  --grad-primary:       var(--color-primary); /* Flat color instead of gradient */
+  --grad-surface:       none;
 
-  /* ── Shadows (Natural & Soft) ── */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.2), 0 8px 10px -6px rgba(0,0,0,0.2);
+  /* ── Shadows (Notion Depths) ── */
+  --shadow-sm:          rgba(0,0,0,0.02) 0px 1px 3px;
+  --shadow-md:          rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.85px, rgba(0,0,0,0.02) 0px 0.8px 2.93px, rgba(0,0,0,0.01) 0px 0.175px 1.04px;
+  --shadow-lg:          rgba(0,0,0,0.01) 0px 1px 3px, rgba(0,0,0,0.02) 0px 3px 7px, rgba(0,0,0,0.02) 0px 7px 15px, rgba(0,0,0,0.04) 0px 14px 28px, rgba(0,0,0,0.05) 0px 23px 52px;
 
   /* ── Spacing ── */
-  --sp-xs: 0.25rem;
-  --sp-sm: 0.5rem;
-  --sp-md: 1rem;
-  --sp-lg: 1.5rem;
-  --sp-xl: 2rem;
-  --sp-2xl: 3rem;
-  --sp-3xl: 4rem;
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 64px;
+  --sp-3xl: 120px;
 
-  /* ── Border radius (Consistent & Subtle) ── */
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   14px;
-  --radius-xl:   20px;
+  /* ── Border radius (Notion Scale) ── */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
   --radius-full: 9999px;
+  --radius-btn:  4px;
+  --radius-container: 12px;
 
   /* ── Typography ── */
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-body:    'Inter', -apple-system, system-ui, sans-serif;
 
   /* ── Transitions ── */
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --t-fast:   0.15s;
-  --t-normal: 0.25s;
-  --t-slow:   0.4s;
+  --t-normal: 0.2s;
+  --t-slow:   0.3s;
 }
 
 /* ── Light Theme Overrides ── */
+/* Notion acts primarily light by default, so light variables are same as root mostly */
 [data-theme='light'] {
-  --color-bg-deep:      #f9fafb;   /* Gray-50 */
-  --color-bg-dark:      #f3f4f6;   /* Gray-100 */
+  --color-bg-deep:      #f6f5f4;
+  --color-bg-dark:      #31302e;
   --color-bg-card:      #ffffff;
-  --color-bg-subtle:    #e5e7eb;   /* Gray-200 */
-
-  --color-border:       rgba(0, 0, 0, 0.08);
-  --color-border-hover: rgba(0, 0, 0, 0.15);
-
-  --color-text-primary: #111827;   /* Gray-900 */
-  --color-text-muted:   #4b5563;   /* Gray-600 */
-  --color-text-dim:     #6b7280;   /* Gray-500 */
-  --color-text-faint:   #9ca3af;   /* Gray-400 */
-  --color-bg-navbar:    rgba(255, 255, 255, 0.82);
-  --color-bg-menu:      rgba(255, 255, 255, 0.98);
-
-
-  --grad-surface: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, transparent 100%);
-  
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --color-bg-subtle:    #f6f5f4;
+  --color-text-primary: rgba(0, 0, 0, 0.95);
+  --color-text-muted:   #615d59;
+  --color-text-dim:     #a39e98;
+  --color-bg-navbar:    rgba(255, 255, 255, 0.98);
 }
 
+/* ── Dark Theme Overrides (Optional / Defaulting to reverse for robustness) ── */
+[data-theme='dark'] {
+  --color-bg-deep:      #191919;
+  --color-bg-card:      #202020;
+  --color-bg-subtle:    #2f2f2f;
+  --color-text-primary: rgba(255, 255, 255, 0.9);
+  --color-text-muted:   rgba(255, 255, 255, 0.6);
+  --color-border:       rgba(255, 255, 255, 0.1);
+  --color-bg-navbar:    rgba(25, 25, 25, 0.98);
+  --shadow-md:          rgba(0,0,0,0.2) 0px 4px 18px;
+  --shadow-lg:          rgba(0,0,0,0.3) 0px 14px 28px;
+}
 
 /* ── Global Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; font-variant-numeric: lining-nums; }
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg-deep);
   color: var(--color-text-primary);
   min-height: 100vh;
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 img { max-width: 100%; display: block; }
-a  { text-decoration: none; color: inherit; transition: opacity var(--t-fast); }
-a:hover { opacity: 0.8; }
+a  { text-decoration: none; color: var(--color-primary); transition: color var(--t-fast); }
+a:hover { color: var(--color-primary-dim); text-decoration: underline; }
 button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 input, textarea, select { font-family: inherit; outline: none; }
 ul, ol { list-style: none; }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-deep); }
-::-webkit-scrollbar-thumb { background: var(--color-bg-subtle); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background: var(--color-text-dim); }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
 
 /* ── Typography Utilities ── */
-.text-gradient {
-  background: var(--grad-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+.text-gradient { color: var(--color-primary); } /* removed gradient for notion */
 .text-muted { color: var(--color-text-muted); }
-.text-sm { font-size: 0.875rem; }
-.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 14px; }
+.text-xs { font-size: 12px; }
 .font-bold { font-weight: 700; }
+
+.notion-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -2.125px;
+  line-height: 1;
+  font-size: 64px;
+}
+.notion-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.00;
+  font-size: 48px;
+}
+.notion-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  line-height: 1.27;
+  font-size: 22px;
+}
 
 /* ── Components: Minimalist Card ── */
 .glass-card, .card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: transform var(--t-normal) var(--ease-out), border-color var(--t-normal) var(--ease-out), box-shadow var(--t-normal) var(--ease-out);
+  border-radius: var(--radius-container);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--t-normal) var(--ease-out), box-shadow var(--t-normal) var(--ease-out);
   overflow: hidden;
 }
 .glass-card:hover, .card:hover {
-  border-color: var(--color-border-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
-/* ── Buttons (Modern Utility) ── */
+/* ── Buttons (Notion Utility) ── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--sp-sm);
-  padding: 0.75rem 1.75rem;
+  padding: 8px 16px;
   background: var(--color-primary);
   color: #ffffff;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  border-radius: var(--radius-md);
-  transition: all var(--t-normal) var(--ease-out);
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: var(--radius-btn);
+  transition: all var(--t-fast) var(--ease-out);
+  border: 1px solid transparent;
 }
+.btn-primary:active { transform: scale(0.95); }
 .btn-primary:hover {
   background: var(--color-primary-dim);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
-.btn-primary:active { transform: translateY(0); }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--sp-sm);
-  padding: 0.75rem 1.75rem;
-  background: transparent;
+  padding: 8px 16px;
+  background: rgba(0,0,0,0.05);
   color: var(--color-text-primary);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: all var(--t-normal) var(--ease-out);
+  font-weight: 500;
+  font-size: 15px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-btn);
+  transition: all var(--t-fast) var(--ease-out);
 }
+.btn-outline:active { transform: scale(0.95); }
 .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--color-text-muted);
+  background: rgba(0,0,0,0.08);
+}
+[data-theme='dark'] .btn-outline {
+  background: rgba(255,255,255,0.1);
+  color: var(--color-text-primary);
+}
+[data-theme='dark'] .btn-outline:hover {
+  background: rgba(255,255,255,0.15);
 }
 
 /* ── Layout ── */
 .page { min-height: 100vh; padding-top: 64px; }
-.section { padding: 2rem var(--sp-xl); max-width: 1440px; margin: 0 auto; }
+.section { padding: var(--sp-3xl) var(--sp-xl); max-width: 1200px; margin: 0 auto; }
 
 .page-header { margin-bottom: 2.5rem; text-align: left; }
 .page-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
+  font-size: 40px;
+  font-weight: 700;
   margin-bottom: 0.5rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  color: var(--color-text-primary);
 }
-.page-sub { color: var(--color-text-muted); font-size: 1.1rem; max-width: 700px; }
+.page-sub { color: var(--color-text-muted); font-size: 16px; max-width: 700px; }
 
-/* ── Animations (Subtle & Intentional) ── */
+/* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -219,23 +245,26 @@ ul, ol { list-style: none; }
 /* ── Form Elements ── */
 .form-group { display: flex; flex-direction: column; gap: var(--sp-sm); margin-bottom: var(--sp-lg); }
 .form-group label {
-  font-size: 0.8125rem;
+  font-size: 14px;
   font-weight: 500;
   color: var(--color-text-muted);
 }
 .form-input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background: var(--color-bg-deep);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  background: var(--color-bg-card);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: var(--radius-btn);
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  font-size: 14px;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
 }
 .form-input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 117, 222, 0.2);
+}
+[data-theme='dark'] .form-input {
+  border-color: rgba(255,255,255,0.15);
 }
 
 /* ── Badge & Chips ── */
@@ -243,12 +272,17 @@ ul, ol { list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 12px;
+  padding: 4px 8px;
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
-  background: var(--color-bg-subtle);
-  border: 1px solid var(--color-border);
+  background: var(--color-accent);
+  color: var(--color-primary);
+  letter-spacing: 0.125px;
+  border: none;
+}
+[data-theme='dark'] .chip {
+  background: rgba(0, 117, 222, 0.2);
 }
 
 /* ── Toast notification ── */
@@ -256,9 +290,9 @@ ul, ol { list-style: none; }
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  padding: 0.875rem 1.25rem;
-  border-radius: var(--radius-md);
-  font-weight: 600;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-container);
+  font-weight: 500;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -273,6 +307,7 @@ ul, ol { list-style: none; }
 
 /* ── Responsive helpers ── */
 @media (max-width: 768px) {
-  .section { padding: var(--sp-2xl) var(--sp-md); }
-  .btn-primary, .btn-outline { padding: 0.625rem 1.25rem; font-size: 0.875rem; }
+  .section { padding: var(--sp-xl) var(--sp-lg); }
+  .btn-primary, .btn-outline { padding: 8px 14px; font-size: 14px; }
+  .page-title { font-size: 32px; letter-spacing: -0.625px; }
 }

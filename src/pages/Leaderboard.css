@@ -5,27 +5,27 @@
   gap: 1.5rem;
   padding: 1.25rem 1.75rem;
   margin-bottom: 2rem;
-  border-color: var(--color-border-glow);
+  border-color: var(--color-border);
   flex-wrap: wrap;
 }
 .mr-left { text-align: center; }
-.mr-rank { font-family: var(--font-display); font-size: 2.5rem; font-weight: 900; line-height: 1; }
-.mr-label { font-size: 0.7rem; color: var(--color-text-muted); text-transform: uppercase; }
+.mr-rank { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; line-height: 1; letter-spacing: -1.5px; }
+.mr-label { font-size: 0.7rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.25px;}
 .mr-mid { display: flex; align-items: center; gap: 0.75rem; flex: 1; }
 .mr-avatar {
   position: relative;
   width: 44px; height: 44px;
   border-radius: 50%;
-  background: var(--grad-primary);
+  background: var(--color-bg-subtle);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 1.1rem; color: #050d0a;
-  box-shadow: var(--glow-primary);
+  font-weight: 600; font-size: 1.1rem; color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
   z-index: 2;
 }
-.mr-name  { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; }
+.mr-name  { font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; }
 .mr-school{ font-size: 0.8rem; color: var(--color-text-muted); }
 .mr-right { text-align: right; }
-.mr-pts { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; }
+.mr-pts { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
 .mr-pts-label { font-size: 0.7rem; color: var(--color-text-muted); }
 
 /* lb-filter */
@@ -48,18 +48,18 @@
   gap: 0.4rem;
   position: relative;
   padding: 1.25rem 1.5rem 0;
-  background: var(--rank-bg);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  border: 1px solid rgba(from var(--rank-color, #ffd700) r g b / 0.3);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-container) var(--radius-container) 0 0;
+  border: 1px solid var(--color-border);
   border-bottom: none;
   min-width: 160px;
-  animation: fadeInUp 0.6s var(--ease-smooth) both;
+  animation: fadeInUp 0.6s var(--ease-out) both;
 }
-.podium-rank-1 { min-width: 200px; padding-top: 2rem; border-color: rgba(255,215,0,0.4); }
+.podium-rank-1 { min-width: 200px; padding-top: 2rem; border-color: var(--color-border); }
 .podium-rank-2 { animation-delay: 0.1s; }
 .podium-rank-3 { animation-delay: 0.2s; }
 
-.podium-medal { font-size: 2.5rem; animation: partyPop 0.6s var(--ease-bounce); }
+.podium-medal { font-size: 2.5rem; animation: fadeInUp 0.6s var(--ease-out); }
 .podium-rank-1 .podium-medal { font-size: 3rem; }
 
 .podium-avatar {
@@ -68,18 +68,20 @@
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.5rem;
   color: var(--rank-color);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
   margin: 0.25rem 0;
   z-index: 2;
 }
 .podium-rank-1 .podium-avatar { width: 70px; height: 70px; font-size: 1.8rem; }
 
-.podium-name  { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; text-align: center; }
+.podium-name  { font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; text-align: center; }
 .podium-school{ font-size: 0.7rem; color: var(--color-text-muted); text-align: center; max-width: 140px; }
-.podium-points{ font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; }
-.podium-rank-1 .podium-points { font-size: 1.5rem; }
+.podium-points{ font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; letter-spacing: -0.25px;}
+.podium-rank-1 .podium-points { font-size: 1.5rem; letter-spacing: -0.5px;}
 .podium-pts-label { font-size: 0.65rem; color: var(--color-text-muted); margin-bottom: 0.5rem; }
 
 .podium-base {
@@ -87,9 +89,10 @@
   height: 14px;
   border-radius: 0;
   margin-top: auto;
-  opacity: 0.7;
+  opacity: 0.1;
+  background: currentColor;
 }
-.podium-rank-1 .podium-base { height: 20px; opacity: 1; }
+.podium-rank-1 .podium-base { height: 20px; opacity: 0.15; }
 
 /* Table */
 .lb-table { overflow: hidden; }
@@ -98,10 +101,10 @@
   grid-template-columns: 50px 1fr 1fr 80px 180px;
   padding: 0.75rem 1.5rem;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--color-text-faint);
+  color: var(--color-text-muted);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -113,17 +116,18 @@
   padding: 0.85rem 1.5rem;
   border-bottom: 1px solid var(--color-border);
   transition: background var(--t-fast);
-  animation: fadeInLeft 0.3s var(--ease-smooth) both;
+  animation: fadeIn 0.3s var(--ease-out) both;
 }
-.lb-row:hover { background: rgba(52,211,100,0.04); }
-.lb-row.lb-row-me { background: rgba(52,211,100,0.06); border-color: var(--color-border-glow); }
+.lb-row:hover { background: rgba(0,0,0,0.02); }
+[data-theme='dark'] .lb-row:hover { background: rgba(255,255,255,0.02); }
+.lb-row.lb-row-me { background: rgba(0, 117, 222, 0.04); }
 .lb-row:last-child { border-bottom: none; }
 
 .lb-rank { display: flex; align-items: center; }
 .rank-num {
   font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 .rank-num.top10 { color: var(--color-primary); }
@@ -133,36 +137,44 @@
   position: relative;
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: var(--grad-primary);
+  background: var(--color-bg-deep);
+  border: 1px solid var(--color-border);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 0.9rem; color: #050d0a;
+  font-weight: 600; font-size: 0.9rem; color: var(--color-text-primary);
   flex-shrink: 0;
   z-index: 2;
 }
-.lb-user-name { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; }
+.lb-user-name { font-weight: 500; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; }
+
 .you-badge {
   font-size: 0.65rem;
-  padding: 1px 6px;
-  background: var(--grad-primary);
-  border-radius: var(--radius-full);
-  color: #050d0a;
-  font-weight: 800;
+  padding: 2px 6px;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
 }
+
 .lb-school { font-size: 0.82rem; color: var(--color-text-muted); }
 .lb-badge-count { font-size: 0.85rem; }
 .lb-points { display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-end; }
-.lb-pts-val { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
-.lb-pts-bar { width: 100px; height: 4px; background: rgba(52,211,100,0.1); border-radius: var(--radius-full); overflow: hidden; }
-.lb-pts-fill { height: 100%; background: var(--grad-primary); border-radius: var(--radius-full); transition: width 0.8s var(--ease-smooth); }
+.lb-pts-val { font-family: var(--font-display); font-size: 1rem; font-weight: 600; letter-spacing: -0.25px;}
+.lb-pts-bar { width: 100px; height: 4px; background: var(--color-bg-subtle); border-radius: var(--radius-full); overflow: hidden; }
+.lb-pts-fill { height: 100%; background: var(--color-primary); border-radius: var(--radius-full); transition: width 0.8s var(--ease-out); }
 
 /* Loading skeleton */
 .lb-loading { display: flex; flex-direction: column; gap: 0; }
 .lb-skeleton {
   height: 60px;
-  background: linear-gradient(90deg, rgba(52,211,100,0.04) 25%, rgba(52,211,100,0.08) 50%, rgba(52,211,100,0.04) 75%);
+  background: linear-gradient(90deg, var(--color-bg-subtle) 25%, var(--color-border) 50%, var(--color-bg-subtle) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-bottom: 1px solid var(--color-border);
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @media (max-width: 900px) {
@@ -182,4 +194,3 @@
   .podium-card { padding: 1rem 0.5rem 0; flex: 1; min-width: 0; }
   .podium-rank-1 { flex: 1.2; padding-top: 1.5rem; min-width: 0; }
 }
-
